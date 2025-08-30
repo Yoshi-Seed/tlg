@@ -1,0 +1,158 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Seed × TLG Linker — On‑the‑Ground Support in Japan</title>
+  <meta name="description" content="We handle the logistics so you can focus on great research — and keep your clients comfortable." />
+  <meta name="color-scheme" content="light dark" />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    // Tailwind CDN config (optional fine‑tuning)
+    tailwind.config = {
+      darkMode: 'media',
+      theme: {
+        extend: {
+          fontFamily: { sans: ['ui-sans-serif','system-ui','-apple-system','Segoe UI','Roboto','Helvetica','Arial','Noto Sans','Apple Color Emoji','Segoe UI Emoji','Segoe UI Symbol','Noto Color Emoji'] },
+          boxShadow: { soft: '0 10px 25px -10px rgb(0 0 0 / 0.15)' },
+        }
+      }
+    }
+  </script>
+  <style>
+    /* iOS safe‑area for the sticky mobile bar */
+    .safe-bottom { padding-bottom: max(env(safe-area-inset-bottom), 12px); }
+  </style>
+</head>
+<body class="bg-gradient-to-b from-white to-slate-50 text-slate-900 antialiased selection:bg-black selection:text-white">
+  <a href="#main" class="sr-only focus:not-sr-only focus:fixed focus:top-4 focus:left-4 focus:z-50 focus:px-3 focus:py-2 focus:bg-black focus:text-white focus:rounded-lg">Skip to content</a>
+
+  <!-- Header -->
+  <header class="sticky top-0 z-40 backdrop-blur bg-white/80 border-b border-slate-200">
+    <div class="max-w-5xl mx-auto px-4 py-3 flex items-center justify-between">
+      <div class="flex items-center gap-3">
+        <span class="px-2 py-1 rounded-2xl bg-black text-white text-xs tracking-wide">SEED</span>
+        <div class="leading-tight">
+          <div class="font-semibold">Seed × TLG Linker</div>
+          <div id="updated" class="text-xs text-slate-500">Last updated: —</div>
+        </div>
+      </div>
+      <div class="hidden sm:flex items-center gap-2 text-xs text-slate-500">
+        <span class="inline-flex items-center gap-1">🇯🇵 Tokyo&nbsp;Time</span>
+      </div>
+    </div>
+  </header>
+
+  <!-- Hero / Quick actions -->
+  <main id="main" class="max-w-5xl mx-auto px-4 pt-10 pb-6">
+    <h1 class="text-3xl sm:text-4xl font-bold tracking-tight">On‑the‑Ground Support in Japan</h1>
+    <p class="mt-3 text-slate-600 max-w-3xl">We handle the logistics so you can focus on great research — and keep your clients comfortable.</p>
+
+    <!-- Card: Quick actions -->
+    <section class="mt-6 rounded-2xl border border-slate-200 bg-white/90 shadow-soft">
+      <div class="px-6 pt-5 pb-2">
+        <h2 class="text-base font-semibold flex items-center gap-2"><span class="inline-flex w-8 h-8 items-center justify-center rounded-xl bg-slate-100">💬</span> Quick actions</h2>
+      </div>
+      <div class="grid gap-3 sm:grid-cols-3 px-6 pb-4">
+        <a id="ctaTeamsTop" href="https://teams.microsoft.com/l/chat/0/0?users=y.honda@seedplanning.co.jp&message=Hello%20Seed%20PM" target="_blank" rel="noreferrer" class="inline-flex items-center gap-2 justify-center sm:justify-start px-4 py-3 rounded-xl bg-black text-white text-base">
+          💬 Message Seed PM on Teams
+        </a>
+        <button id="copyBtn" class="inline-flex items-center gap-2 justify-center sm:justify-start px-4 py-3 rounded-xl bg-slate-100 text-base">
+          📞 Copy taxi note
+        </button>
+        <button onclick="window.print()" class="inline-flex items-center gap-2 justify-center sm:justify-start px-4 py-3 rounded-xl border text-base">
+          🖨️ Print page
+        </button>
+        <p class="sm:col-span-3 text-sm text-slate-600 flex items-start gap-2">
+          ℹ️ <span>Show the Google Map address from your Facility Information to the Uber/Taxi driver.</span>
+        </p>
+      </div>
+    </section>
+  </main>
+
+  <hr class="my-6 border-slate-200" />
+
+  <!-- Content grid -->
+  <section class="max-w-5xl mx-auto px-4 pb-28 grid gap-6 md:grid-cols-2">
+    <article class="rounded-2xl border border-slate-200 bg-white/90 shadow-soft p-6">
+      <h3 class="text-lg font-semibold flex items-center gap-2"><span class="inline-flex w-8 h-8 items-center justify-center rounded-xl bg-slate-100">📍</span> From Hotel to Facility</h3>
+      <p class="mt-3">If it’s your first time at a facility, it’s normal to feel unsure. Some Linkers even do a dry run the day before. On the day, simply show the <strong>Google Map address</strong> from the Facility Information to your <strong>Uber or taxi driver</strong>. If you get dropped off in the wrong spot or can’t find the entrance, <strong>chat us on Teams immediately</strong> and we’ll guide you in.</p>
+      <p class="mt-3 text-sm bg-slate-50 rounded-xl p-3">Heads‑up: Japan taxi drivers prefer <em>an address in Japanese</em>. Your Facility Information includes one — that’s the safest thing to show.</p>
+    </article>
+
+    <article class="rounded-2xl border border-slate-200 bg-white/90 shadow-soft p-6">
+      <h3 class="text-lg font-semibold flex items-center gap-2"><span class="inline-flex w-8 h-8 items-center justify-center rounded-xl bg-slate-100">🍱</span> Meals at the Facility</h3>
+      <p class="mt-3">Depending on headcount, we’ll either <strong>pre‑order bento boxes</strong> or place a <strong>group Uber order</strong> so everyone gets what they want. Either way, it’s already covered as <strong>project catering</strong> — no extra admin for you. Even in the back room, we want you to enjoy <em>good</em> food during your Japan stay.</p>
+    </article>
+
+    <article class="rounded-2xl border border-slate-200 bg-white/90 shadow-soft p-6">
+      <h3 class="text-lg font-semibold flex items-center gap-2"><span class="inline-flex w-8 h-8 items-center justify-center rounded-xl bg-slate-100">🚄</span> Tokyo ↔ Osaka (Shinkansen)</h3>
+      <p class="mt-3">A Seed teammate will <strong>accompany you</strong> between Tokyo and Osaka. We handle <strong>ticket purchase and seat assignments</strong> end‑to‑end. Seed will <strong>front the cost</strong> for you and your accompanying client(s) and later settle via <strong>expense reconciliation</strong>. Relax — just bring yourselves.</p>
+    </article>
+
+    <article class="rounded-2xl border border-slate-200 bg-white/90 shadow-soft p-6">
+      <h3 class="text-lg font-semibold flex items-center gap-2"><span class="inline-flex w-8 h-8 items-center justify-center rounded-xl bg-slate-100">🍽️</span> Post‑Research Dinner</h3>
+      <p class="mt-3">Too many options? Tell us the <strong>style you want</strong> — e.g., yakiniku (BBQ), washoku (Japanese), ramen — and we’ll recommend spots and <strong>make the reservation</strong> if needed. Your clients will feel looked after without you juggling bookings.</p>
+    </article>
+
+    <article class="rounded-2xl border border-slate-200 bg-white/90 shadow-soft p-6">
+      <h3 class="text-lg font-semibold flex items-center gap-2"><span class="inline-flex w-8 h-8 items-center justify-center rounded-xl bg-slate-100">🗓️</span> Free Day Planning</h3>
+      <p class="mt-3">If you score a half or full day before departure, we can <strong>plan a relaxed course</strong> in Tokyo or Osaka and <strong>handle all arrangements</strong>. Just say what would make the day feel easy and fun.</p>
+    </article>
+
+    <article class="rounded-2xl border border-slate-200 bg-white/90 shadow-soft p-6">
+      <h3 class="text-lg font-semibold flex items-center gap-2"><span class="inline-flex w-8 h-8 items-center justify-center rounded-xl bg-slate-100">💡</span> Quick Tips</h3>
+      <ul class="mt-3 list-disc pl-5 space-y-2">
+        <li><strong>Carry some cash</strong> (¥10,000–¥20,000). Shrines, stalls, and small shops may be cash‑only.</li>
+        <li><strong>Hydrate in summer</strong> — heat can sneak up on you.</li>
+        <li><strong>Ping your Seed PM on Teams anytime</strong>. We’re on standby throughout your stay.</li>
+      </ul>
+    </article>
+  </section>
+
+  <!-- Sticky mobile bar (shows on small screens) -->
+  <div class="fixed inset-x-0 bottom-0 sm:hidden bg-white/95 border-t border-slate-200 shadow-soft safe-bottom">
+    <div class="max-w-5xl mx-auto px-4 py-3 grid grid-cols-2 gap-3">
+      <a id="ctaTeamsBottom" href="https://teams.microsoft.com/l/chat/0/0?users=y.honda@seedplanning.co.jp&message=Hello%20Seed%20PM" target="_blank" rel="noreferrer" class="inline-flex items-center justify-center gap-2 rounded-xl bg-black text-white px-4 py-3 text-base">
+        💬 Message PM
+      </a>
+      <button id="copyBtnBottom" class="inline-flex items-center justify-center gap-2 rounded-xl bg-slate-100 px-4 py-3 text-base">📋 Copy note</button>
+    </div>
+  </div>
+
+  <!-- Footer (desktop friendly) -->
+  <footer class="border-t border-slate-200 bg-white/70">
+    <div class="max-w-5xl mx-auto px-4 py-10 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+      <div>
+        <div class="font-medium">We’re on standby throughout your stay.</div>
+        <div class="text-slate-600 text-sm">Ping us on Teams anytime and we’ll jump in.</div>
+      </div>
+      <a href="https://teams.microsoft.com/l/chat/0/0?users=y.honda@seedplanning.co.jp&message=Hello%20Seed%20PM" target="_blank" rel="noreferrer" class="hidden sm:inline-flex items-center gap-2 px-4 py-3 rounded-xl bg-black text-white">💬 Open Teams chat</a>
+    </div>
+  </footer>
+
+  <script>
+    // Last updated stamp (JST label only)
+    (function(){
+      var d=new Date();
+      var m=d.toLocaleString('en-US',{month:'short'}); var day=('0'+d.getDate()).slice(-2); var y=d.getFullYear();
+      document.getElementById('updated').textContent='Last updated: '+m+' '+day+', '+y+' (JST)';
+    })();
+
+    // Copy taxi memo (top & bottom buttons)
+    const memo='(Please take me to J-Facility -Osaka) こちらの目的地まで連れて行ってください。住所：【大阪市北区東天満1-12-12 】　';
+    function copyMemo(){ navigator.clipboard.writeText(memo).then(()=>alert('Copied!')).catch(()=>alert('Copied!')); }
+    document.getElementById('copyBtn').addEventListener('click', copyMemo);
+    document.getElementById('copyBtnBottom').addEventListener('click', copyMemo);
+  </script>
+
+  <!-- Print tweaks -->
+  <style>
+    @media print {
+      .fixed, .sticky, .safe-bottom { display:none !important; }
+      a[href]::after { content:" (" attr(href) ")"; font-size: 0.8em; color:#64748b; }
+      body { background: white; }
+    }
+  </style>
+</body>
+</html>

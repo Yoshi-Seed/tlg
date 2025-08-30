@@ -1,0 +1,438 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#fcfaf6">
+    <title>Your Japan Research Journey - On-the-Ground Support</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-color: #fcfaf6; /* A warmer, more textured off-white */
+            --text-color: #3d3d3d;
+            --primary-color: #0b3d5f; /* A deeper, more sophisticated navy */
+            --accent-color: #d16058; /* A slightly muted, elegant red */
+            --border-color: #eaeaea;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            font-family: 'Inter', sans-serif;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+            line-height: 1.7;
+        }
+
+        h1, h2, h3 {
+            font-family: 'Playfair Display', serif;
+            color: var(--primary-color);
+            font-weight: 700;
+        }
+
+        .card {
+            background-color: white;
+            border-radius: 16px;
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.08);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            position: relative;
+            overflow: hidden;
+            border: 1px solid var(--border-color);
+        }
+        .card:hover {
+            transform: translateY(-6px);
+            box-shadow: 0 12px 40px rgba(0, 0, 0, 0.12);
+        }
+
+        /* The main timeline container */
+        .timeline-container {
+            position: relative;
+            padding: 3rem 0;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        /* The vertical line acting as the timeline's spine */
+        .timeline-spine {
+            position: absolute;
+            top: 0;
+            left: 21px; /* Center of the 44px marker */
+            width: 3px;
+            height: 100%;
+            background-color: var(--border-color);
+            z-index: 0;
+        }
+        
+        /* The progress bar that fills up on scroll */
+        #timeline-progress {
+            position: absolute;
+            top: 0;
+            left: 21px;
+            width: 3px;
+            height: 0; /* Initially 0, will be set by JS */
+            background: linear-gradient(to bottom, var(--primary-color), var(--accent-color));
+            z-index: 1;
+            transition: height 0.1s linear;
+        }
+
+        .timeline-item {
+            position: relative;
+            display: flex;
+            align-items: flex-start;
+            gap: 2rem;
+            margin-bottom: 3.5rem;
+            opacity: 0;
+            transform: translateY(40px);
+            transition: opacity 0.7s ease-out, transform 0.7s ease-out;
+        }
+        .timeline-item:last-child {
+            margin-bottom: 0;
+        }
+        .timeline-item.is-visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* The marker on the timeline spine (Kamon style) */
+        .timeline-marker {
+            position: relative;
+            flex-shrink: 0;
+            width: 44px;
+            height: 44px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-color: var(--bg-color);
+            border: 3px solid var(--primary-color);
+            border-radius: 50%;
+            z-index: 2;
+            box-shadow: 0 0 0 4px var(--bg-color); /* Creates a cutout effect */
+        }
+        .timeline-marker svg {
+            width: 24px;
+            height: 24px;
+            color: var(--primary-color);
+            stroke-width: 2;
+        }
+
+        .timeline-content {
+            flex-grow: 1;
+            padding-top: 0.5rem; /* Align content with the marker nicely */
+        }
+        
+        .card-header {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            margin-bottom: 0.75rem;
+            border-left: 4px solid;
+            padding-left: 1rem;
+        }
+        
+        /* Color accents for each card header */
+        .card-accent-1 { border-color: #0077b6; }
+        .card-accent-2 { border-color: #f77f00; }
+        .card-accent-3 { border-color: #0081a7; }
+        .card-accent-4 { border-color: #d62828; }
+        .card-accent-5 { border-color: #6a4c93; }
+
+        details summary {
+            cursor: pointer;
+            list-style: none;
+            padding: 1rem 0;
+        }
+        details summary::-webkit-details-marker { display: none; }
+        details summary .summary-title { display: flex; align-items: center; gap: 1rem; }
+        details summary::after {
+            content: '+'; float: right; color: var(--accent-color); transition: transform 0.2s ease; font-size: 1.5em; line-height: 1; font-weight: 300;
+        }
+        details[open] summary::after { content: '−'; }
+
+        /* Taxi Modal Styles */
+        .modal-overlay {
+            transition: opacity 0.3s ease;
+        }
+        .modal-container {
+            transition: transform 0.3s ease, opacity 0.3s ease;
+        }
+        .modal-hidden {
+            pointer-events: none;
+        }
+        .modal-hidden .modal-overlay {
+            opacity: 0;
+        }
+        .modal-hidden .modal-container {
+            opacity: 0;
+            transform: scale(0.95);
+        }
+        
+    </style>
+</head>
+
+<body class="selection:bg-yellow-200">
+    <main class="max-w-4xl mx-auto px-4 pt-16 pb-12">
+        
+        <header class="text-center mb-20">
+            <h1 class="text-5xl md:text-6xl font-bold tracking-tight leading-tight">Your Japan Research Journey</h1>
+            <p class="mt-5 text-xl text-gray-600 max-w-2xl mx-auto">Seamless support for your on-the-ground needs, so you can focus on great research with peace of mind.</p>
+        </header>
+
+        <section class="card p-8 mb-20 shadow-xl bg-white">
+            <h2 class="text-3xl flex items-center gap-4 mb-6"><span class="text-3xl">🚀</span> Quick Actions</h2>
+            <div class="grid gap-4 sm:grid-cols-2">
+                <a href="https://teams.microsoft.com/l/chat/0/0?users=y.honda@seedplanning.co.jp&message=Hello%20Seed%20PM" target="_blank" rel="noopener noreferrer" class="inline-flex items-center justify-center gap-3 px-4 py-3 rounded-xl bg-[var(--primary-color)] text-white font-semibold transition hover:opacity-90">
+                    <span class="text-xl">💬</span> Message Seed PM
+                </a>
+                <button id="openTaxiModalBtn" class="inline-flex items-center justify-center gap-3 px-4 py-3 rounded-xl bg-gray-100 text-gray-800 font-semibold border border-gray-200 transition hover:bg-gray-200">
+                    <span class="text-xl">🚕</span> Show Taxi Note
+                </button>
+            </div>
+             <p class="mt-6 text-base text-gray-600 border-t border-gray-100 pt-5 flex items-start gap-4">
+                <span class="text-2xl text-[var(--primary-color)]">ℹ️</span> 
+                <div>Show the <strong class="text-gray-900">Japanese address</strong> from your Facility Information to the Uber/Taxi driver. This is the safest and most reliable way to reach your destination.</div>
+            </p>
+        </section>
+
+        <!-- TIMELINE START -->
+        <div class="timeline-container" id="timeline-container">
+            <div class="timeline-spine"></div>
+            <div id="timeline-progress"></div>
+
+            <div class="timeline-item">
+                <div class="timeline-marker">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/></svg>
+                </div>
+                <div class="timeline-content card p-7">
+                    <div class="card-header card-accent-1">
+                        <h3 class="text-2xl">From Hotel to Facility</h3>
+                    </div>
+                    <p class="text-gray-700">First time at a facility? It's normal to feel unsure. Simply show the <strong>Google Map address (Japanese is best!)</strong> from your Facility Information to your Uber or taxi driver. If you get dropped off incorrectly or can’t find the entrance, <strong>chat us on Teams immediately</strong>, and we’ll guide you.</p>
+                </div>
+            </div>
+            
+            <div class="timeline-item">
+                <div class="timeline-marker">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M4 11a8 8 0 0 1 8-8V2a2 2 0 0 0-2-2H6a2 2 0 0 0-2 2v1"/><path d="M10 11a8 8 0 0 1 8-8V2a2 2 0 0 1 2-2h2a2 2 0 0 1 2 2v1"/><path d="M4 11h16a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2v-8a2 2 0 0 1 2-2Z"/><path d="M9 16H7"/><path d="M17 16h-2"/></svg>
+                </div>
+                 <div class="timeline-content card p-7">
+                    <div class="card-header card-accent-2">
+                        <h3 class="text-2xl">Meals at the Facility</h3>
+                    </div>
+                    <p class="text-gray-700">Depending on headcount, we’ll either <strong>pre-order bento boxes</strong> or place a <strong>group Uber order</strong> to cater to everyone's preferences. Either way, it’s already covered as <strong>project catering</strong>. We want you to enjoy delicious food during your Japan stay, even in the back room!</p>
+                </div>
+            </div>
+
+             <div class="timeline-item">
+                <div class="timeline-marker">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M16 8.3a2.5 2.5 0 0 0-4.82.9A2.5 2.5 0 0 0 8 8.3c0-1.2.93-2.5 2.5-2.5A2.5 2.5 0 0 1 16 8.3Z"/><path d="M5 12h14"/><path d="M5 12a4 4 0 0 0-4 4v2a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2v-2a4 4 0 0 0-4-4Z"/><path d="m10 12-1.5-2.5"/><path d="m14 12 1.5-2.5"/></svg>
+                </div>
+                <div class="timeline-content card p-7">
+                    <div class="card-header card-accent-3">
+                        <h3 class="text-2xl">Tokyo ↔ Osaka Travel</h3>
+                    </div>
+                    <p class="text-gray-700">A Seed teammate will <strong>accompany you</strong> on the Shinkansen (bullet train). We handle <strong>ticket purchase and seat assignments</strong> end-to-end. Seed will <strong>front the cost</strong> for you and your accompanying client(s), settling later via <strong>expense reconciliation</strong>. Relax — just bring yourselves!</p>
+                </div>
+            </div>
+            
+            <div class="timeline-item">
+                <div class="timeline-marker">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M2 12v10h20V12"/><path d="M6 12H4a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"/><path d="M18 12h2a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2h-2"/><path d="M11.5 2v10M9 12h5"/><path d="M8 7h2"/><path d="M14 7h2"/></svg>
+                </div>
+                <div class="timeline-content card p-7">
+                    <div class="card-header card-accent-4">
+                        <h3 class="text-2xl">Post-Research Dinner</h3>
+                    </div>
+                    <p class="text-gray-700">Too many options in Japan? Tell us the <strong>style you want</strong> — e.g., yakiniku (BBQ), washoku (Japanese cuisine), ramen — and we’ll recommend excellent spots and <strong>make reservations</strong> if needed. Your clients will feel well taken care of, without you juggling bookings.</p>
+                </div>
+            </div>
+            
+             <div class="timeline-item">
+                <div class="timeline-marker">
+                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10"/><path d="m9 12 2 2 4-4"/></svg>
+                </div>
+                <div class="timeline-content card p-7">
+                    <div class="card-header card-accent-5">
+                        <h3 class="text-2xl">Free Day Planning</h3>
+                    </div>
+                    <p class="text-gray-700">If you're lucky enough to have a free day before departure, it’s a fantastic chance to explore Japan! We can <strong>plan a relaxed itinerary</strong> in Tokyo or Osaka and <strong>handle all arrangements</strong>. Just let us know what would make your free day easy and enjoyable.</p>
+                </div>
+            </div>
+        </div>
+        <!-- TIMELINE END -->
+
+        <section class="card p-8 mt-20 shadow-xl bg-white">
+             <details>
+                <summary>
+                    <div class="summary-title">
+                        <h2 class="text-3xl">💡 Quick Tips for Your Stay</h2>
+                    </div>
+                </summary>
+                <ul class="list-disc ml-4 space-y-3 mt-6 text-base text-gray-700">
+                    <li><strong>Always carry some cash (¥10,000–¥20,000).</strong> Shrines, street stalls, and smaller shops may still be cash-only.</li>
+                    <li><strong>Hydrate frequently in summer.</strong> Japan's summers are humid, and heatstroke can sneak up on you.</li>
+                    <li><strong>Ping your Seed PM on Teams anytime.</strong> We are on standby throughout your stay. Don't hesitate to reach out for anything!</li>
+                </ul>
+             </details>
+        </section>
+    </main>
+
+    <footer class="border-t bg-white/90 backdrop-blur-sm sticky bottom-0 z-20 py-5">
+        <div class="max-w-4xl mx-auto px-4 flex flex-col sm:flex-row items-center justify-between gap-4">
+            <div>
+                <div class="font-bold text-gray-900 text-lg">We're on standby throughout your stay.</div>
+                <div class="text-gray-600">Ping us on Teams anytime and we'll jump in.</div>
+            </div>
+            <a href="https://teams.microsoft.com/l/chat/0/0?users=y.honda@seedplanning.co.jp&message=Hello%20Seed%20PM" target="_blank"  rel="noopener noreferrer" class="inline-flex items-center gap-3 px-6 py-3 rounded-full bg-[var(--accent-color)] text-white font-semibold transition hover:opacity-90 shadow-lg text-base">
+                <span class="text-xl">💬</span> Open Teams Chat
+            </a>
+        </div>
+    </footer>
+
+    <!-- Taxi Note Modal -->
+    <div id="taxiModal" class="modal-hidden fixed inset-0 z-50 flex items-center justify-center p-4">
+        <!-- Overlay -->
+        <div class="modal-overlay fixed inset-0 bg-black bg-opacity-60 backdrop-blur-sm"></div>
+        
+        <!-- Modal Content -->
+        <div class="modal-container relative bg-white rounded-2xl shadow-2xl p-8 max-w-lg w-full transform">
+            <!-- Initial Selection View -->
+            <div id="facility-selection">
+                <h3 class="text-3xl font-bold mb-6 text-center">Choose Your Facility</h3>
+                <div class="flex flex-col gap-4">
+                    <button data-facility="osaka" class="facility-btn text-left w-full p-4 rounded-lg border-2 border-gray-200 hover:border-blue-500 hover:bg-blue-50 transition">
+                        <span class="font-bold text-lg text-gray-800">Osaka: J-Facility (Ipsos)</span><br>
+                        <span class="text-gray-600">Select for Japanese address</span>
+                    </button>
+                    <button data-facility="tokyo" class="facility-btn text-left w-full p-4 rounded-lg border-2 border-gray-200 hover:border-blue-500 hover:bg-blue-50 transition">
+                        <span class="font-bold text-lg text-gray-800">Tokyo: Sugata Space C/D</span><br>
+                        <span class="text-gray-600">Select for Japanese address</span>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Address Display View -->
+            <div id="address-display" class="hidden">
+                <h3 id="facility-name" class="text-3xl font-bold mb-4 text-center"></h3>
+                <p class="text-center text-gray-600 mb-4">Show this address to your taxi driver:</p>
+                <div id="japanese-address" class="text-2xl lg:text-3xl bg-gray-100 p-6 rounded-lg text-center font-semibold text-gray-800 tracking-wider leading-relaxed"></div>
+                <div class="mt-8 flex flex-col sm:flex-row gap-4">
+                     <button id="back-to-selection" class="w-full sm:w-auto flex-1 inline-flex items-center justify-center gap-2 px-4 py-3 rounded-xl bg-gray-200 text-gray-800 font-semibold transition hover:bg-gray-300">
+                        <span>← Back</span>
+                     </button>
+                     <button id="copy-address-btn" class="w-full sm:w-auto flex-1 inline-flex items-center justify-center gap-3 px-4 py-3 rounded-xl bg-[var(--primary-color)] text-white font-semibold transition hover:opacity-90">
+                        <span class="text-xl">📋</span> Copy Address
+                     </button>
+                </div>
+            </div>
+
+            <button id="closeModalBtn" class="absolute -top-3 -right-3 h-10 w-10 flex items-center justify-center bg-white rounded-full shadow-lg text-gray-600 hover:text-red-500 hover:rotate-90 transition-transform">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+            </button>
+        </div>
+    </div>
+
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // --- Timeline Logic ---
+            const timelineItems = document.querySelectorAll('.timeline-item');
+            const observer = new IntersectionObserver(entries => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('is-visible');
+                        observer.unobserve(entry.target);
+                    }
+                });
+            }, { threshold: 0.2 });
+            timelineItems.forEach(item => observer.observe(item));
+            
+            const timelineContainer = document.getElementById('timeline-container');
+            const progressEl = document.getElementById('timeline-progress');
+            if (timelineContainer && progressEl) {
+                const handleScroll = () => {
+                    const containerRect = timelineContainer.getBoundingClientRect();
+                    const windowHeight = window.innerHeight;
+                    const progress = (windowHeight - containerRect.top) / containerRect.height;
+                    const clampedProgress = Math.min(1, Math.max(0, progress));
+                    progressEl.style.height = `${clampedProgress * 100}%`;
+                };
+                window.addEventListener('scroll', handleScroll, { passive: true });
+                handleScroll();
+            }
+
+            // --- Taxi Modal Logic ---
+            const facilityData = {
+                osaka: {
+                    name: "Osaka: J-Facility (Ipsos)",
+                    address: "\n大阪市北区東天満1-12-12\n"
+                },
+                tokyo: {
+                    name: "Tokyo: Sugata Research Space C/D",
+                    address: "\n渋谷区代々木1-57-4\n ドルミ第2代々木ビル 1階"
+                }
+            };
+
+            const modal = document.getElementById('taxiModal');
+            const openBtn = document.getElementById('openTaxiModalBtn');
+            const closeBtn = document.getElementById('closeModalBtn');
+            const facilitySelectionDiv = document.getElementById('facility-selection');
+            const addressDisplayDiv = document.getElementById('address-display');
+            const facilityNameEl = document.getElementById('facility-name');
+            const japaneseAddressEl = document.getElementById('japanese-address');
+            const backBtn = document.getElementById('back-to-selection');
+            const copyBtn = document.getElementById('copy-address-btn');
+
+            const showModal = () => modal.classList.remove('modal-hidden');
+            const hideModal = () => modal.classList.add('modal-hidden');
+
+            const showAddressView = (facilityKey) => {
+                const data = facilityData[facilityKey];
+                facilityNameEl.textContent = data.name;
+                japaneseAddressEl.innerText = data.address; // Use innerText to preserve line breaks
+                
+                facilitySelectionDiv.classList.add('hidden');
+                addressDisplayDiv.classList.remove('hidden');
+            };
+
+            const showSelectionView = () => {
+                facilitySelectionDiv.classList.remove('hidden');
+                addressDisplayDiv.classList.add('hidden');
+            };
+
+            openBtn.addEventListener('click', () => {
+                showSelectionView();
+                showModal();
+            });
+
+            closeBtn.addEventListener('click', hideModal);
+            modal.querySelector('.modal-overlay').addEventListener('click', hideModal);
+            
+            document.querySelectorAll('.facility-btn').forEach(btn => {
+                btn.addEventListener('click', () => {
+                    showAddressView(btn.dataset.facility);
+                });
+            });
+
+            backBtn.addEventListener('click', showSelectionView);
+
+            copyBtn.addEventListener('click', function() {
+                navigator.clipboard.writeText(japaneseAddressEl.innerText)
+                    .then(() => {
+                        const originalContent = this.innerHTML;
+                        this.innerHTML = '<span class="text-xl">✅</span> Copied!';
+                        this.classList.add('!bg-green-500');
+                        setTimeout(() => {
+                            this.innerHTML = originalContent;
+                            this.classList.remove('!bg-green-500');
+                        }, 2000);
+                    })
+                    .catch(err => alert('Failed to copy address.'));
+            });
+        });
+    </script>
+</body>
+</html>
+
