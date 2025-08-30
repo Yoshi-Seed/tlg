@@ -1,14 +1,11 @@
 {
   "name": "seed-linker-site",
   "version": "1.0.0",
-  "private": true,
-  "type": "module",
-  "scripts": {
-    "dev": "vercel dev",
-    "start": "vercel dev"
-  },
-  "dependencies": {},
-  "engines": {
-    "node": ">=18"
+  "description": "On-the-ground support site for research in Japan",
+  "main": "index.html",
+  "license": "MIT",
+  "dependencies": {
+    "jsdom": "^23.0.1",
+    "node-fetch": "^3.3.2"
   }
 }
