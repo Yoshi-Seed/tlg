@@ -1,525 +1,339 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Your Japan Research Journey - On-the-Ground Support</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
-    <style>
-        :root {
-            --bg-color: #fcfaf6; /* A warmer, more textured off-white */
-            --text-color: #3d3d3d;
-            --primary-color: #0b3d5f; /* A deeper, more sophisticated navy */
-            --accent-color: #d16058; /* A slightly muted, elegant red */
-            --border-color: #eaeaea;
-        }
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Your Japan Research Journey - On-the-Ground Support</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&family=Playfair+Display:wght@700&display=swap" rel="stylesheet" />
+  <style>
+    :root{
+      --bg-color:#0b1220;               /* deep lounge navy */
+      --surface-0:#0d1628;              /* top bar / footer */
+      --surface-1:#111c32;              /* cards */
+      --surface-2:#0f1a2e;              /* marker / chips */
+      --text-color:#e9eff8;             /* body text */
+      --muted-color:#a7b5cc;            /* secondary text */
+      --primary-color:#bcd6ff;          /* headings / accents (cool) */
+      --accent-color:#d1b464;           /* elite gold */
+      --border-color:#1e2a3f;           /* hairlines */
+    }
 
-        body {
-            background-color: var(--bg-color);
-            color: var(--text-color);
-            font-family: 'Inter', sans-serif;
-            -webkit-font-smoothing: antialiased;
-            -moz-osx-font-smoothing: grayscale;
-            line-height: 1.7;
-        }
+    html,body{height:100%}
+    body{
+      background:
+        radial-gradient(1200px 500px at 20% -10%, rgba(149,198,255,.10), transparent 60%),
+        radial-gradient(900px 400px at 80% 0%, rgba(209,180,100,.08), transparent 60%),
+        var(--bg-color);
+      color:var(--text-color);
+      font-family:'Inter',system-ui,-apple-system,Segoe UI,Roboto,"Helvetica Neue",Arial,"Noto Sans";
+      -webkit-font-smoothing:antialiased; -moz-osx-font-smoothing:grayscale;
+      line-height:1.7;
+    }
 
-        h1, h2, h3 {
-            font-family: 'Playfair Display', serif;
-            color: var(--primary-color);
-            font-weight: 700;
-        }
+    h1,h2,h3,h4{font-family:'Playfair Display',serif;color:var(--primary-color);font-weight:700}
 
-        .card {
-            background-color: white;
-            border-radius: 16px;
-            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.08);
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-            position: relative;
-            overflow: hidden;
-            border: 1px solid var(--border-color);
-        }
-        .card:hover {
-            transform: translateY(-6px);
-            box-shadow: 0 12px 40px rgba(0, 0, 0, 0.12);
-        }
+    /* Card */
+    .card{background:var(--surface-1);border-radius:16px;box-shadow:0 10px 30px rgba(0,0,0,.25);transition:.25s ease;border:1px solid var(--border-color)}
+    .card:hover{transform:translateY(-3px);box-shadow:0 14px 40px rgba(0,0,0,.35);}
 
-        /* The main timeline container */
-        .timeline-container {
-            position: relative;
-            padding: 3rem 0;
-            max-width: 800px;
-            margin: 0 auto;
-        }
+    /* Hero wave */
+    .hero-wrap{position:relative;overflow:hidden}
+    .hero-wrap:before{content:"";position:absolute;inset:-40% -10% auto -10%;height:120%;background:radial-gradient(1200px 500px at 20% 0%,rgba(188,214,255,.10),transparent 60%),radial-gradient(900px 400px at 80% 10%,rgba(209,180,100,.08),transparent 60%)}
 
-        /* The vertical line acting as the timeline's spine */
-        .timeline-spine {
-            position: absolute;
-            top: 0;
-            left: 21px; /* Center of the 44px marker */
-            width: 3px;
-            height: 100%;
-            background-color: var(--border-color);
-            z-index: 0;
-        }
-        
-        /* The progress bar that fills up on scroll */
-        #timeline-progress {
-            position: absolute;
-            top: 0;
-            left: 21px;
-            width: 3px;
-            height: 0; /* Initially 0, will be set by JS */
-            background: linear-gradient(to bottom, var(--primary-color), var(--accent-color));
-            z-index: 1;
-            transition: height 0.1s linear;
-        }
+    /* Timeline */
+    .timeline-container{position:relative;padding:3rem 0;max-width:860px;margin:0 auto}
+    .timeline-spine{position:absolute;top:0;left:22px;width:3px;height:100%;background:linear-gradient(to bottom,#25314d,#1e2a44);z-index:0;border-radius:3px}
+    #timeline-progress{position:absolute;top:0;left:22px;width:3px;height:0;background:linear-gradient(to bottom,var(--accent-color),#f2dfac);z-index:1;transition:height .12s linear}
+    .timeline-item{position:relative;display:flex;align-items:flex-start;gap:2rem;margin-bottom:3.25rem;opacity:0;transform:translateY(40px);transition:opacity .6s ease,transform .6s ease}
+    .timeline-item.is-visible{opacity:1;transform:none}
+    .timeline-marker{position:relative;flex-shrink:0;width:44px;height:44px;display:flex;align-items:center;justify-content:center;background:var(--surface-2);border:3px solid var(--accent-color);border-radius:9999px;z-index:2;box-shadow:0 0 0 4px var(--surface-1), 0 0 24px rgba(209,180,100,.15)}
+    .timeline-marker svg{width:22px;height:22px;color:var(--accent-color);stroke-width:2}
+    .timeline-content{flex:1;padding-top:.25rem}
 
-        .timeline-item {
-            position: relative;
-            display: flex;
-            align-items: flex-start;
-            gap: 2rem;
-            margin-bottom: 3.5rem;
-            opacity: 0;
-            transform: translateY(40px);
-            transition: opacity 0.7s ease-out, transform 0.7s ease-out;
-        }
-        .timeline-item:last-child {
-            margin-bottom: 0;
-        }
-        .timeline-item.is-visible {
-            opacity: 1;
-            transform: translateY(0);
-        }
+    .card-header{display:flex;align-items:center;gap:.75rem;margin-bottom:.75rem;padding-left:1rem;border-left:4px solid}
+    .card-accent-1{border-color:#7fb8ff}
+    .card-accent-2{border-color:#e7b26b}
+    .card-accent-3{border-color:#9ad1ff}
+    .card-accent-4{border-color:#ef8a6a}
+    .card-accent-5{border-color:#c9a552}
 
-        /* The marker on the timeline spine (Kamon style) */
-        .timeline-marker {
-            position: relative;
-            flex-shrink: 0;
-            width: 44px;
-            height: 44px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            background-color: var(--bg-color);
-            border: 3px solid var(--primary-color);
-            border-radius: 50%;
-            z-index: 2;
-            box-shadow: 0 0 0 4px var(--bg-color); /* Creates a cutout effect */
-        }
-        .timeline-marker svg {
-            width: 24px;
-            height: 24px;
-            color: var(--primary-color);
-            stroke-width: 2;
-        }
+    details summary{cursor:pointer;list-style:none;padding:1rem 0}
+    details summary::-webkit-details-marker{display:none}
+    details summary .summary-title{display:flex;align-items:center;gap:1rem}
+    details summary::after{content:'+';float:right;color:var(--accent-color);transition:transform .2s ease;font-size:1.4em;line-height:1;font-weight:300}
+    details[open] summary::after{content:'−'}
 
-        .timeline-content {
-            flex-grow: 1;
-            padding-top: 0.5rem; /* Align content with the marker nicely */
-        }
-        
-        .card-header {
-            display: flex;
-            align-items: center;
-            gap: 0.75rem;
-            margin-bottom: 0.75rem;
-            border-left: 4px solid;
-            padding-left: 1rem;
-        }
-        
-        /* Color accents for each card header */
-        .card-accent-1 { border-color: #0077b6; }
-        .card-accent-2 { border-color: #f77f00; }
-        .card-accent-3 { border-color: #0081a7; }
-        .card-accent-4 { border-color: #d62828; }
-        .card-accent-5 { border-color: #6a4c93; }
-
-        details summary {
-            cursor: pointer;
-            list-style: none;
-            padding: 1rem 0;
-        }
-        details summary::-webkit-details-marker { display: none; }
-        details summary .summary-title { display: flex; align-items: center; gap: 1rem; }
-        details summary::after {
-            content: '+'; float: right; color: var(--accent-color); transition: transform 0.2s ease; font-size: 1.5em; line-height: 1; font-weight: 300;
-        }
-        details[open] summary::after { content: '−'; }
-
-        /* Modal Styles */
-        .modal-hidden {
-            pointer-events: none;
-        }
-        .modal-hidden .modal-overlay,
-        .modal-hidden .gemini-modal-overlay {
-            opacity: 0;
-        }
-        .modal-hidden .modal-container,
-        .modal-hidden .gemini-modal-container {
-            opacity: 0;
-            transform: scale(0.95);
-        }
-        .modal-overlay, .gemini-modal-overlay {
-            transition: opacity 0.3s ease;
-        }
-        .modal-container, .gemini-modal-container {
-            transition: transform 0.3s ease, opacity 0.3s ease;
-        }
-        
-        /* Styling for Gemini-generated HTML */
-        #gemini-modal-result h4 {
-            font-size: 1.25rem;
-            margin-top: 1rem;
-            margin-bottom: 0.5rem;
-            color: var(--primary-color);
-            font-family: 'Playfair Display', serif;
-        }
-        #gemini-modal-result p { margin-bottom: 0.75rem; }
-        #gemini-modal-result ul { list-style-type: disc; padding-left: 1.5rem; }
-        #gemini-modal-result li { margin-bottom: 0.5rem; }
-        
-    </style>
+    /* Reduced motion preference */
+    @media (prefers-reduced-motion: reduce){
+      .card:hover{transform:none}
+      .timeline-item{transition:none}
+    }
+  </style>
 </head>
+<body class="selection:bg-[color:var(--accent-color)]/30">
+  <a href="#main" class="sr-only focus:not-sr-only focus:absolute focus:top-2 focus:left-2 bg-[var(--surface-1)] text-[var(--primary-color)] px-3 py-2 rounded-md shadow">Skip to content</a>
 
-<body class="selection:bg-yellow-200">
-    <main class="max-w-4xl mx-auto px-4 pt-16 pb-12">
-        
-        <header class="text-center mb-20">
-            <h1 class="text-5xl md:text-6xl font-bold tracking-tight leading-tight">Your Japan Research Journey</h1>
-            <p class="mt-5 text-xl text-gray-600 max-w-2xl mx-auto">Seamless support for your on-the-ground needs, so you can focus on great research with peace of mind.</p>
-        </header>
-
-        <section class="card p-8 mb-20 shadow-xl bg-white">
-            <h2 class="text-3xl flex items-center gap-4 mb-6"><span class="text-3xl">🚀</span> Quick Actions</h2>
-            <div class="grid gap-4 sm:grid-cols-2">
-                <a href="https://teams.microsoft.com/l/chat/0/0?users=y.honda@seedplanning.co.jp&message=Hello%20Seed%20PM" target="_blank" class="inline-flex items-center justify-center gap-3 px-4 py-3 rounded-xl bg-[var(--primary-color)] text-white font-semibold transition hover:opacity-90">
-                    <span class="text-xl">💬</span> Message Seed PM
-                </a>
-                <button id="openTaxiModalBtn" class="inline-flex items-center justify-center gap-3 px-4 py-3 rounded-xl bg-gray-100 text-gray-800 font-semibold border border-gray-200 transition hover:bg-gray-200">
-                    <span class="text-xl">🚕</span> Show Taxi Note
-                </button>
-            </div>
-             <p class="mt-6 text-base text-gray-600 border-t border-gray-100 pt-5 flex items-start gap-4">
-                <span class="text-2xl text-[var(--primary-color)]">ℹ️</span> 
-                <div>Show the <strong class="text-gray-900">Japanese address</strong> from your Facility Information to the Uber/Taxi driver. This is the safest and most reliable way to reach your destination.</div>
-            </p>
-        </section>
-
-        <!-- TIMELINE START -->
-        <div class="timeline-container" id="timeline-container">
-            <div class="timeline-spine"></div>
-            <div id="timeline-progress"></div>
-
-            <div class="timeline-item">
-                <div class="timeline-marker">
-                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/></svg>
-                </div>
-                <div class="timeline-content card p-7">
-                    <div class="card-header card-accent-1">
-                        <h3 class="text-2xl">From Hotel to Facility</h3>
-                    </div>
-                    <p class="text-gray-700">First time at a facility? It's normal to feel unsure. Simply show the <strong>Google Map address (Japanese is best!)</strong> from your Facility Information to your Uber or taxi driver. If you get dropped off incorrectly or can’t find the entrance, <strong>chat us on Teams immediately</strong>, and we’ll guide you.</p>
-                </div>
-            </div>
-            
-            <div class="timeline-item">
-                <div class="timeline-marker">
-                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M4 11a8 8 0 0 1 8-8V2a2 2 0 0 0-2-2H6a2 2 0 0 0-2 2v1"/><path d="M10 11a8 8 0 0 1 8-8V2a2 2 0 0 1 2-2h2a2 2 0 0 1 2 2v1"/><path d="M4 11h16a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2v-8a2 2 0 0 1 2-2Z"/><path d="M9 16H7"/><path d="M17 16h-2"/></svg>
-                </div>
-                 <div class="timeline-content card p-7">
-                    <div class="card-header card-accent-2">
-                        <h3 class="text-2xl">Meals at the Facility</h3>
-                    </div>
-                    <p class="text-gray-700">Depending on headcount, we’ll either <strong>pre-order bento boxes</strong> or place a <strong>group Uber order</strong> to cater to everyone's preferences. Either way, it’s already covered as <strong>project catering</strong>. We want you to enjoy delicious food during your Japan stay, even in the back room!</p>
-                </div>
-            </div>
-
-             <div class="timeline-item">
-                <div class="timeline-marker">
-                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M16 8.3a2.5 2.5 0 0 0-4.82.9A2.5 2.5 0 0 0 8 8.3c0-1.2.93-2.5 2.5-2.5A2.5 2.5 0 0 1 16 8.3Z"/><path d="M5 12h14"/><path d="M5 12a4 4 0 0 0-4 4v2a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2v-2a4 4 0 0 0-4-4Z"/><path d="m10 12-1.5-2.5"/><path d="m14 12 1.5-2.5"/></svg>
-                </div>
-                <div class="timeline-content card p-7">
-                    <div class="card-header card-accent-3">
-                        <h3 class="text-2xl">Tokyo ↔ Osaka Travel</h3>
-                    </div>
-                    <p class="text-gray-700">A Seed teammate will <strong>accompany you</strong> on the Shinkansen (bullet train). We handle <strong>ticket purchase and seat assignments</strong> end-to-end. Seed will <strong>front the cost</strong> for you and your accompanying client(s), settling later via <strong>expense reconciliation</strong>. Relax — just bring yourselves!</p>
-                </div>
-            </div>
-            
-            <div class="timeline-item">
-                <div class="timeline-marker">
-                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M2 12v10h20V12"/><path d="M6 12H4a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"/><path d="M18 12h2a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2h-2"/><path d="M11.5 2v10M9 12h5"/><path d="M8 7h2"/><path d="M14 7h2"/></svg>
-                </div>
-                <div class="timeline-content card p-7">
-                    <div class="card-header card-accent-4">
-                        <h3 class="text-2xl">Post-Research Dinner</h3>
-                    </div>
-                    <p class="text-gray-700">Too many options in Japan? Tell us the <strong>style you want</strong> — e.g., yakiniku (BBQ), washoku (Japanese cuisine), ramen — and we’ll recommend excellent spots and <strong>make reservations</strong> if needed. Your clients will feel well taken care of, without you juggling bookings.</p>
-                    <p class="text-gray-700 mt-2">Or alternatively let our AI assist you!</p>
-                    <button data-feature="dinner" class="gemini-feature-btn mt-4 inline-flex items-center gap-2 justify-center px-4 py-2 rounded-lg bg-gray-100 text-gray-800 font-semibold border border-gray-200 transition hover:bg-gray-200">✨ Get Dinner Recommendations</button>
-                </div>
-            </div>
-            
-             <div class="timeline-item">
-                <div class="timeline-marker">
-                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10"/><path d="m9 12 2 2 4-4"/></svg>
-                </div>
-                <div class="timeline-content card p-7">
-                    <div class="card-header card-accent-5">
-                        <h3 class="text-2xl">Free Day Planning</h3>
-                    </div>
-                    <p class="text-gray-700">If you're lucky enough to have a free day before departure, it’s a fantastic chance to explore Japan! We can <strong>plan a relaxed itinerary</strong> in Tokyo or Osaka and <strong>handle all arrangements</strong>. Just let us know what would make your free day easy and enjoyable.</p>
-                    <p class="text-gray-700 mt-2">Or alternatively let our AI assist you!</p>
-                    <button data-feature="freeday" class="gemini-feature-btn mt-4 inline-flex items-center gap-2 justify-center px-4 py-2 rounded-lg bg-gray-100 text-gray-800 font-semibold border border-gray-200 transition hover:bg-gray-200">✨ Get Itinerary Ideas</button>
-                </div>
-            </div>
+  <!-- Top Bar -->
+  <header class="sticky top-0 z-30 bg-[var(--surface-0)]/80 backdrop-blur border-b border-[var(--border-color)]">
+    <div class="max-w-5xl mx-auto px-4 py-3 flex items-center gap-3 justify-between">
+      <div class="flex items-center gap-3">
+        <div class="h-8 w-8 rounded-full bg-[var(--accent-color)]/90 flex items-center justify-center text-black font-bold">S</div>
+        <div class="leading-tight">
+          <div class="text-sm tracking-wide text-[var(--muted-color)]">SEED × TLG • Elite Access</div>
+          <div class="font-semibold text-[var(--primary-color)]">On-the-Ground Support</div>
         </div>
-        <!-- TIMELINE END -->
-
-        <section class="card p-8 mt-20 shadow-xl bg-white">
-             <details>
-                <summary>
-                    <div class="summary-title">
-                        <h2 class="text-3xl">💡 Quick Tips for Your Stay</h2>
-                    </div>
-                </summary>
-                <ul class="list-disc ml-4 space-y-3 mt-6 text-base text-gray-700">
-                    <li><strong>Always carry some cash (¥10,000–¥20,000).</strong> Shrines, street stalls, and smaller shops may still be cash-only.</li>
-                    <li><strong>Hydrate frequently in summer.</strong> Japan's summers are humid, and heatstroke can sneak up on you.</li>
-                    <li><strong>Ping your Seed PM on Teams anytime.</strong> We are on standby throughout your stay. Don't hesitate to reach out for anything!</li>
-                </ul>
-             </details>
-        </section>
-    </main>
-
-    <footer class="border-t bg-white/90 backdrop-blur-sm sticky bottom-0 z-20 py-5">
-        <div class="max-w-4xl mx-auto px-4 flex flex-col sm:flex-row items-center justify-between gap-4">
-            <div>
-                <div class="font-bold text-gray-900 text-lg">We're on standby throughout your stay.</div>
-                <div class="text-gray-600">Ping us on Teams anytime and we'll jump in.</div>
-            </div>
-            <a href="https://teams.microsoft.com/l/chat/0/0?users=y.honda@seedplanning.co.jp&message=Hello%20Seed%20PM" target="_blank" class="inline-flex items-center gap-3 px-6 py-3 rounded-full bg-[var(--accent-color)] text-white font-semibold transition hover:opacity-90 shadow-lg text-base">
-                <span class="text-xl">💬</span> Open Teams Chat
-            </a>
-        </div>
-    </footer>
-
-    <!-- Taxi Note Modal -->
-    <div id="taxiModal" class="modal-hidden fixed inset-0 z-50 flex items-center justify-center p-4">
-        <div class="modal-overlay fixed inset-0 bg-black bg-opacity-60 backdrop-blur-sm"></div>
-        <div class="modal-container relative bg-white rounded-2xl shadow-2xl p-8 max-w-lg w-full transform">
-            <div id="facility-selection">
-                <h3 class="text-3xl font-bold mb-6 text-center">Choose Your Facility</h3>
-                <div class="flex flex-col gap-4">
-                    <button data-facility="osaka" class="facility-btn text-left w-full p-4 rounded-lg border-2 border-gray-200 hover:border-blue-500 hover:bg-blue-50 transition">
-                        <span class="font-bold text-lg text-gray-800">Osaka: J-Facility (Ipsos)</span><br>
-                        <span class="text-gray-600">Select for Japanese address</span>
-                    </button>
-                    <button data-facility="tokyo" class="facility-btn text-left w-full p-4 rounded-lg border-2 border-gray-200 hover:border-blue-500 hover:bg-blue-50 transition">
-                        <span class="font-bold text-lg text-gray-800">Tokyo: Sugata Research Space C/D</span><br>
-                        <span class="text-gray-600">Select for Japanese address</span>
-                    </button>
-                </div>
-            </div>
-            <div id="address-display" class="hidden">
-                <h3 id="facility-name" class="text-3xl font-bold mb-4 text-center"></h3>
-                <p class="text-center text-gray-600 mb-4">Show this address to your taxi driver:</p>
-                <div id="japanese-address" class="text-2xl lg:text-3xl bg-gray-100 p-6 rounded-lg text-center font-semibold text-gray-800 tracking-wider leading-relaxed"></div>
-                <div class="mt-8 flex flex-col sm:flex-row gap-4">
-                     <button id="back-to-selection" class="w-full sm:w-auto flex-1 inline-flex items-center justify-center gap-2 px-4 py-3 rounded-xl bg-gray-200 text-gray-800 font-semibold transition hover:bg-gray-300"><span>← Back</span></button>
-                     <button id="copy-address-btn" class="w-full sm:w-auto flex-1 inline-flex items-center justify-center gap-3 px-4 py-3 rounded-xl bg-[var(--primary-color)] text-white font-semibold transition hover:opacity-90"><span class="text-xl">📋</span> Copy Address</button>
-                </div>
-            </div>
-            <button id="closeModalBtn" class="absolute -top-3 -right-3 h-10 w-10 flex items-center justify-center bg-white rounded-full shadow-lg text-gray-600 hover:text-red-500 hover:rotate-90 transition-transform"><svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg></button>
-        </div>
+      </div>
+      <a href="https://teams.microsoft.com/l/chat/0/0?users=y.honda@seedplanning.co.jp&message=Hello%20Seed%20PM" target="_blank" class="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-gradient-to-r from-[color:var(--accent-color)] to-[#b99745] text-black font-semibold shadow hover:opacity-90">
+        <span class="text-lg">💬</span><span>Open Teams Chat</span>
+      </a>
     </div>
-    
-    <!-- Gemini Feature Modal -->
-    <div id="geminiModal" class="modal-hidden fixed inset-0 z-50 flex items-center justify-center p-4">
-        <div class="gemini-modal-overlay fixed inset-0 bg-black bg-opacity-60 backdrop-blur-sm"></div>
-        <div class="gemini-modal-container relative bg-white rounded-2xl shadow-2xl p-8 max-w-2xl w-full transform">
-            <h3 id="gemini-modal-title" class="text-3xl font-bold mb-4 text-center"></h3>
-            <p id="gemini-modal-prompt" class="text-center text-gray-600 mb-6"></p>
-            <div class="space-y-4">
-                <textarea id="gemini-modal-input" class="w-full h-24 p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[var(--primary-color)]" placeholder="e.g., casual ramen near Shibuya, half-day exploring temples..."></textarea>
-                <button id="gemini-modal-generate-btn" class="w-full inline-flex items-center justify-center gap-3 px-4 py-3 rounded-xl bg-[var(--accent-color)] text-white font-semibold transition hover:opacity-90 disabled:opacity-50">
-                    <span id="gemini-btn-text">✨ Generate Ideas</span>
-                    <div id="gemini-loader" class="hidden w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
-                </button>
-            </div>
-            <div id="gemini-modal-result" class="mt-6 max-h-[40vh] overflow-y-auto p-4 bg-gray-50 rounded-lg border"></div>
-            <button id="geminiCloseModalBtn" class="absolute -top-3 -right-3 h-10 w-10 flex items-center justify-center bg-white rounded-full shadow-lg text-gray-600 hover:text-red-500 hover:rotate-90 transition-transform"><svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg></button>
-        </div>
+  </header>
+
+  <!-- Hero -->
+  <section class="hero-wrap">
+    <div class="max-w-5xl mx-auto px-4 pt-14 pb-10 text-center">
+      <h1 class="text-5xl md:text-6xl leading-tight">Your Japan Research Journey</h1>
+      <p class="mt-5 text-lg md:text-xl text-[color:var(--muted-color)] max-w-2xl mx-auto">Welcome to Japan. We keep the logistics calm and clear so you can lead research with confidence. Professional backbone, warm follow‑through.</p>
+      <div class="mt-7 flex items-center justify-center gap-3">
+        <a href="#quick-actions" class="inline-flex items-center gap-2 px-5 py-3 rounded-xl bg-[var(--accent-color)] text-black font-semibold shadow hover:opacity-90"><span class="text-lg">🚀</span>Quick Actions</a>
+        <a href="#tips" class="inline-flex items-center gap-2 px-5 py-3 rounded-xl bg-[var(--surface-1)] text-[var(--primary-color)] font-semibold border border-[var(--border-color)] hover:bg-[var(--surface-2)]">💡 Quick Tips</a>
+      </div>
     </div>
+  </section>
 
+  <main id="main" class="max-w-5xl mx-auto px-4 pt-8 pb-20">
 
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            // --- Timeline Logic ---
-            const timelineItems = document.querySelectorAll('.timeline-item');
-            const observer = new IntersectionObserver(entries => {
-                entries.forEach(entry => {
-                    if (entry.isIntersecting) {
-                        entry.target.classList.add('is-visible');
-                        observer.unobserve(entry.target);
-                    }
-                });
-            }, { threshold: 0.2 });
-            timelineItems.forEach(item => observer.observe(item));
-            
-            const timelineContainer = document.getElementById('timeline-container');
-            const progressEl = document.getElementById('timeline-progress');
-            if (timelineContainer && progressEl) {
-                const handleScroll = () => {
-                    const containerRect = timelineContainer.getBoundingClientRect();
-                    const windowHeight = window.innerHeight;
-                    const progress = (windowHeight - containerRect.top) / containerRect.height;
-                    const clampedProgress = Math.min(1, Math.max(0, progress));
-                    progressEl.style.height = `${clampedProgress * 100}%`;
-                };
-                window.addEventListener('scroll', handleScroll, { passive: true });
-                handleScroll();
-            }
+    <!-- Quick Actions -->
+    <section id="quick-actions" class="card p-8 mb-16">
+      <h2 class="text-3xl flex items-center gap-3 mb-6"><span class="text-3xl">🚀</span> Quick Actions</h2>
+      <div class="grid gap-4 sm:grid-cols-2">
+        <a href="https://teams.microsoft.com/l/chat/0/0?users=y.honda@seedplanning.co.jp&message=Hello%20Seed%20PM" target="_blank" class="inline-flex items-center justify-center gap-3 px-4 py-3 rounded-xl bg-[var(--accent-color)] text-black font-semibold transition hover:opacity-90">
+          <span class="text-xl">💬</span> Message Seed PM on Teams
+        </a>
+        <button id="openTaxiModalBtn" class="inline-flex items-center justify-center gap-3 px-4 py-3 rounded-xl bg-[var(--surface-2)] text-[var(--text-color)] font-semibold border border-[var(--border-color)] transition hover:bg-[var(--surface-0)]">
+          <span class="text-xl">🚕</span> Show Taxi Note for Facility
+        </button>
+      </div>
+      <p class="mt-6 text-base text-[color:var(--muted-color)] border-t border-[var(--border-color)] pt-5 flex items-start gap-3">
+        <span class="text-2xl text-[var(--accent-color)]">ℹ️</span>
+        <span>Show the <strong class="text-[var(--text-color)]">Japanese address</strong> from "Taxi Note" to your Uber/Taxi driver. This is the most reliable way to reach the facility.</span>
+      </p>
+    </section>
 
-            // --- Taxi Modal Logic ---
-            const facilityData = {
-                osaka: { name: "Osaka: J-Facility (Ipsos)", address: "\n大阪市北区東天満1-12-12\nイプソスビル 1階" },
-                tokyo: { name: "Tokyo: Sugata Research Space C/D", address: "\n渋谷区代々木1-57-4\nドルミ第2代々木ビル 1階" }
-            };
-            const taxiModal = document.getElementById('taxiModal');
-            document.getElementById('openTaxiModalBtn').addEventListener('click', () => taxiModal.classList.remove('modal-hidden'));
-            document.getElementById('closeModalBtn').addEventListener('click', () => taxiModal.classList.add('modal-hidden'));
-            taxiModal.querySelector('.modal-overlay').addEventListener('click', () => taxiModal.classList.add('modal-hidden'));
-            
-            const facilitySelectionDiv = document.getElementById('facility-selection');
-            const addressDisplayDiv = document.getElementById('address-display');
-            
-            const showAddressView = (facilityKey) => {
-                const data = facilityData[facilityKey];
-                document.getElementById('facility-name').textContent = data.name;
-                document.getElementById('japanese-address').innerText = data.address;
-                facilitySelectionDiv.classList.add('hidden');
-                addressDisplayDiv.classList.remove('hidden');
-            };
-            const showSelectionView = () => {
-                facilitySelectionDiv.classList.remove('hidden');
-                addressDisplayDiv.classList.add('hidden');
-            };
+    <!-- Timeline -->
+    <section class="timeline-container" aria-label="Journey timeline">
+      <div class="timeline-spine" aria-hidden="true"></div>
+      <div id="timeline-progress" aria-hidden="true"></div>
 
-            document.querySelectorAll('.facility-btn').forEach(btn => {
-                btn.addEventListener('click', () => showAddressView(btn.dataset.facility));
-            });
-            document.getElementById('back-to-selection').addEventListener('click', showSelectionView);
-            document.getElementById('copy-address-btn').addEventListener('click', function() {
-                navigator.clipboard.writeText(document.getElementById('japanese-address').innerText).then(() => {
-                    this.innerHTML = '<span class="text-xl">✅</span> Copied!';
-                    setTimeout(() => { this.innerHTML = '<span class="text-xl">📋</span> Copy Address'; }, 2000);
-                });
-            });
+      <!-- 1. Hotel to Facility -->
+      <article class="timeline-item">
+        <div class="timeline-marker" aria-hidden="true">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/></svg>
+        </div>
+        <div class="timeline-content card p-7">
+          <div class="card-header card-accent-1"><h3 class="text-2xl">From Hotel to Facility</h3></div>
+          <p class="text-[color:var(--muted-color)]">First time at a facility? Totally normal to feel unsure. Show the <strong class="text-[var(--text-color)]">Google Map address (Japanese preferred)</strong> from your Facility Info to the driver. If you’re dropped off wrong or can’t spot the entrance, <strong class="text-[var(--text-color)]">ping us on Teams</strong>—we’ll guide you live.</p>
+        </div>
+      </article>
 
-            // --- Gemini API Feature Logic ---
-            const geminiModal = document.getElementById('geminiModal');
-            const geminiModalTitle = document.getElementById('gemini-modal-title');
-            const geminiModalPrompt = document.getElementById('gemini-modal-prompt');
-            const geminiModalInput = document.getElementById('gemini-modal-input');
-            const geminiGenerateBtn = document.getElementById('gemini-modal-generate-btn');
-            const geminiBtnText = document.getElementById('gemini-btn-text');
-            const geminiLoader = document.getElementById('gemini-loader');
-            const geminiModalResult = document.getElementById('gemini-modal-result');
+      <!-- 2. Meals -->
+      <article class="timeline-item">
+        <div class="timeline-marker" aria-hidden="true">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M4 11a8 8 0 0 1 8-8V2a2 2 0 0 0-2-2H6a2 2 0 0 0-2 2v1"/><path d="M10 11a8 8 0 0 1 8-8V2a2 2 0 0 1 2-2h2a2 2 0 0 1 2 2v1"/><path d="M4 11h16a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2v-8a2 2 0 0 1 2-2Z"/><path d="M9 16H7"/><path d="M17 16h-2"/></svg>
+        </div>
+        <div class="timeline-content card p-7">
+          <div class="card-header card-accent-2"><h3 class="text-2xl">Meals at the Facility</h3></div>
+          <p class="text-[color:var(--muted-color)]">Depending on headcount, we’ll <strong class="text-[var(--text-color)]">pre‑order bento boxes</strong> or place a <strong class="text-[var(--text-color)]">group Uber order</strong> so everyone gets what they want. It’s covered as <strong class="text-[var(--text-color)]">project catering</strong>. Good food, even in the back room.</p>
+        </div>
+      </article>
 
-            // IMPORTANT: Enter your Google AI Studio API key here
-            // 重要：ここにGoogle AI Studioで取得したAPIキーを入力してください
-            const YOUR_API_KEY = "AIzaSyB-V6HbuAuOGqr62yF6IC92xbWlggwlQrE";
+      <!-- 3. Shinkansen -->
+      <article class="timeline-item">
+        <div class="timeline-marker" aria-hidden="true">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M5 15h14m-8-9c4.418 0 8 3.582 8 8v4a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2v-4c0-4.418 3.582-8 8-8Z"/><path d="M8 20l-1.5 2m9.5-2l1.5 2"/></svg>
+        </div>
+        <div class="timeline-content card p-7">
+          <div class="card-header card-accent-3"><h3 class="text-2xl">Tokyo ↔ Osaka Travel</h3></div>
+          <p class="text-[color:var(--muted-color)]">A Seed teammate will <strong class="text-[var(--text-color)]">accompany you</strong> on the Shinkansen. We handle <strong class="text-[var(--text-color)]">tickets and seats</strong>. We’ll <strong class="text-[var(--text-color)]">front costs</strong> for you and your client(s), and reconcile via expenses later. Show up; we’ll handle the rest.</p>
+        </div>
+      </article>
 
-            const featureConfig = {
-                dinner: {
-                    title: "AI Dinner Recommendations",
-                    prompt: "Tell me what you're in the mood for (e.g., cuisine, price, area).",
-                    systemPrompt: "You are an expert guide for authentic Japanese experiences. A foreign researcher is looking for dinner. Their preferences are: {userInput}. Recommend 3 restaurants that are highly regarded by international visitors but are NOT typical tourist traps. Focus on authentic, high-quality experiences. Include the restaurant name, a short description of why it's special and authentic, and a general price range. Format the response as simple HTML with <h4> for names and <p> for descriptions."
-                },
-                freeday: {
-                    title: "AI Itinerary Planner",
-                    prompt: "Describe your interests and available time (e.g., half-day, temples, shopping).",
-                    systemPrompt: "You are an expert tour planner specializing in authentic Japanese experiences for foreign visitors. A researcher has a free day and their interests are: {userInput}. Create a sample itinerary that avoids overcrowded tourist spots and focuses on authentic, memorable experiences that international visitors love. Be creative and practical. Include timings, locations, and brief descriptions for each activity, explaining why each place is a special choice. Format the response as simple HTML with <h4> for locations/times and <p> for details."
-                }
-            };
+      <!-- 4. Dinner / Free Day (no AI) -->
+      <article class="timeline-item">
+        <div class="timeline-marker" aria-hidden="true">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M2 12v10h20V12"/><path d="M6 12H4a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"/><path d="M18 12h2a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2h-2"/><path d="M11.5 2v10M9 12h5"/><path d="M8 7h2"/><path d="M14 7h2"/></svg>
+        </div>
+        <div class="timeline-content card p-7">
+          <div class="card-header card-accent-4"><h3 class="text-2xl">Post‑Research Dinner</h3></div>
+          <p class="text-[color:var(--muted-color)]">Too many options? Tell us the <strong class="text-[var(--text-color)]">style</strong>—yakiniku (BBQ), washoku, ramen—and we’ll shortlist great spots and <strong class="text-[var(--text-color)]">book</strong> as needed. Clients feel cared for, you keep your headspace.</p>
+        </div>
+      </article>
 
-            async function callGeminiAPI(prompt, retries = 3, delay = 1000) {
-                if (!YOUR_API_KEY) {
-                    geminiModalResult.innerHTML = `<p class="text-red-500 text-center">API key is not set. Please add your API key in the script tag.</p>`;
-                    return;
-                }
+      <article class="timeline-item">
+        <div class="timeline-marker" aria-hidden="true">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10"/><path d="m9 12 2 2 4-4"/></svg>
+        </div>
+        <div class="timeline-content card p-7">
+          <div class="card-header card-accent-5"><h3 class="text-2xl">Free Day Planning</h3></div>
+          <p class="text-[color:var(--muted-color)]">Have a half or full day? We can <strong class="text-[var(--text-color)]">plan a relaxed itinerary</strong> in Tokyo or Osaka and <strong class="text-[var(--text-color)]">handle arrangements</strong>. Tell us what would make the day feel easy and memorable.</p>
+        </div>
+      </article>
+    </section>
 
-                geminiGenerateBtn.disabled = true;
-                geminiBtnText.classList.add('hidden');
-                geminiLoader.classList.remove('hidden');
-                geminiModalResult.innerHTML = '<div class="text-center p-4">Generating ideas...</div>';
+    <!-- Essentials Mini Cards -->
+    <section class="grid md:grid-cols-3 gap-4 mt-10">
+      <div class="card p-5">
+        <div class="flex items-center gap-2 mb-2"><span class="text-xl">🏧</span><h3 class="text-xl">ATMs for Overseas Cards</h3></div>
+        <p class="text-[color:var(--muted-color)]">7‑Eleven ATMs are convenient with English menus. Withdraw a bit more at once to reduce fees.</p>
+      </div>
+      <div class="card p-5">
+        <div class="flex items-center gap-2 mb-2"><span class="text-xl">🚨</span><h3 class="text-xl">Emergency</h3></div>
+        <p class="text-[color:var(--muted-color)]"><strong class="text-[var(--text-color)]">110</strong> Police • <strong class="text-[var(--text-color)]">119</strong> Ambulance/Fire. When unsure, message the Seed PM for quick non‑emergency help.</p>
+      </div>
+      <div class="card p-5">
+        <div class="flex items-center gap-2 mb-2"><span class="text-xl">🗾</span><h3 class="text-xl">Phrase to Keep</h3></div>
+        <p class="text-[color:var(--muted-color)]"><strong class="text-[var(--text-color)]">Arigatou gozaimasu</strong> = “Thank you very much.” Use it often—polite and always appreciated.</p>
+      </div>
+    </section>
 
-                const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-05-20:generateContent?key=${YOUR_API_KEY}`;
-                const payload = { contents: [{ parts: [{ text: prompt }] }] };
+    <!-- Quick Tips -->
+    <section id="tips" class="card p-8 mt-14">
+      <details>
+        <summary>
+          <div class="summary-title"><h2 class="text-3xl">💡 Quick Tips for Your Stay</h2></div>
+        </summary>
+        <ul class="list-disc ml-5 space-y-3 mt-6 text-[color:var(--muted-color)]">
+          <li><strong class="text-[var(--text-color)]">Carry some cash (¥10,000–¥20,000).</strong> Shrines, stalls, and small shops may be cash‑only.</li>
+          <li><strong class="text-[var(--text-color)]">Hydrate in summer.</strong> Humidity is real; heatstroke sneaks up.</li>
+          <li><strong class="text-[var(--text-color)]">IC card on your phone.</strong> Add Suica/PASMO/ICOCA to Apple/Google Wallet for transit and kiosks.</li>
+          <li><strong class="text-[var(--text-color)]">ATMs that work.</strong> 7‑Eleven and Japan Post ATMs support most overseas cards.</li>
+          <li><strong class="text-[var(--text-color)]">Check last trains.</strong> Some lines end earlier than you’d expect; plan a taxi if you’ll run late.</li>
+          <li><strong class="text-[var(--text-color)]">Keep receipts for expenses.</strong> Ask for a <em>ryoushuusho</em> (receipt) with a company name if needed.</li>
+          <li><strong class="text-[var(--text-color)]">Tax‑Free shopping.</strong> Over ¥5,000 at participating stores with passport. Keep it handy.</li>
+          <li><strong class="text-[var(--text-color)]">Ping your Seed PM anytime.</strong> We’re on standby for the whole stay.</li>
+        </ul>
+      </details>
+    </section>
+  </main>
 
-                try {
-                    const response = await fetch(apiUrl, {
-                        method: 'POST',
-                        headers: { 'Content-Type': 'application/json' },
-                        body: JSON.stringify(payload)
-                    });
-                    if (!response.ok) throw new Error(`API Error: ${response.status}`);
-                    
-                    const result = await response.json();
-                    const text = result.candidates?.[0]?.content?.parts?.[0]?.text;
-                    if (text) {
-                        geminiModalResult.innerHTML = text;
-                    } else {
-                        throw new Error("Invalid response structure from API.");
-                    }
-                } catch (error) {
-                    console.error(`Attempt failed:`, error);
-                    if (retries > 1) {
-                        await new Promise(resolve => setTimeout(resolve, delay));
-                        return callGeminiAPI(prompt, retries - 1, delay * 2);
-                    } else {
-                        geminiModalResult.innerHTML = `<p class="text-red-500 text-center">Sorry, I'm unable to connect to the AI service right now. Please try again later.</p>`;
-                    }
-                } finally {
-                    geminiGenerateBtn.disabled = false;
-                    geminiBtnText.classList.remove('hidden');
-                    geminiLoader.classList.add('hidden');
-                }
-            }
+  <!-- Footer Help Bar -->
+  <footer class="border-t border-[var(--border-color)] bg-[var(--surface-0)]/90 backdrop-blur sticky bottom-0 z-20 py-5">
+    <div class="max-w-5xl mx-auto px-4 flex flex-col sm:flex-row items-center justify-between gap-4">
+      <div>
+        <div class="font-bold text-[var(--text-color)] text-lg">We’re on standby throughout your stay.</div>
+        <div class="text-[color:var(--muted-color)]">Message us on Teams and we’ll jump in.</div>
+      </div>
+      <a href="https://teams.microsoft.com/l/chat/0/0?users=y.honda@seedplanning.co.jp&message=Hello%20Seed%20PM" target="_blank" class="inline-flex items-center gap-3 px-6 py-3 rounded-full bg-gradient-to-r from-[color:var(--accent-color)] to-[#b99745] text-black font-semibold transition hover:opacity-90 shadow-lg text-base">
+        <span class="text-xl">💬</span> Open Teams Chat
+      </a>
+    </div>
+  </footer>
 
-            document.querySelectorAll('.gemini-feature-btn').forEach(btn => {
-                btn.addEventListener('click', () => {
-                    const feature = btn.dataset.feature;
-                    const config = featureConfig[feature];
-                    geminiModalTitle.textContent = config.title;
-                    geminiModalPrompt.textContent = config.prompt;
-                    geminiModalInput.value = '';
-                    geminiModalResult.innerHTML = '';
-                    geminiGenerateBtn.dataset.feature = feature;
-                    geminiModal.classList.remove('modal-hidden');
-                });
-            });
+  <!-- Taxi Note Modal -->
+  <div id="taxiModal" class="hidden fixed inset-0 z-50 items-center justify-center p-4" role="dialog" aria-modal="true" aria-labelledby="taxi-title">
+    <div class="fixed inset-0 bg-black/60 backdrop-blur" data-close-overlay></div>
+    <div class="relative bg-[var(--surface-1)] rounded-2xl shadow-2xl p-8 max-w-lg w-full border border-[var(--border-color)]">
+      <h3 id="taxi-title" class="text-3xl font-bold mb-6 text-center text-[var(--primary-color)]">Choose Your Facility</h3>
+      <div id="facility-selection" class="flex flex-col gap-4">
+        <button data-facility="osaka" class="facility-btn text-left w-full p-4 rounded-lg border-2 border-[var(--border-color)] hover:border-[var(--accent-color)] hover:bg-[var(--surface-2)] transition">
+          <span class="font-bold text-lg text-[var(--text-color)]">Osaka: J‑Facility (Ipsos)</span><br />
+          <span class="text-[color:var(--muted-color)]">Select for Japanese address</span>
+        </button>
+        <button data-facility="tokyo" class="facility-btn text-left w-full p-4 rounded-lg border-2 border-[var(--border-color)] hover:border-[var(--accent-color)] hover:bg-[var(--surface-2)] transition">
+          <span class="font-bold text-lg text-[var(--text-color)]">Tokyo: Sugata Research Space C/D</span><br />
+          <span class="text-[color:var(--muted-color)]">Select for Japanese address</span>
+        </button>
+      </div>
+      <div id="address-display" class="hidden">
+        <h4 id="facility-name" class="text-2xl font-bold mb-3 text-center text-[var(--primary-color)]"></h4>
+        <p class="text-center text-[color:var(--muted-color)] mb-4">Show this address to your driver:</p>
+        <div id="japanese-address" class="text-2xl lg:text-3xl bg-[var(--surface-2)] p-6 rounded-lg text-center font-semibold text-[var(--text-color)] tracking-wider leading-relaxed border border-[var(--border-color)]"></div>
+        <div class="mt-8 flex flex-col sm:flex-row gap-4">
+          <button id="back-to-selection" class="w-full sm:w-auto flex-1 inline-flex items-center justify-center gap-2 px-4 py-3 rounded-xl bg-[var(--surface-0)] text-[var(--text-color)] font-semibold transition hover:opacity-90">← Back</button>
+          <button id="copy-address-btn" class="w-full sm:w-auto flex-1 inline-flex items-center justify-center gap-3 px-4 py-3 rounded-xl bg-[var(--accent-color)] text-black font-semibold transition hover:opacity-90"><span class="text-xl">📋</span> Copy Address</button>
+        </div>
+      </div>
+      <button id="closeModalBtn" class="absolute -top-3 -right-3 h-10 w-10 flex items-center justify-center bg-[var(--surface-0)] rounded-full shadow-lg text-[color:var(--muted-color)] hover:text-red-400 hover:rotate-90 transition-transform" aria-label="Close modal">
+        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+      </button>
+    </div>
+  </div>
 
-            geminiGenerateBtn.addEventListener('click', function() {
-                const feature = this.dataset.feature;
-                const userInput = geminiModalInput.value.trim();
-                if (!userInput) {
-                    geminiModalResult.innerHTML = `<p class="text-center text-red-500">Please enter your preferences first.</p>`;
-                    return;
-                }
-                const prompt = featureConfig[feature].systemPrompt.replace('{userInput}', userInput);
-                callGeminiAPI(prompt);
-            });
-            
-            const closeGeminiModal = () => geminiModal.classList.add('modal-hidden');
-            document.getElementById('geminiCloseModalBtn').addEventListener('click', closeGeminiModal);
-            geminiModal.querySelector('.gemini-modal-overlay').addEventListener('click', closeGeminiModal);
+  <button id="backToTop" class="hidden fixed bottom-20 right-4 md:right-8 h-11 px-4 rounded-full bg-[var(--surface-2)] text-[var(--text-color)] border border-[var(--border-color)] font-semibold shadow-lg">Top ↑</button>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      // Intersection reveal for timeline
+      const items = document.querySelectorAll('.timeline-item');
+      const io = new IntersectionObserver((entries)=>{
+        entries.forEach(e=>{ if(e.isIntersecting){ e.target.classList.add('is-visible'); io.unobserve(e.target); } });
+      },{threshold:.2});
+      items.forEach(i=>io.observe(i));
+
+      // Progress fill
+      const container = document.querySelector('.timeline-container');
+      const progress = document.getElementById('timeline-progress');
+      const onScroll = () => {
+        if(!container || !progress) return;
+        const r = container.getBoundingClientRect();
+        const h = window.innerHeight;
+        const p = (h - r.top) / r.height; // 0..1
+        const clamped = Math.max(0, Math.min(1, p));
+        progress.style.height = (clamped * 100) + '%';
+      };
+      window.addEventListener('scroll', onScroll, {passive:true});
+      onScroll();
+
+      // Taxi modal
+      const facilityData = {
+        osaka:{ name:"Osaka: J‑Facility (Ipsos)", address:"\n大阪市北区東天満1-12-12\nイプソスビル 1階" },
+        tokyo:{ name:"Tokyo: Sugata Research Space C/D", address:"\n渋谷区代々木1-57-4\nドルミ第2代々木ビル 1階" }
+      };
+      const taxiModal = document.getElementById('taxiModal');
+      const openTaxiBtn = document.getElementById('openTaxiModalBtn');
+      const closeTaxiBtn = document.getElementById('closeModalBtn');
+      const facilitySel = document.getElementById('facility-selection');
+      const addressView = document.getElementById('address-display');
+
+      const openModal = () => { taxiModal.classList.remove('hidden'); taxiModal.classList.add('flex'); };
+      const closeModal = () => { taxiModal.classList.add('hidden'); taxiModal.classList.remove('flex'); };
+
+      openTaxiBtn.addEventListener('click', openModal);
+      closeTaxiBtn.addEventListener('click', closeModal);
+      taxiModal.querySelector('[data-close-overlay]').addEventListener('click', closeModal);
+
+      function showAddress(key){
+        const data = facilityData[key];
+        document.getElementById('facility-name').textContent = data.name;
+        document.getElementById('japanese-address').innerText = data.address;
+        facilitySel.classList.add('hidden');
+        addressView.classList.remove('hidden');
+      }
+      function showSelect(){
+        addressView.classList.add('hidden');
+        facilitySel.classList.remove('hidden');
+      }
+      document.querySelectorAll('.facility-btn').forEach(btn=>{
+        btn.addEventListener('click', ()=>showAddress(btn.dataset.facility));
+      });
+      document.getElementById('back-to-selection').addEventListener('click', showSelect);
+      document.getElementById('copy-address-btn').addEventListener('click', function(){
+        navigator.clipboard.writeText(document.getElementById('japanese-address').innerText).then(()=>{
+          const old = this.innerHTML; this.innerHTML = '<span class="text-xl">✅</span> Copied!';
+          setTimeout(()=> this.innerHTML = old, 1800);
         });
-    </script>
+      });
+
+      // Back to top
+      const backToTop = document.getElementById('backToTop');
+      window.addEventListener('scroll',()=>{
+        if(window.scrollY > 400){ backToTop.classList.remove('hidden'); } else { backToTop.classList.add('hidden'); }
+      },{passive:true});
+      backToTop.addEventListener('click',()=>window.scrollTo({top:0,behavior:'smooth'}));
+    });
+  </script>
 </body>
 </html>
