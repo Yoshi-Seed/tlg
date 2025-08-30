@@ -258,7 +258,8 @@
                     <div class="card-header card-accent-4">
                         <h3 class="text-2xl">Post-Research Dinner</h3>
                     </div>
-                    <p class="text-gray-700">Too many options in Japan? Let our AI assistant help! Tell us the <strong>style you want</strong> and we’ll generate personalized recommendations. Your clients will feel well taken care of, without you juggling bookings.</p>
+                    <p class="text-gray-700">Too many options in Japan? Tell us the <strong>style you want</strong> — e.g., yakiniku (BBQ), washoku (Japanese cuisine), ramen — and we’ll recommend excellent spots and <strong>make reservations</strong> if needed. Your clients will feel well taken care of, without you juggling bookings.</p>
+                    <p class="text-gray-700 mt-2">Or alternatively let our AI assist you!</p>
                     <button data-feature="dinner" class="gemini-feature-btn mt-4 inline-flex items-center gap-2 justify-center px-4 py-2 rounded-lg bg-gray-100 text-gray-800 font-semibold border border-gray-200 transition hover:bg-gray-200">✨ Get Dinner Recommendations</button>
                 </div>
             </div>
@@ -271,7 +272,8 @@
                     <div class="card-header card-accent-5">
                         <h3 class="text-2xl">Free Day Planning</h3>
                     </div>
-                    <p class="text-gray-700">Have a free day? It’s a fantastic chance to explore Japan! Let our AI assistant <strong>plan a relaxed itinerary</strong> based on your interests. Just let us know what would make your free day easy and enjoyable.</p>
+                    <p class="text-gray-700">If you're lucky enough to have a free day before departure, it’s a fantastic chance to explore Japan! We can <strong>plan a relaxed itinerary</strong> in Tokyo or Osaka and <strong>handle all arrangements</strong>. Just let us know what would make your free day easy and enjoyable.</p>
+                    <p class="text-gray-700 mt-2">Or alternatively let our AI assist you!</p>
                     <button data-feature="freeday" class="gemini-feature-btn mt-4 inline-flex items-center gap-2 justify-center px-4 py-2 rounded-lg bg-gray-100 text-gray-800 font-semibold border border-gray-200 transition hover:bg-gray-200">✨ Get Itinerary Ideas</button>
                 </div>
             </div>
@@ -433,12 +435,12 @@
                 dinner: {
                     title: "AI Dinner Recommendations",
                     prompt: "Tell me what you're in the mood for (e.g., cuisine, price, area).",
-                    systemPrompt: "You are a friendly guide in Japan. A foreign researcher is looking for dinner recommendations. Their preferences are: {userInput}. Please suggest 3 restaurants in a friendly, concise format. Include the restaurant name, a short description, and a general price range. Format the response as simple HTML with <h4> for names and <p> for descriptions."
+                    systemPrompt: "You are an expert guide for authentic Japanese experiences. A foreign researcher is looking for dinner. Their preferences are: {userInput}. Recommend 3 restaurants that are highly regarded by international visitors but are NOT typical tourist traps. Focus on authentic, high-quality experiences. Include the restaurant name, a short description of why it's special and authentic, and a general price range. Format the response as simple HTML with <h4> for names and <p> for descriptions."
                 },
                 freeday: {
                     title: "AI Itinerary Planner",
                     prompt: "Describe your interests and available time (e.g., half-day, temples, shopping).",
-                    systemPrompt: "You are a helpful tour planner for foreign visitors in Japan. A researcher has a free day and their interests are: {userInput}. Create a sample itinerary. Be creative and practical. Include timings, locations, and brief descriptions for each activity. Format the response as simple HTML with <h4> for locations/times and <p> for details."
+                    systemPrompt: "You are an expert tour planner specializing in authentic Japanese experiences for foreign visitors. A researcher has a free day and their interests are: {userInput}. Create a sample itinerary that avoids overcrowded tourist spots and focuses on authentic, memorable experiences that international visitors love. Be creative and practical. Include timings, locations, and brief descriptions for each activity, explaining why each place is a special choice. Format the response as simple HTML with <h4> for locations/times and <p> for details."
                 }
             };
 
