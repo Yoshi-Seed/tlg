@@ -431,6 +431,10 @@
             const geminiLoader = document.getElementById('gemini-loader');
             const geminiModalResult = document.getElementById('gemini-modal-result');
 
+            // IMPORTANT: Enter your Google AI Studio API key here
+            // 重要：ここにGoogle AI Studioで取得したAPIキーを入力してください
+            const YOUR_API_KEY = "AIzaSyB-V6HbuAuOGqr62yF6IC92xbWlggwlQrE";
+
             const featureConfig = {
                 dinner: {
                     title: "AI Dinner Recommendations",
@@ -445,13 +449,17 @@
             };
 
             async function callGeminiAPI(prompt, retries = 3, delay = 1000) {
+                if (!YOUR_API_KEY) {
+                    geminiModalResult.innerHTML = `<p class="text-red-500 text-center">API key is not set. Please add your API key in the script tag.</p>`;
+                    return;
+                }
+
                 geminiGenerateBtn.disabled = true;
                 geminiBtnText.classList.add('hidden');
                 geminiLoader.classList.remove('hidden');
                 geminiModalResult.innerHTML = '<div class="text-center p-4">Generating ideas...</div>';
 
-                const apiKey = ""; // API key is injected at runtime by the platform.
-                const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-05-20:generateContent?key=${apiKey}`;
+                const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-05-20:generateContent?key=${YOUR_API_KEY}`;
                 const payload = { contents: [{ parts: [{ text: prompt }] }] };
 
                 try {
