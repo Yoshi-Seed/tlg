@@ -1,158 +1,525 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Seed × TLG Linker — On‑the‑Ground Support in Japan</title>
-  <meta name="description" content="We handle the logistics so you can focus on great research — and keep your clients comfortable." />
-  <meta name="color-scheme" content="light dark" />
-  <script src="https://cdn.tailwindcss.com"></script>
-  <script>
-    // Tailwind CDN config (optional fine‑tuning)
-    tailwind.config = {
-      darkMode: 'media',
-      theme: {
-        extend: {
-          fontFamily: { sans: ['ui-sans-serif','system-ui','-apple-system','Segoe UI','Roboto','Helvetica','Arial','Noto Sans','Apple Color Emoji','Segoe UI Emoji','Segoe UI Symbol','Noto Color Emoji'] },
-          boxShadow: { soft: '0 10px 25px -10px rgb(0 0 0 / 0.15)' },
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Your Japan Research Journey - On-the-Ground Support</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-color: #fcfaf6; /* A warmer, more textured off-white */
+            --text-color: #3d3d3d;
+            --primary-color: #0b3d5f; /* A deeper, more sophisticated navy */
+            --accent-color: #d16058; /* A slightly muted, elegant red */
+            --border-color: #eaeaea;
         }
-      }
-    }
-  </script>
-  <style>
-    /* iOS safe‑area for the sticky mobile bar */
-    .safe-bottom { padding-bottom: max(env(safe-area-inset-bottom), 12px); }
-  </style>
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            font-family: 'Inter', sans-serif;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+            line-height: 1.7;
+        }
+
+        h1, h2, h3 {
+            font-family: 'Playfair Display', serif;
+            color: var(--primary-color);
+            font-weight: 700;
+        }
+
+        .card {
+            background-color: white;
+            border-radius: 16px;
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.08);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            position: relative;
+            overflow: hidden;
+            border: 1px solid var(--border-color);
+        }
+        .card:hover {
+            transform: translateY(-6px);
+            box-shadow: 0 12px 40px rgba(0, 0, 0, 0.12);
+        }
+
+        /* The main timeline container */
+        .timeline-container {
+            position: relative;
+            padding: 3rem 0;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        /* The vertical line acting as the timeline's spine */
+        .timeline-spine {
+            position: absolute;
+            top: 0;
+            left: 21px; /* Center of the 44px marker */
+            width: 3px;
+            height: 100%;
+            background-color: var(--border-color);
+            z-index: 0;
+        }
+        
+        /* The progress bar that fills up on scroll */
+        #timeline-progress {
+            position: absolute;
+            top: 0;
+            left: 21px;
+            width: 3px;
+            height: 0; /* Initially 0, will be set by JS */
+            background: linear-gradient(to bottom, var(--primary-color), var(--accent-color));
+            z-index: 1;
+            transition: height 0.1s linear;
+        }
+
+        .timeline-item {
+            position: relative;
+            display: flex;
+            align-items: flex-start;
+            gap: 2rem;
+            margin-bottom: 3.5rem;
+            opacity: 0;
+            transform: translateY(40px);
+            transition: opacity 0.7s ease-out, transform 0.7s ease-out;
+        }
+        .timeline-item:last-child {
+            margin-bottom: 0;
+        }
+        .timeline-item.is-visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* The marker on the timeline spine (Kamon style) */
+        .timeline-marker {
+            position: relative;
+            flex-shrink: 0;
+            width: 44px;
+            height: 44px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-color: var(--bg-color);
+            border: 3px solid var(--primary-color);
+            border-radius: 50%;
+            z-index: 2;
+            box-shadow: 0 0 0 4px var(--bg-color); /* Creates a cutout effect */
+        }
+        .timeline-marker svg {
+            width: 24px;
+            height: 24px;
+            color: var(--primary-color);
+            stroke-width: 2;
+        }
+
+        .timeline-content {
+            flex-grow: 1;
+            padding-top: 0.5rem; /* Align content with the marker nicely */
+        }
+        
+        .card-header {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            margin-bottom: 0.75rem;
+            border-left: 4px solid;
+            padding-left: 1rem;
+        }
+        
+        /* Color accents for each card header */
+        .card-accent-1 { border-color: #0077b6; }
+        .card-accent-2 { border-color: #f77f00; }
+        .card-accent-3 { border-color: #0081a7; }
+        .card-accent-4 { border-color: #d62828; }
+        .card-accent-5 { border-color: #6a4c93; }
+
+        details summary {
+            cursor: pointer;
+            list-style: none;
+            padding: 1rem 0;
+        }
+        details summary::-webkit-details-marker { display: none; }
+        details summary .summary-title { display: flex; align-items: center; gap: 1rem; }
+        details summary::after {
+            content: '+'; float: right; color: var(--accent-color); transition: transform 0.2s ease; font-size: 1.5em; line-height: 1; font-weight: 300;
+        }
+        details[open] summary::after { content: '−'; }
+
+        /* Modal Styles */
+        .modal-hidden {
+            pointer-events: none;
+        }
+        .modal-hidden .modal-overlay,
+        .modal-hidden .gemini-modal-overlay {
+            opacity: 0;
+        }
+        .modal-hidden .modal-container,
+        .modal-hidden .gemini-modal-container {
+            opacity: 0;
+            transform: scale(0.95);
+        }
+        .modal-overlay, .gemini-modal-overlay {
+            transition: opacity 0.3s ease;
+        }
+        .modal-container, .gemini-modal-container {
+            transition: transform 0.3s ease, opacity 0.3s ease;
+        }
+        
+        /* Styling for Gemini-generated HTML */
+        #gemini-modal-result h4 {
+            font-size: 1.25rem;
+            margin-top: 1rem;
+            margin-bottom: 0.5rem;
+            color: var(--primary-color);
+            font-family: 'Playfair Display', serif;
+        }
+        #gemini-modal-result p { margin-bottom: 0.75rem; }
+        #gemini-modal-result ul { list-style-type: disc; padding-left: 1.5rem; }
+        #gemini-modal-result li { margin-bottom: 0.5rem; }
+        
+    </style>
 </head>
-<body class="bg-gradient-to-b from-white to-slate-50 text-slate-900 antialiased selection:bg-black selection:text-white">
-  <a href="#main" class="sr-only focus:not-sr-only focus:fixed focus:top-4 focus:left-4 focus:z-50 focus:px-3 focus:py-2 focus:bg-black focus:text-white focus:rounded-lg">Skip to content</a>
 
-  <!-- Header -->
-  <header class="sticky top-0 z-40 backdrop-blur bg-white/80 border-b border-slate-200">
-    <div class="max-w-5xl mx-auto px-4 py-3 flex items-center justify-between">
-      <div class="flex items-center gap-3">
-        <span class="px-2 py-1 rounded-2xl bg-black text-white text-xs tracking-wide">SEED</span>
-        <div class="leading-tight">
-          <div class="font-semibold">Seed × TLG Linker</div>
-          <div id="updated" class="text-xs text-slate-500">Last updated: —</div>
+<body class="selection:bg-yellow-200">
+    <main class="max-w-4xl mx-auto px-4 pt-16 pb-12">
+        
+        <header class="text-center mb-20">
+            <h1 class="text-5xl md:text-6xl font-bold tracking-tight leading-tight">Your Japan Research Journey</h1>
+            <p class="mt-5 text-xl text-gray-600 max-w-2xl mx-auto">Seamless support for your on-the-ground needs, so you can focus on great research with peace of mind.</p>
+        </header>
+
+        <section class="card p-8 mb-20 shadow-xl bg-white">
+            <h2 class="text-3xl flex items-center gap-4 mb-6"><span class="text-3xl">🚀</span> Quick Actions</h2>
+            <div class="grid gap-4 sm:grid-cols-2">
+                <a href="https://teams.microsoft.com/l/chat/0/0?users=y.honda@seedplanning.co.jp&message=Hello%20Seed%20PM" target="_blank" class="inline-flex items-center justify-center gap-3 px-4 py-3 rounded-xl bg-[var(--primary-color)] text-white font-semibold transition hover:opacity-90">
+                    <span class="text-xl">💬</span> Message Seed PM
+                </a>
+                <button id="openTaxiModalBtn" class="inline-flex items-center justify-center gap-3 px-4 py-3 rounded-xl bg-gray-100 text-gray-800 font-semibold border border-gray-200 transition hover:bg-gray-200">
+                    <span class="text-xl">🚕</span> Show Taxi Note
+                </button>
+            </div>
+             <p class="mt-6 text-base text-gray-600 border-t border-gray-100 pt-5 flex items-start gap-4">
+                <span class="text-2xl text-[var(--primary-color)]">ℹ️</span> 
+                <div>Show the <strong class="text-gray-900">Japanese address</strong> from your Facility Information to the Uber/Taxi driver. This is the safest and most reliable way to reach your destination.</div>
+            </p>
+        </section>
+
+        <!-- TIMELINE START -->
+        <div class="timeline-container" id="timeline-container">
+            <div class="timeline-spine"></div>
+            <div id="timeline-progress"></div>
+
+            <div class="timeline-item">
+                <div class="timeline-marker">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/></svg>
+                </div>
+                <div class="timeline-content card p-7">
+                    <div class="card-header card-accent-1">
+                        <h3 class="text-2xl">From Hotel to Facility</h3>
+                    </div>
+                    <p class="text-gray-700">First time at a facility? It's normal to feel unsure. Simply show the <strong>Google Map address (Japanese is best!)</strong> from your Facility Information to your Uber or taxi driver. If you get dropped off incorrectly or can’t find the entrance, <strong>chat us on Teams immediately</strong>, and we’ll guide you.</p>
+                </div>
+            </div>
+            
+            <div class="timeline-item">
+                <div class="timeline-marker">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M4 11a8 8 0 0 1 8-8V2a2 2 0 0 0-2-2H6a2 2 0 0 0-2 2v1"/><path d="M10 11a8 8 0 0 1 8-8V2a2 2 0 0 1 2-2h2a2 2 0 0 1 2 2v1"/><path d="M4 11h16a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2v-8a2 2 0 0 1 2-2Z"/><path d="M9 16H7"/><path d="M17 16h-2"/></svg>
+                </div>
+                 <div class="timeline-content card p-7">
+                    <div class="card-header card-accent-2">
+                        <h3 class="text-2xl">Meals at the Facility</h3>
+                    </div>
+                    <p class="text-gray-700">Depending on headcount, we’ll either <strong>pre-order bento boxes</strong> or place a <strong>group Uber order</strong> to cater to everyone's preferences. Either way, it’s already covered as <strong>project catering</strong>. We want you to enjoy delicious food during your Japan stay, even in the back room!</p>
+                </div>
+            </div>
+
+             <div class="timeline-item">
+                <div class="timeline-marker">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M16 8.3a2.5 2.5 0 0 0-4.82.9A2.5 2.5 0 0 0 8 8.3c0-1.2.93-2.5 2.5-2.5A2.5 2.5 0 0 1 16 8.3Z"/><path d="M5 12h14"/><path d="M5 12a4 4 0 0 0-4 4v2a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2v-2a4 4 0 0 0-4-4Z"/><path d="m10 12-1.5-2.5"/><path d="m14 12 1.5-2.5"/></svg>
+                </div>
+                <div class="timeline-content card p-7">
+                    <div class="card-header card-accent-3">
+                        <h3 class="text-2xl">Tokyo ↔ Osaka Travel</h3>
+                    </div>
+                    <p class="text-gray-700">A Seed teammate will <strong>accompany you</strong> on the Shinkansen (bullet train). We handle <strong>ticket purchase and seat assignments</strong> end-to-end. Seed will <strong>front the cost</strong> for you and your accompanying client(s), settling later via <strong>expense reconciliation</strong>. Relax — just bring yourselves!</p>
+                </div>
+            </div>
+            
+            <div class="timeline-item">
+                <div class="timeline-marker">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M2 12v10h20V12"/><path d="M6 12H4a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"/><path d="M18 12h2a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2h-2"/><path d="M11.5 2v10M9 12h5"/><path d="M8 7h2"/><path d="M14 7h2"/></svg>
+                </div>
+                <div class="timeline-content card p-7">
+                    <div class="card-header card-accent-4">
+                        <h3 class="text-2xl">Post-Research Dinner</h3>
+                    </div>
+                    <p class="text-gray-700">Too many options in Japan? Tell us the <strong>style you want</strong> — e.g., yakiniku (BBQ), washoku (Japanese cuisine), ramen — and we’ll recommend excellent spots and <strong>make reservations</strong> if needed. Your clients will feel well taken care of, without you juggling bookings.</p>
+                    <p class="text-gray-700 mt-2">Or alternatively let our AI assist you!</p>
+                    <button data-feature="dinner" class="gemini-feature-btn mt-4 inline-flex items-center gap-2 justify-center px-4 py-2 rounded-lg bg-gray-100 text-gray-800 font-semibold border border-gray-200 transition hover:bg-gray-200">✨ Get Dinner Recommendations</button>
+                </div>
+            </div>
+            
+             <div class="timeline-item">
+                <div class="timeline-marker">
+                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10"/><path d="m9 12 2 2 4-4"/></svg>
+                </div>
+                <div class="timeline-content card p-7">
+                    <div class="card-header card-accent-5">
+                        <h3 class="text-2xl">Free Day Planning</h3>
+                    </div>
+                    <p class="text-gray-700">If you're lucky enough to have a free day before departure, it’s a fantastic chance to explore Japan! We can <strong>plan a relaxed itinerary</strong> in Tokyo or Osaka and <strong>handle all arrangements</strong>. Just let us know what would make your free day easy and enjoyable.</p>
+                    <p class="text-gray-700 mt-2">Or alternatively let our AI assist you!</p>
+                    <button data-feature="freeday" class="gemini-feature-btn mt-4 inline-flex items-center gap-2 justify-center px-4 py-2 rounded-lg bg-gray-100 text-gray-800 font-semibold border border-gray-200 transition hover:bg-gray-200">✨ Get Itinerary Ideas</button>
+                </div>
+            </div>
         </div>
-      </div>
-      <div class="hidden sm:flex items-center gap-2 text-xs text-slate-500">
-        <span class="inline-flex items-center gap-1">🇯🇵 Tokyo&nbsp;Time</span>
-      </div>
+        <!-- TIMELINE END -->
+
+        <section class="card p-8 mt-20 shadow-xl bg-white">
+             <details>
+                <summary>
+                    <div class="summary-title">
+                        <h2 class="text-3xl">💡 Quick Tips for Your Stay</h2>
+                    </div>
+                </summary>
+                <ul class="list-disc ml-4 space-y-3 mt-6 text-base text-gray-700">
+                    <li><strong>Always carry some cash (¥10,000–¥20,000).</strong> Shrines, street stalls, and smaller shops may still be cash-only.</li>
+                    <li><strong>Hydrate frequently in summer.</strong> Japan's summers are humid, and heatstroke can sneak up on you.</li>
+                    <li><strong>Ping your Seed PM on Teams anytime.</strong> We are on standby throughout your stay. Don't hesitate to reach out for anything!</li>
+                </ul>
+             </details>
+        </section>
+    </main>
+
+    <footer class="border-t bg-white/90 backdrop-blur-sm sticky bottom-0 z-20 py-5">
+        <div class="max-w-4xl mx-auto px-4 flex flex-col sm:flex-row items-center justify-between gap-4">
+            <div>
+                <div class="font-bold text-gray-900 text-lg">We're on standby throughout your stay.</div>
+                <div class="text-gray-600">Ping us on Teams anytime and we'll jump in.</div>
+            </div>
+            <a href="https://teams.microsoft.com/l/chat/0/0?users=y.honda@seedplanning.co.jp&message=Hello%20Seed%20PM" target="_blank" class="inline-flex items-center gap-3 px-6 py-3 rounded-full bg-[var(--accent-color)] text-white font-semibold transition hover:opacity-90 shadow-lg text-base">
+                <span class="text-xl">💬</span> Open Teams Chat
+            </a>
+        </div>
+    </footer>
+
+    <!-- Taxi Note Modal -->
+    <div id="taxiModal" class="modal-hidden fixed inset-0 z-50 flex items-center justify-center p-4">
+        <div class="modal-overlay fixed inset-0 bg-black bg-opacity-60 backdrop-blur-sm"></div>
+        <div class="modal-container relative bg-white rounded-2xl shadow-2xl p-8 max-w-lg w-full transform">
+            <div id="facility-selection">
+                <h3 class="text-3xl font-bold mb-6 text-center">Choose Your Facility</h3>
+                <div class="flex flex-col gap-4">
+                    <button data-facility="osaka" class="facility-btn text-left w-full p-4 rounded-lg border-2 border-gray-200 hover:border-blue-500 hover:bg-blue-50 transition">
+                        <span class="font-bold text-lg text-gray-800">Osaka: J-Facility (Ipsos)</span><br>
+                        <span class="text-gray-600">Select for Japanese address</span>
+                    </button>
+                    <button data-facility="tokyo" class="facility-btn text-left w-full p-4 rounded-lg border-2 border-gray-200 hover:border-blue-500 hover:bg-blue-50 transition">
+                        <span class="font-bold text-lg text-gray-800">Tokyo: Sugata Research Space C/D</span><br>
+                        <span class="text-gray-600">Select for Japanese address</span>
+                    </button>
+                </div>
+            </div>
+            <div id="address-display" class="hidden">
+                <h3 id="facility-name" class="text-3xl font-bold mb-4 text-center"></h3>
+                <p class="text-center text-gray-600 mb-4">Show this address to your taxi driver:</p>
+                <div id="japanese-address" class="text-2xl lg:text-3xl bg-gray-100 p-6 rounded-lg text-center font-semibold text-gray-800 tracking-wider leading-relaxed"></div>
+                <div class="mt-8 flex flex-col sm:flex-row gap-4">
+                     <button id="back-to-selection" class="w-full sm:w-auto flex-1 inline-flex items-center justify-center gap-2 px-4 py-3 rounded-xl bg-gray-200 text-gray-800 font-semibold transition hover:bg-gray-300"><span>← Back</span></button>
+                     <button id="copy-address-btn" class="w-full sm:w-auto flex-1 inline-flex items-center justify-center gap-3 px-4 py-3 rounded-xl bg-[var(--primary-color)] text-white font-semibold transition hover:opacity-90"><span class="text-xl">📋</span> Copy Address</button>
+                </div>
+            </div>
+            <button id="closeModalBtn" class="absolute -top-3 -right-3 h-10 w-10 flex items-center justify-center bg-white rounded-full shadow-lg text-gray-600 hover:text-red-500 hover:rotate-90 transition-transform"><svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg></button>
+        </div>
     </div>
-  </header>
-
-  <!-- Hero / Quick actions -->
-  <main id="main" class="max-w-5xl mx-auto px-4 pt-10 pb-6">
-    <h1 class="text-3xl sm:text-4xl font-bold tracking-tight">On‑the‑Ground Support in Japan</h1>
-    <p class="mt-3 text-slate-600 max-w-3xl">We handle the logistics so you can focus on great research — and keep your clients comfortable.</p>
-
-    <!-- Card: Quick actions -->
-    <section class="mt-6 rounded-2xl border border-slate-200 bg-white/90 shadow-soft">
-      <div class="px-6 pt-5 pb-2">
-        <h2 class="text-base font-semibold flex items-center gap-2"><span class="inline-flex w-8 h-8 items-center justify-center rounded-xl bg-slate-100">💬</span> Quick actions</h2>
-      </div>
-      <div class="grid gap-3 sm:grid-cols-3 px-6 pb-4">
-        <a id="ctaTeamsTop" href="https://teams.microsoft.com/l/chat/0/0?users=y.honda@seedplanning.co.jp&message=Hello%20Seed%20PM" target="_blank" rel="noreferrer" class="inline-flex items-center gap-2 justify-center sm:justify-start px-4 py-3 rounded-xl bg-black text-white text-base">
-          💬 Message Seed PM on Teams
-        </a>
-        <button id="copyBtn" class="inline-flex items-center gap-2 justify-center sm:justify-start px-4 py-3 rounded-xl bg-slate-100 text-base">
-          📞 Copy taxi note
-        </button>
-        <button onclick="window.print()" class="inline-flex items-center gap-2 justify-center sm:justify-start px-4 py-3 rounded-xl border text-base">
-          🖨️ Print page
-        </button>
-        <p class="sm:col-span-3 text-sm text-slate-600 flex items-start gap-2">
-          ℹ️ <span>Show the Google Map address from your Facility Information to the Uber/Taxi driver.</span>
-        </p>
-      </div>
-    </section>
-  </main>
-
-  <hr class="my-6 border-slate-200" />
-
-  <!-- Content grid -->
-  <section class="max-w-5xl mx-auto px-4 pb-28 grid gap-6 md:grid-cols-2">
-    <article class="rounded-2xl border border-slate-200 bg-white/90 shadow-soft p-6">
-      <h3 class="text-lg font-semibold flex items-center gap-2"><span class="inline-flex w-8 h-8 items-center justify-center rounded-xl bg-slate-100">📍</span> From Hotel to Facility</h3>
-      <p class="mt-3">If it’s your first time at a facility, it’s normal to feel unsure. Some Linkers even do a dry run the day before. On the day, simply show the <strong>Google Map address</strong> from the Facility Information to your <strong>Uber or taxi driver</strong>. If you get dropped off in the wrong spot or can’t find the entrance, <strong>chat us on Teams immediately</strong> and we’ll guide you in.</p>
-      <p class="mt-3 text-sm bg-slate-50 rounded-xl p-3">Heads‑up: Japan taxi drivers prefer <em>an address in Japanese</em>. Your Facility Information includes one — that’s the safest thing to show.</p>
-    </article>
-
-    <article class="rounded-2xl border border-slate-200 bg-white/90 shadow-soft p-6">
-      <h3 class="text-lg font-semibold flex items-center gap-2"><span class="inline-flex w-8 h-8 items-center justify-center rounded-xl bg-slate-100">🍱</span> Meals at the Facility</h3>
-      <p class="mt-3">Depending on headcount, we’ll either <strong>pre‑order bento boxes</strong> or place a <strong>group Uber order</strong> so everyone gets what they want. Either way, it’s already covered as <strong>project catering</strong> — no extra admin for you. Even in the back room, we want you to enjoy <em>good</em> food during your Japan stay.</p>
-    </article>
-
-    <article class="rounded-2xl border border-slate-200 bg-white/90 shadow-soft p-6">
-      <h3 class="text-lg font-semibold flex items-center gap-2"><span class="inline-flex w-8 h-8 items-center justify-center rounded-xl bg-slate-100">🚄</span> Tokyo ↔ Osaka (Shinkansen)</h3>
-      <p class="mt-3">A Seed teammate will <strong>accompany you</strong> between Tokyo and Osaka. We handle <strong>ticket purchase and seat assignments</strong> end‑to‑end. Seed will <strong>front the cost</strong> for you and your accompanying client(s) and later settle via <strong>expense reconciliation</strong>. Relax — just bring yourselves.</p>
-    </article>
-
-    <article class="rounded-2xl border border-slate-200 bg-white/90 shadow-soft p-6">
-      <h3 class="text-lg font-semibold flex items-center gap-2"><span class="inline-flex w-8 h-8 items-center justify-center rounded-xl bg-slate-100">🍽️</span> Post‑Research Dinner</h3>
-      <p class="mt-3">Too many options? Tell us the <strong>style you want</strong> — e.g., yakiniku (BBQ), washoku (Japanese), ramen — and we’ll recommend spots and <strong>make the reservation</strong> if needed. Your clients will feel looked after without you juggling bookings.</p>
-    </article>
-
-    <article class="rounded-2xl border border-slate-200 bg-white/90 shadow-soft p-6">
-      <h3 class="text-lg font-semibold flex items-center gap-2"><span class="inline-flex w-8 h-8 items-center justify-center rounded-xl bg-slate-100">🗓️</span> Free Day Planning</h3>
-      <p class="mt-3">If you score a half or full day before departure, we can <strong>plan a relaxed course</strong> in Tokyo or Osaka and <strong>handle all arrangements</strong>. Just say what would make the day feel easy and fun.</p>
-    </article>
-
-    <article class="rounded-2xl border border-slate-200 bg-white/90 shadow-soft p-6">
-      <h3 class="text-lg font-semibold flex items-center gap-2"><span class="inline-flex w-8 h-8 items-center justify-center rounded-xl bg-slate-100">💡</span> Quick Tips</h3>
-      <ul class="mt-3 list-disc pl-5 space-y-2">
-        <li><strong>Carry some cash</strong> (¥10,000–¥20,000). Shrines, stalls, and small shops may be cash‑only.</li>
-        <li><strong>Hydrate in summer</strong> — heat can sneak up on you.</li>
-        <li><strong>Ping your Seed PM on Teams anytime</strong>. We’re on standby throughout your stay.</li>
-      </ul>
-    </article>
-  </section>
-
-  <!-- Sticky mobile bar (shows on small screens) -->
-  <div class="fixed inset-x-0 bottom-0 sm:hidden bg-white/95 border-t border-slate-200 shadow-soft safe-bottom">
-    <div class="max-w-5xl mx-auto px-4 py-3 grid grid-cols-2 gap-3">
-      <a id="ctaTeamsBottom" href="https://teams.microsoft.com/l/chat/0/0?users=y.honda@seedplanning.co.jp&message=Hello%20Seed%20PM" target="_blank" rel="noreferrer" class="inline-flex items-center justify-center gap-2 rounded-xl bg-black text-white px-4 py-3 text-base">
-        💬 Message PM
-      </a>
-      <button id="copyBtnBottom" class="inline-flex items-center justify-center gap-2 rounded-xl bg-slate-100 px-4 py-3 text-base">📋 Copy note</button>
+    
+    <!-- Gemini Feature Modal -->
+    <div id="geminiModal" class="modal-hidden fixed inset-0 z-50 flex items-center justify-center p-4">
+        <div class="gemini-modal-overlay fixed inset-0 bg-black bg-opacity-60 backdrop-blur-sm"></div>
+        <div class="gemini-modal-container relative bg-white rounded-2xl shadow-2xl p-8 max-w-2xl w-full transform">
+            <h3 id="gemini-modal-title" class="text-3xl font-bold mb-4 text-center"></h3>
+            <p id="gemini-modal-prompt" class="text-center text-gray-600 mb-6"></p>
+            <div class="space-y-4">
+                <textarea id="gemini-modal-input" class="w-full h-24 p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[var(--primary-color)]" placeholder="e.g., casual ramen near Shibuya, half-day exploring temples..."></textarea>
+                <button id="gemini-modal-generate-btn" class="w-full inline-flex items-center justify-center gap-3 px-4 py-3 rounded-xl bg-[var(--accent-color)] text-white font-semibold transition hover:opacity-90 disabled:opacity-50">
+                    <span id="gemini-btn-text">✨ Generate Ideas</span>
+                    <div id="gemini-loader" class="hidden w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
+                </button>
+            </div>
+            <div id="gemini-modal-result" class="mt-6 max-h-[40vh] overflow-y-auto p-4 bg-gray-50 rounded-lg border"></div>
+            <button id="geminiCloseModalBtn" class="absolute -top-3 -right-3 h-10 w-10 flex items-center justify-center bg-white rounded-full shadow-lg text-gray-600 hover:text-red-500 hover:rotate-90 transition-transform"><svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg></button>
+        </div>
     </div>
-  </div>
 
-  <!-- Footer (desktop friendly) -->
-  <footer class="border-t border-slate-200 bg-white/70">
-    <div class="max-w-5xl mx-auto px-4 py-10 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
-      <div>
-        <div class="font-medium">We’re on standby throughout your stay.</div>
-        <div class="text-slate-600 text-sm">Ping us on Teams anytime and we’ll jump in.</div>
-      </div>
-      <a href="https://teams.microsoft.com/l/chat/0/0?users=y.honda@seedplanning.co.jp&message=Hello%20Seed%20PM" target="_blank" rel="noreferrer" class="hidden sm:inline-flex items-center gap-2 px-4 py-3 rounded-xl bg-black text-white">💬 Open Teams chat</a>
-    </div>
-  </footer>
 
-  <script>
-    // Last updated stamp (JST label only)
-    (function(){
-      var d=new Date();
-      var m=d.toLocaleString('en-US',{month:'short'}); var day=('0'+d.getDate()).slice(-2); var y=d.getFullYear();
-      document.getElementById('updated').textContent='Last updated: '+m+' '+day+', '+y+' (JST)';
-    })();
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // --- Timeline Logic ---
+            const timelineItems = document.querySelectorAll('.timeline-item');
+            const observer = new IntersectionObserver(entries => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('is-visible');
+                        observer.unobserve(entry.target);
+                    }
+                });
+            }, { threshold: 0.2 });
+            timelineItems.forEach(item => observer.observe(item));
+            
+            const timelineContainer = document.getElementById('timeline-container');
+            const progressEl = document.getElementById('timeline-progress');
+            if (timelineContainer && progressEl) {
+                const handleScroll = () => {
+                    const containerRect = timelineContainer.getBoundingClientRect();
+                    const windowHeight = window.innerHeight;
+                    const progress = (windowHeight - containerRect.top) / containerRect.height;
+                    const clampedProgress = Math.min(1, Math.max(0, progress));
+                    progressEl.style.height = `${clampedProgress * 100}%`;
+                };
+                window.addEventListener('scroll', handleScroll, { passive: true });
+                handleScroll();
+            }
 
-    // Copy taxi memo (top & bottom buttons)
-    const memo='(Please take me to J-Facility -Osaka) こちらの目的地まで連れて行ってください。住所：【大阪市北区東天満1-12-12 】　';
-    function copyMemo(){ navigator.clipboard.writeText(memo).then(()=>alert('Copied!')).catch(()=>alert('Copied!')); }
-    document.getElementById('copyBtn').addEventListener('click', copyMemo);
-    document.getElementById('copyBtnBottom').addEventListener('click', copyMemo);
-  </script>
+            // --- Taxi Modal Logic ---
+            const facilityData = {
+                osaka: { name: "Osaka: J-Facility (Ipsos)", address: "\n大阪市北区東天満1-12-12\nイプソスビル 1階" },
+                tokyo: { name: "Tokyo: Sugata Research Space C/D", address: "\n渋谷区代々木1-57-4\nドルミ第2代々木ビル 1階" }
+            };
+            const taxiModal = document.getElementById('taxiModal');
+            document.getElementById('openTaxiModalBtn').addEventListener('click', () => taxiModal.classList.remove('modal-hidden'));
+            document.getElementById('closeModalBtn').addEventListener('click', () => taxiModal.classList.add('modal-hidden'));
+            taxiModal.querySelector('.modal-overlay').addEventListener('click', () => taxiModal.classList.add('modal-hidden'));
+            
+            const facilitySelectionDiv = document.getElementById('facility-selection');
+            const addressDisplayDiv = document.getElementById('address-display');
+            
+            const showAddressView = (facilityKey) => {
+                const data = facilityData[facilityKey];
+                document.getElementById('facility-name').textContent = data.name;
+                document.getElementById('japanese-address').innerText = data.address;
+                facilitySelectionDiv.classList.add('hidden');
+                addressDisplayDiv.classList.remove('hidden');
+            };
+            const showSelectionView = () => {
+                facilitySelectionDiv.classList.remove('hidden');
+                addressDisplayDiv.classList.add('hidden');
+            };
 
-  <!-- Print tweaks -->
-  <style>
-    @media print {
-      .fixed, .sticky, .safe-bottom { display:none !important; }
-      a[href]::after { content:" (" attr(href) ")"; font-size: 0.8em; color:#64748b; }
-      body { background: white; }
-    }
-  </style>
+            document.querySelectorAll('.facility-btn').forEach(btn => {
+                btn.addEventListener('click', () => showAddressView(btn.dataset.facility));
+            });
+            document.getElementById('back-to-selection').addEventListener('click', showSelectionView);
+            document.getElementById('copy-address-btn').addEventListener('click', function() {
+                navigator.clipboard.writeText(document.getElementById('japanese-address').innerText).then(() => {
+                    this.innerHTML = '<span class="text-xl">✅</span> Copied!';
+                    setTimeout(() => { this.innerHTML = '<span class="text-xl">📋</span> Copy Address'; }, 2000);
+                });
+            });
+
+            // --- Gemini API Feature Logic ---
+            const geminiModal = document.getElementById('geminiModal');
+            const geminiModalTitle = document.getElementById('gemini-modal-title');
+            const geminiModalPrompt = document.getElementById('gemini-modal-prompt');
+            const geminiModalInput = document.getElementById('gemini-modal-input');
+            const geminiGenerateBtn = document.getElementById('gemini-modal-generate-btn');
+            const geminiBtnText = document.getElementById('gemini-btn-text');
+            const geminiLoader = document.getElementById('gemini-loader');
+            const geminiModalResult = document.getElementById('gemini-modal-result');
+
+            // IMPORTANT: Enter your Google AI Studio API key here
+            // 重要：ここにGoogle AI Studioで取得したAPIキーを入力してください
+            const YOUR_API_KEY = "AIzaSyB-V6HbuAuOGqr62yF6IC92xbWlggwlQrE";
+
+            const featureConfig = {
+                dinner: {
+                    title: "AI Dinner Recommendations",
+                    prompt: "Tell me what you're in the mood for (e.g., cuisine, price, area).",
+                    systemPrompt: "You are an expert guide for authentic Japanese experiences. A foreign researcher is looking for dinner. Their preferences are: {userInput}. Recommend 3 restaurants that are highly regarded by international visitors but are NOT typical tourist traps. Focus on authentic, high-quality experiences. Include the restaurant name, a short description of why it's special and authentic, and a general price range. Format the response as simple HTML with <h4> for names and <p> for descriptions."
+                },
+                freeday: {
+                    title: "AI Itinerary Planner",
+                    prompt: "Describe your interests and available time (e.g., half-day, temples, shopping).",
+                    systemPrompt: "You are an expert tour planner specializing in authentic Japanese experiences for foreign visitors. A researcher has a free day and their interests are: {userInput}. Create a sample itinerary that avoids overcrowded tourist spots and focuses on authentic, memorable experiences that international visitors love. Be creative and practical. Include timings, locations, and brief descriptions for each activity, explaining why each place is a special choice. Format the response as simple HTML with <h4> for locations/times and <p> for details."
+                }
+            };
+
+            async function callGeminiAPI(prompt, retries = 3, delay = 1000) {
+                if (!YOUR_API_KEY) {
+                    geminiModalResult.innerHTML = `<p class="text-red-500 text-center">API key is not set. Please add your API key in the script tag.</p>`;
+                    return;
+                }
+
+                geminiGenerateBtn.disabled = true;
+                geminiBtnText.classList.add('hidden');
+                geminiLoader.classList.remove('hidden');
+                geminiModalResult.innerHTML = '<div class="text-center p-4">Generating ideas...</div>';
+
+                const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-05-20:generateContent?key=${YOUR_API_KEY}`;
+                const payload = { contents: [{ parts: [{ text: prompt }] }] };
+
+                try {
+                    const response = await fetch(apiUrl, {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify(payload)
+                    });
+                    if (!response.ok) throw new Error(`API Error: ${response.status}`);
+                    
+                    const result = await response.json();
+                    const text = result.candidates?.[0]?.content?.parts?.[0]?.text;
+                    if (text) {
+                        geminiModalResult.innerHTML = text;
+                    } else {
+                        throw new Error("Invalid response structure from API.");
+                    }
+                } catch (error) {
+                    console.error(`Attempt failed:`, error);
+                    if (retries > 1) {
+                        await new Promise(resolve => setTimeout(resolve, delay));
+                        return callGeminiAPI(prompt, retries - 1, delay * 2);
+                    } else {
+                        geminiModalResult.innerHTML = `<p class="text-red-500 text-center">Sorry, I'm unable to connect to the AI service right now. Please try again later.</p>`;
+                    }
+                } finally {
+                    geminiGenerateBtn.disabled = false;
+                    geminiBtnText.classList.remove('hidden');
+                    geminiLoader.classList.add('hidden');
+                }
+            }
+
+            document.querySelectorAll('.gemini-feature-btn').forEach(btn => {
+                btn.addEventListener('click', () => {
+                    const feature = btn.dataset.feature;
+                    const config = featureConfig[feature];
+                    geminiModalTitle.textContent = config.title;
+                    geminiModalPrompt.textContent = config.prompt;
+                    geminiModalInput.value = '';
+                    geminiModalResult.innerHTML = '';
+                    geminiGenerateBtn.dataset.feature = feature;
+                    geminiModal.classList.remove('modal-hidden');
+                });
+            });
+
+            geminiGenerateBtn.addEventListener('click', function() {
+                const feature = this.dataset.feature;
+                const userInput = geminiModalInput.value.trim();
+                if (!userInput) {
+                    geminiModalResult.innerHTML = `<p class="text-center text-red-500">Please enter your preferences first.</p>`;
+                    return;
+                }
+                const prompt = featureConfig[feature].systemPrompt.replace('{userInput}', userInput);
+                callGeminiAPI(prompt);
+            });
+            
+            const closeGeminiModal = () => geminiModal.classList.add('modal-hidden');
+            document.getElementById('geminiCloseModalBtn').addEventListener('click', closeGeminiModal);
+            geminiModal.querySelector('.gemini-modal-overlay').addEventListener('click', closeGeminiModal);
+        });
+    </script>
 </body>
 </html>
