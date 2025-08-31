@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -17,7 +16,6 @@
             --accent-color: #d16058; /* A slightly muted, elegant red */
             --border-color: #eaeaea;
         }
-
         body {
             background-color: var(--bg-color);
             color: var(--text-color);
@@ -26,13 +24,11 @@
             -moz-osx-font-smoothing: grayscale;
             line-height: 1.7;
         }
-
         h1, h2, h3 {
             font-family: 'Playfair Display', serif;
             color: var(--primary-color);
             font-weight: 700;
         }
-
         .card {
             background-color: white;
             border-radius: 16px;
@@ -46,7 +42,6 @@
             transform: translateY(-6px);
             box-shadow: 0 12px 40px rgba(0, 0, 0, 0.12);
         }
-
         /* The main timeline container */
         .timeline-container {
             position: relative;
@@ -54,7 +49,6 @@
             max-width: 800px;
             margin: 0 auto;
         }
-
         /* The vertical line acting as the timeline's spine */
         .timeline-spine {
             position: absolute;
@@ -65,7 +59,6 @@
             background-color: var(--border-color);
             z-index: 0;
         }
-        
         /* The progress bar that fills up on scroll */
         #timeline-progress {
             position: absolute;
@@ -77,7 +70,6 @@
             z-index: 1;
             transition: height 0.1s linear;
         }
-
         .timeline-item {
             position: relative;
             display: flex;
@@ -95,7 +87,6 @@
             opacity: 1;
             transform: translateY(0);
         }
-
         /* The marker on the timeline spine (Kamon style) */
         .timeline-marker {
             position: relative;
@@ -117,12 +108,10 @@
             color: var(--primary-color);
             stroke-width: 2;
         }
-
         .timeline-content {
             flex-grow: 1;
             padding-top: 0.5rem; /* Align content with the marker nicely */
         }
-        
         .card-header {
             display: flex;
             align-items: center;
@@ -131,14 +120,12 @@
             border-left: 4px solid;
             padding-left: 1rem;
         }
-        
         /* Color accents for each card header */
         .card-accent-1 { border-color: #0077b6; }
         .card-accent-2 { border-color: #f77f00; }
         .card-accent-3 { border-color: #0081a7; }
         .card-accent-4 { border-color: #d62828; }
         .card-accent-5 { border-color: #6a4c93; }
-
         details summary {
             cursor: pointer;
             list-style: none;
@@ -150,7 +137,6 @@
             content: '+'; float: right; color: var(--accent-color); transition: transform 0.2s ease; font-size: 1.5em; line-height: 1; font-weight: 300;
         }
         details[open] summary::after { content: '−'; }
-
         /* Modal Styles */
         .modal-hidden {
             pointer-events: none;
@@ -170,7 +156,6 @@
         .modal-container, .gemini-modal-container {
             transition: transform 0.3s ease, opacity 0.3s ease;
         }
-        
         /* Styling for Gemini-generated HTML */
         #gemini-modal-result h4 {
             font-size: 1.25rem;
@@ -182,13 +167,10 @@
         #gemini-modal-result p { margin-bottom: 0.75rem; }
         #gemini-modal-result ul { list-style-type: disc; padding-left: 1.5rem; }
         #gemini-modal-result li { margin-bottom: 0.5rem; }
-        
     </style>
 </head>
-
 <body class="selection:bg-yellow-200">
     <main class="max-w-4xl mx-auto px-4 pt-16 pb-12">
-        
         <header class="text-center mb-20">
             <h1 class="text-5xl md:text-6xl font-bold tracking-tight leading-tight">Your Japan Research Journey</h1>
             <p class="mt-5 text-xl text-gray-600 max-w-2xl mx-auto">Welcome to Japan! Let team SEED handle seamless support for your on-the-ground needs, so you can focus on great research with peace of mind.</p>
@@ -206,11 +188,10 @@
             </div>
              <p class="mt-6 text-base text-gray-600 border-t border-gray-100 pt-5 flex items-start gap-4">
                 <span class="text-2xl text-[var(--primary-color)]">ℹ️</span> 
-                <div>Show the <strong class="text-gray-900">Japanese address</strong> from "Show Taxi Note" for the exact Facility Information to the Uber/Taxi driver. This is the safest and most reliable way to reach your destination.</div>
+                 <div>Show the <strong class="text-gray-900">Japanese address</strong> from "Show Taxi Note" for the exact Facility Information to the Uber/Taxi driver. This is the safest and most reliable way to reach your destination.</div>
             </p>
         </section>
 
-        <!-- TIMELINE START -->
         <div class="timeline-container" id="timeline-container">
             <div class="timeline-spine"></div>
             <div id="timeline-progress"></div>
@@ -226,7 +207,7 @@
                     <p class="text-gray-700">First time at a facility? It's normal to feel unsure. (Some Linkers do dry-run travel on the day before research) Simply show the <strong>Google Map address (Japanese is best!)</strong> from your Facility Information to your Uber or taxi driver. If you get dropped off incorrectly or can’t find the entrance, <strong>chat us on Teams immediately</strong>, and we’ll guide you.</p>
                 </div>
             </div>
-            
+
             <div class="timeline-item">
                 <div class="timeline-marker">
                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M4 11a8 8 0 0 1 8-8V2a2 2 0 0 0-2-2H6a2 2 0 0 0-2 2v1"/><path d="M10 11a8 8 0 0 1 8-8V2a2 2 0 0 1 2-2h2a2 2 0 0 1 2 2v1"/><path d="M4 11h16a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2v-8a2 2 0 0 1 2-2Z"/><path d="M9 16H7"/><path d="M17 16h-2"/></svg>
@@ -248,9 +229,10 @@
                         <h3 class="text-2xl">Tokyo ↔ Osaka Travel</h3>
                     </div>
                     <p class="text-gray-700">A Seed teammate will <strong>accompany you</strong> on the Shinkansen (bullet train). We handle <strong>ticket purchase and seat assignments</strong> end-to-end. Seed will <strong>front the cost</strong> for you and your accompanying client(s), settling later via <strong>expense reconciliation</strong>. Relax — just bring yourselves!</p>
-                </div>
+                    <button id="openMeetingPointModalBtn" class="mt-4 inline-flex items-center gap-2 justify-center px-4 py-2 rounded-lg bg-gray-100 text-gray-800 font-semibold border border-gray-200 transition hover:bg-gray-200">📍 Show Station Meeting Point</button>
+                    </div>
             </div>
-            
+
             <div class="timeline-item">
                 <div class="timeline-marker">
                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M2 12v10h20V12"/><path d="M6 12H4a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"/><path d="M18 12h2a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2h-2"/><path d="M11.5 2v10M9 12h5"/><path d="M8 7h2"/><path d="M14 7h2"/></svg>
@@ -264,7 +246,7 @@
                     <button data-feature="dinner" class="gemini-feature-btn mt-4 inline-flex items-center gap-2 justify-center px-4 py-2 rounded-lg bg-gray-100 text-gray-800 font-semibold border border-gray-200 transition hover:bg-gray-200">✨ Get Dinner Recommendations</button>
                 </div>
             </div>
-            
+
              <div class="timeline-item">
                 <div class="timeline-marker">
                      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10"/><path d="m9 12 2 2 4-4"/></svg>
@@ -279,8 +261,6 @@
                 </div>
             </div>
         </div>
-        <!-- TIMELINE END -->
-
         <section class="card p-8 mt-20 shadow-xl bg-white">
              <details>
                 <summary>
@@ -291,18 +271,14 @@
                 <ul class="list-disc ml-4 space-y-3 mt-6 text-base text-gray-700">
                     <li><strong>Always carry some cash (¥10,000–¥20,000).</strong> Shrines, street stalls, and smaller shops may still be cash-only.</li>
 		    <li><strong>🏧 ATMs for Overseas Cards.</strong> 7-Eleven ATMs are the most convenient and have English menus. Withdraw larger amounts at once to save on fees.</li>
-
                     <li><strong>Hydrate frequently in summer.</strong> Japan's summers are humid, and heatstroke can sneak up on you.</li>
-
  		   <li><strong>Tax-Free Shopping.</strong> At participating stores, purchases over ¥5,000 are eligible for tax-free with your passport. Keep your passport on you for a smoother process.</li>
-
- 		  
-                    <li><strong>Ping your Seed PM on Teams anytime.</strong> We are on standby throughout your stay. Don't hesitate to reach out for anything!</li>
- <li><strong>🗾Arigatou gozaimasu! = “Thank you very much.”</strong> Use it often—polite and always appreciated.</li>               
-
+ 		                      <li><strong>Ping your Seed PM on Teams anytime.</strong> We are on standby throughout your stay. Don't hesitate to reach out for anything!</li>
+                     <li><strong>🗾Arigatou gozaimasu! = “Thank you very much.”</strong> Use it often—polite and always appreciated.</li>
                  </ul>
              </details>
         </section>
+
     </main>
 
     <footer class="border-t bg-white/90 backdrop-blur-sm sticky bottom-0 z-20 py-5">
@@ -317,7 +293,6 @@
         </div>
     </footer>
 
-    <!-- Taxi Note Modal -->
     <div id="taxiModal" class="modal-hidden fixed inset-0 z-50 flex items-center justify-center p-4">
         <div class="modal-overlay fixed inset-0 bg-black bg-opacity-60 backdrop-blur-sm"></div>
         <div class="modal-container relative bg-white rounded-2xl shadow-2xl p-8 max-w-lg w-full transform">
@@ -347,7 +322,33 @@
         </div>
     </div>
     
-    <!-- Gemini Feature Modal -->
+    <div id="meetingPointModal" class="modal-hidden fixed inset-0 z-50 flex items-center justify-center p-4">
+        <div class="modal-overlay fixed inset-0 bg-black bg-opacity-60 backdrop-blur-sm"></div>
+        <div class="modal-container relative bg-white rounded-2xl shadow-2xl p-8 max-w-lg w-full transform">
+            <div id="station-selection">
+                <h3 class="text-3xl font-bold mb-6 text-center">Choose Your Station</h3>
+                <div class="flex flex-col gap-4">
+                    <button data-station="tokyo" class="station-btn text-left w-full p-4 rounded-lg border-2 border-gray-200 hover:border-blue-500 hover:bg-blue-50 transition">
+                        <span class="font-bold text-lg text-gray-800">Tokyo Station</span><br>
+                        <span class="text-gray-600">Select for meeting point details</span>
+                    </button>
+                    <button data-station="osaka" class="station-btn text-left w-full p-4 rounded-lg border-2 border-gray-200 hover:border-blue-500 hover:bg-blue-50 transition">
+                        <span class="font-bold text-lg text-gray-800">Shin-Osaka Station</span><br>
+                        <span class="text-gray-600">Select for meeting point details</span>
+                    </button>
+                </div>
+            </div>
+            <div id="station-details-display" class="hidden">
+                <h3 id="station-name" class="text-3xl font-bold mb-4 text-center"></h3>
+                <div id="station-details" class="text-lg bg-gray-100 p-6 rounded-lg text-center text-gray-800 leading-relaxed"></div>
+                <div class="mt-8 flex flex-col sm:flex-row gap-4">
+                     <button id="back-to-station-selection" class="w-full sm:w-auto flex-1 inline-flex items-center justify-center gap-2 px-4 py-3 rounded-xl bg-gray-200 text-gray-800 font-semibold transition hover:bg-gray-300"><span>← Back</span></button>
+                     <a id="open-map-btn" href="#" target="_blank" class="w-full sm:w-auto flex-1 inline-flex items-center justify-center gap-3 px-4 py-3 rounded-xl bg-[var(--primary-color)] text-white font-semibold transition hover:opacity-90"><span class="text-xl">🗺️</span> Open Google Map</a>
+                </div>
+            </div>
+            <button id="closeMeetingPointModalBtn" class="absolute -top-3 -right-3 h-10 w-10 flex items-center justify-center bg-white rounded-full shadow-lg text-gray-600 hover:text-red-500 hover:rotate-90 transition-transform"><svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg></button>
+        </div>
+    </div>
     <div id="geminiModal" class="modal-hidden fixed inset-0 z-50 flex items-center justify-center p-4">
         <div class="gemini-modal-overlay fixed inset-0 bg-black bg-opacity-60 backdrop-blur-sm"></div>
         <div class="gemini-modal-container relative bg-white rounded-2xl shadow-2xl p-8 max-w-2xl w-full transform">
@@ -365,7 +366,6 @@
         </div>
     </div>
 
-
     <script>
         document.addEventListener('DOMContentLoaded', function() {
             // --- Timeline Logic ---
@@ -379,7 +379,7 @@
                 });
             }, { threshold: 0.2 });
             timelineItems.forEach(item => observer.observe(item));
-            
+
             const timelineContainer = document.getElementById('timeline-container');
             const progressEl = document.getElementById('timeline-progress');
             if (timelineContainer && progressEl) {
@@ -403,10 +403,10 @@
             document.getElementById('openTaxiModalBtn').addEventListener('click', () => taxiModal.classList.remove('modal-hidden'));
             document.getElementById('closeModalBtn').addEventListener('click', () => taxiModal.classList.add('modal-hidden'));
             taxiModal.querySelector('.modal-overlay').addEventListener('click', () => taxiModal.classList.add('modal-hidden'));
-            
+
             const facilitySelectionDiv = document.getElementById('facility-selection');
             const addressDisplayDiv = document.getElementById('address-display');
-            
+
             const showAddressView = (facilityKey) => {
                 const data = facilityData[facilityKey];
                 document.getElementById('facility-name').textContent = data.name;
@@ -429,6 +429,52 @@
                     setTimeout(() => { this.innerHTML = '<span class="text-xl">📋</span> Copy Address'; }, 2000);
                 });
             });
+            
+            // --- ▼▼▼ ADDED SCRIPT ▼▼▼ ---
+            // --- Station Meeting Point Modal Logic ---
+            const meetingPointData = {
+                tokyo: { 
+                    name: "Tokyo Station Meeting Point", 
+                    details: "Meet Seed at Yaesu Exit Taxi drop off point (There is only one drop off point for Taxi at Yaesu Exit)",
+                    mapUrl: "https://maps.app.goo.gl/Jx7h6etgm3Sg5PzQ8"
+                },
+                osaka: {
+                    name: "Shin-Osaka Station Meeting Point",
+                    details: "Ask your driver to be dropped off for Shinkansen (There is only one drop off point for Shinkansen at Shi-Osaka station)",
+                    mapUrl: "https://maps.app.goo.gl/fa9i1mNyi7Tzb2DS8"
+                }
+            };
+
+            const meetingPointModal = document.getElementById('meetingPointModal');
+            const openMeetingPointBtn = document.getElementById('openMeetingPointModalBtn');
+            const closeMeetingPointBtn = document.getElementById('closeMeetingPointModalBtn');
+            const stationSelectionDiv = document.getElementById('station-selection');
+            const stationDetailsDiv = document.getElementById('station-details-display');
+
+            openMeetingPointBtn.addEventListener('click', () => meetingPointModal.classList.remove('modal-hidden'));
+            closeMeetingPointBtn.addEventListener('click', () => meetingPointModal.classList.add('modal-hidden'));
+            meetingPointModal.querySelector('.modal-overlay').addEventListener('click', () => meetingPointModal.classList.add('modal-hidden'));
+
+            const showStationDetailsView = (stationKey) => {
+                const data = meetingPointData[stationKey];
+                document.getElementById('station-name').textContent = data.name;
+                document.getElementById('station-details').innerText = data.details;
+                document.getElementById('open-map-btn').href = data.mapUrl;
+                stationSelectionDiv.classList.add('hidden');
+                stationDetailsDiv.classList.remove('hidden');
+            };
+            
+            const showStationSelectionView = () => {
+                stationSelectionDiv.classList.remove('hidden');
+                stationDetailsDiv.classList.add('hidden');
+            };
+
+            document.querySelectorAll('.station-btn').forEach(btn => {
+                btn.addEventListener('click', () => showStationDetailsView(btn.dataset.station));
+            });
+            
+            document.getElementById('back-to-station-selection').addEventListener('click', showStationSelectionView);
+            // --- ▲▲▲ ADDED SCRIPT ▲▲▲ ---
 
             // --- Gemini API Feature Logic ---
             const geminiModal = document.getElementById('geminiModal');
@@ -478,7 +524,7 @@
                         body: JSON.stringify(payload)
                     });
                     if (!response.ok) throw new Error(`API Error: ${response.status}`);
-                    
+                                        
                     const result = await response.json();
                     const text = result.candidates?.[0]?.content?.parts?.[0]?.text;
                     if (text) {
@@ -532,4 +578,3 @@
     </script>
 </body>
 </html>
-
