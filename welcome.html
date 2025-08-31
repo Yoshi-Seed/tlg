@@ -302,7 +302,7 @@
     <footer class="border-t bg-white/90 backdrop-blur-sm sticky bottom-0 z-20 py-5">
         <div class="max-w-4xl mx-auto px-4 flex flex-col sm:flex-row items-center justify-between gap-4">
             <div>
-                <div class="font-bold text-gray-600 text-lg">We're on standby throughout your stay. Message us on Teams anytime.</div>
+                <div class="font-bold text-gray-600 text-lg">We're on standby throughout your stay.</div>
             </div>
             <a href="https://teams.microsoft.com/l/chat/0/0?users=y.honda@seedplanning.co.jp&message=Hello%20Seed%20PM" target="_blank" class="inline-flex items-center gap-3 px-5 py-2 rounded-full bg-[var(--accent-color)] text-white font-semibold transition hover:opacity-90 shadow-lg text-base">
                 <span class="text-l">💬</span> Open Teams Chat
@@ -376,7 +376,7 @@
             <h3 id="gemini-modal-title" class="text-3xl font-bold mb-4 text-center"></h3>
             <p id="gemini-modal-prompt" class="text-center text-gray-600 mb-6"></p>
             <div class="space-y-4">
-                <textarea id="gemini-modal-input" class="w-full h-24 p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[var(--primary-color)]" placeholder="e.g., casual ramen near Shibuya, Haf day in Kamakur..."></textarea>
+                <textarea id="gemini-modal-input" class="w-full h-24 p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[var(--primary-color)]" placeholder="e.g., casual ramen near Shibuya, Haf day in Kamakura..."></textarea>
                 <button id="gemini-modal-generate-btn" class="w-full inline-flex items-center justify-center gap-3 px-4 py-3 rounded-xl bg-[var(--accent-color)] text-white font-semibold transition hover:opacity-90 disabled:opacity-50">
                     <span id="gemini-btn-text">✨ Generate Ideas</span>
                     <div id="gemini-loader" class="hidden w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
@@ -420,7 +420,7 @@
             const facilityData = {
                 osaka: { 
                     name: "Osaka: J-Facility (Ipsos)", 
-                    address: "大阪市北区東天満1-12-12\nイプソスビル 1階",
+                    address: "大阪市北区東天満1-12-12\nイプソスビル1階",
                     mapUrl: "https://maps.app.goo.gl/Dvro83gEMMahK4DM6"
                 },
                 'tokyo-c': { 
@@ -430,7 +430,7 @@
                 },
                 'tokyo-d': { 
                     name: "Tokyo: Sugata Research Space D", 
-                    address: "渋谷区代々木1-57-4\nドルミ第2代々木ビル 1階",
+                    address: "渋谷区代々木1-57-4\nドルミ第2代々木ビル1階",
                     mapUrl: "https://goo.gl/maps/MEVQdYVXD9HyRebs9"
                 }
             };
@@ -465,12 +465,12 @@
             const meetingPointData = {
                 tokyo: { 
                     name: "Tokyo Station Meeting Point", 
-                    details: "Meet Seed team at Tokyo station <Strong>Yaesu Exit </strong> Taxi drop off point (There is only one drop off point for Taxi at Yaesu Exit)",
+                    details: "Meet Seed team at Tokyo station Yaesu Exit Taxi drop off point (There is only one drop off point for Taxi at Yaesu Exit)",
                     mapUrl: "https://maps.app.goo.gl/Jx7h6etgm3Sg5PzQ8"
                 },
                 osaka: {
                     name: "Shin-Osaka Station Meeting Point",
-                    details: "Meet Seed team at<strong> Shin-Osaka station</strong>. Ask your driver to be dropped off for Shinkansen (There is only one drop off point for Shinkansen at Shi-Osaka station)",
+                    details: "Meet Seed team at Shin-Osaka station (⚠️Not Osaka). Ask your driver to be dropped off for Shinkansen (There is only one drop off point for Shinkansen at Shin-Osaka station)",
                     mapUrl: "https://maps.app.goo.gl/fa9i1mNyi7Tzb2DS8"
                 }
             };
