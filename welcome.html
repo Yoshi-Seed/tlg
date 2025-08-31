@@ -42,30 +42,27 @@
             transform: translateY(-6px);
             box-shadow: 0 12px 40px rgba(0, 0, 0, 0.12);
         }
-        /* The main timeline container */
         .timeline-container {
             position: relative;
             padding: 3rem 0;
             max-width: 800px;
             margin: 0 auto;
         }
-        /* The vertical line acting as the timeline's spine */
         .timeline-spine {
             position: absolute;
             top: 0;
-            left: 21px; /* Center of the 44px marker */
+            left: 21px;
             width: 3px;
             height: 100%;
             background-color: var(--border-color);
             z-index: 0;
         }
-        /* The progress bar that fills up on scroll */
         #timeline-progress {
             position: absolute;
             top: 0;
             left: 21px;
             width: 3px;
-            height: 0; /* Initially 0, will be set by JS */
+            height: 0;
             background: linear-gradient(to bottom, var(--primary-color), var(--accent-color));
             z-index: 1;
             transition: height 0.1s linear;
@@ -87,7 +84,6 @@
             opacity: 1;
             transform: translateY(0);
         }
-        /* The marker on the timeline spine (Kamon style) */
         .timeline-marker {
             position: relative;
             flex-shrink: 0;
@@ -100,7 +96,7 @@
             border: 3px solid var(--primary-color);
             border-radius: 50%;
             z-index: 2;
-            box-shadow: 0 0 0 4px var(--bg-color); /* Creates a cutout effect */
+            box-shadow: 0 0 0 4px var(--bg-color);
         }
         .timeline-marker svg {
             width: 24px;
@@ -110,7 +106,7 @@
         }
         .timeline-content {
             flex-grow: 1;
-            padding-top: 0.5rem; /* Align content with the marker nicely */
+            padding-top: 0.5rem;
         }
         .card-header {
             display: flex;
@@ -120,7 +116,6 @@
             border-left: 4px solid;
             padding-left: 1rem;
         }
-        /* Color accents for each card header */
         .card-accent-1 { border-color: #0077b6; }
         .card-accent-2 { border-color: #f77f00; }
         .card-accent-3 { border-color: #0081a7; }
@@ -137,7 +132,6 @@
             content: '+'; float: right; color: var(--accent-color); transition: transform 0.2s ease; font-size: 1.5em; line-height: 1; font-weight: 300;
         }
         details[open] summary::after { content: '−'; }
-        /* Modal Styles */
         .modal-hidden {
             pointer-events: none;
         }
@@ -156,7 +150,6 @@
         .modal-container, .gemini-modal-container {
             transition: transform 0.3s ease, opacity 0.3s ease;
         }
-        /* Styling for Gemini-generated HTML */
         #gemini-modal-result h4 {
             font-size: 1.25rem;
             margin-top: 1rem;
@@ -167,33 +160,33 @@
         #gemini-modal-result p { margin-bottom: 0.75rem; }
         #gemini-modal-result ul { list-style-type: disc; padding-left: 1.5rem; }
         #gemini-modal-result li { margin-bottom: 0.5rem; }
-
-        /* Custom Header Style */
         .custom-header {
-            background-color: #1a2a4b; /* TLGのコーポレートカラーに近い濃い青 */
+            background-color: #1a2a4b;
             color: #ffffff;
-            padding: 0.75rem 1rem;
-            font-size: 1rem;
-            font-weight: 600;
-            display: flex;
-            align-items: center;
-            justify-content: center;
+            padding: 0.5rem 1rem;
             width: 100%;
             box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+            text-align: center;
         }
     </style>
 </head>
 <body class="selection:bg-yellow-200">
     <div class="custom-header">
-        SEED x TLG | On-the-ground partnership
-    </div>
+        <p class="text-sm font-light tracking-wider opacity-80">SEED x TLG | On-the-Ground Support</p>
+       </div>
 
     <main class="max-w-4xl mx-auto px-4 pt-12 pb-12">
-        <header class="text-center mb-20">
-            <img src="https://yoshi-seed.github.io/tlg/seed-planning-logo.png" alt="Seed Planning Logo" class="mx-auto mb-8" style="max-height: 50px;">
+        <header class="text-center mb-12">
+            <div class="flex justify-center items-center gap-6 mb-8">
+                <img src="https://yoshi-seed.github.io/tlg/seed-planning-logo.png" alt="TLG / SEED Logo" style="height: 45px;">
+               </div>
             <h1 class="text-5xl md:text-6xl font-bold tracking-tight leading-tight">Your Japan Research Journey</h1>
-            <p class="mt-5 text-xl text-gray-600 max-w-2xl mx-auto">Welcome to Japan! Team Seed will assist your on-the-ground needs, so you can focus on great research with peace of mind.</p>
+   <p class="mt-5 text-xl text-gray-600 max-w-2xl mx-auto">Welcome to Japan! Team Seed will assist your on-the-ground needs, so you can focus on great research with peace of mind.</p>
         </header>
+        
+        <div class="mb-20">
+             <img src="https://yoshi-seed.github.io/tlg/welcome_tlg.png" alt="Welcome to Japan banner with iconic landmarks" class="w-full h-auto rounded-2xl shadow-xl object-cover">
+        </div>
 
         <section class="card p-8 mb-20 shadow-xl bg-white">
             <h2 class="text-3xl flex items-center gap-4 mb-6"><span class="text-3xl">🚀</span> Quick Actions</h2>
@@ -415,7 +408,6 @@
                 handleScroll();
             }
 
-            // --- ▼▼▼ MODIFIED SCRIPT ▼▼▼ ---
             // --- Taxi Modal Logic ---
             const facilityData = {
                 osaka: { 
@@ -459,7 +451,6 @@
                 btn.addEventListener('click', () => showAddressView(btn.dataset.facility));
             });
             document.getElementById('back-to-selection').addEventListener('click', showSelectionView);
-            // --- ▲▲▲ MODIFIED SCRIPT ▲▲▲ ---
             
             // --- Station Meeting Point Modal Logic ---
             const meetingPointData = {
