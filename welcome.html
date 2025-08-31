@@ -230,7 +230,7 @@
                     </div>
                     <p class="text-gray-700">A Seed teammate will <strong>accompany you</strong> on the Shinkansen (bullet train). We handle <strong>ticket purchase and seat assignments</strong> end-to-end. Seed will <strong>front the cost</strong> for you and your accompanying client(s), settling later via <strong>expense reconciliation</strong>. Relax — just bring yourselves!</p>
                     <button id="openMeetingPointModalBtn" class="mt-4 inline-flex items-center gap-2 justify-center px-4 py-2 rounded-lg bg-gray-100 text-gray-800 font-semibold border border-gray-200 transition hover:bg-gray-200">📍 Show Station Meeting Point</button>
-                    </div>
+                </div>
             </div>
 
             <div class="timeline-item">
@@ -301,11 +301,15 @@
                 <div class="flex flex-col gap-4">
                     <button data-facility="osaka" class="facility-btn text-left w-full p-4 rounded-lg border-2 border-gray-200 hover:border-blue-500 hover:bg-blue-50 transition">
                         <span class="font-bold text-lg text-gray-800">Osaka: J-Facility (Ipsos)</span><br>
-                        <span class="text-gray-600">Select for Japanese address</span>
+                        <span class="text-gray-600">Select for Japanese address & Map</span>
                     </button>
-                    <button data-facility="tokyo" class="facility-btn text-left w-full p-4 rounded-lg border-2 border-gray-200 hover:border-blue-500 hover:bg-blue-50 transition">
-                        <span class="font-bold text-lg text-gray-800">Tokyo: Sugata Research Space C/D</span><br>
-                        <span class="text-gray-600">Select for Japanese address</span>
+                    <button data-facility="tokyo-c" class="facility-btn text-left w-full p-4 rounded-lg border-2 border-gray-200 hover:border-blue-500 hover:bg-blue-50 transition">
+                        <span class="font-bold text-lg text-gray-800">Tokyo: Sugata Research Space C</span><br>
+                        <span class="text-gray-600">Select for Japanese address & Map</span>
+                    </button>
+                    <button data-facility="tokyo-d" class="facility-btn text-left w-full p-4 rounded-lg border-2 border-gray-200 hover:border-blue-500 hover:bg-blue-50 transition">
+                        <span class="font-bold text-lg text-gray-800">Tokyo: Sugata Research Space D</span><br>
+                        <span class="text-gray-600">Select for Japanese address & Map</span>
                     </button>
                 </div>
             </div>
@@ -315,13 +319,12 @@
                 <div id="japanese-address" class="text-2xl lg:text-3xl bg-gray-100 p-6 rounded-lg text-center font-semibold text-gray-800 tracking-wider leading-relaxed"></div>
                 <div class="mt-8 flex flex-col sm:flex-row gap-4">
                      <button id="back-to-selection" class="w-full sm:w-auto flex-1 inline-flex items-center justify-center gap-2 px-4 py-3 rounded-xl bg-gray-200 text-gray-800 font-semibold transition hover:bg-gray-300"><span>← Back</span></button>
-                     <button id="copy-address-btn" class="w-full sm:w-auto flex-1 inline-flex items-center justify-center gap-3 px-4 py-3 rounded-xl bg-[var(--primary-color)] text-white font-semibold transition hover:opacity-90"><span class="text-xl">📋</span> Copy Address</button>
+                     <a id="open-taxi-map-btn" href="#" target="_blank" class="w-full sm:w-auto flex-1 inline-flex items-center justify-center gap-3 px-4 py-3 rounded-xl bg-[var(--primary-color)] text-white font-semibold transition hover:opacity-90"><span class="text-xl">🗺️</span> Open Google Map</a>
                 </div>
             </div>
             <button id="closeModalBtn" class="absolute -top-3 -right-3 h-10 w-10 flex items-center justify-center bg-white rounded-full shadow-lg text-gray-600 hover:text-red-500 hover:rotate-90 transition-transform"><svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg></button>
         </div>
     </div>
-    
     <div id="meetingPointModal" class="modal-hidden fixed inset-0 z-50 flex items-center justify-center p-4">
         <div class="modal-overlay fixed inset-0 bg-black bg-opacity-60 backdrop-blur-sm"></div>
         <div class="modal-container relative bg-white rounded-2xl shadow-2xl p-8 max-w-lg w-full transform">
@@ -349,6 +352,7 @@
             <button id="closeMeetingPointModalBtn" class="absolute -top-3 -right-3 h-10 w-10 flex items-center justify-center bg-white rounded-full shadow-lg text-gray-600 hover:text-red-500 hover:rotate-90 transition-transform"><svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg></button>
         </div>
     </div>
+
     <div id="geminiModal" class="modal-hidden fixed inset-0 z-50 flex items-center justify-center p-4">
         <div class="gemini-modal-overlay fixed inset-0 bg-black bg-opacity-60 backdrop-blur-sm"></div>
         <div class="gemini-modal-container relative bg-white rounded-2xl shadow-2xl p-8 max-w-2xl w-full transform">
@@ -394,10 +398,24 @@
                 handleScroll();
             }
 
+            // --- ▼▼▼ MODIFIED SCRIPT ▼▼▼ ---
             // --- Taxi Modal Logic ---
             const facilityData = {
-                osaka: { name: "Osaka: J-Facility (Ipsos)", address: "\n大阪市北区東天満1-12-12\nイプソスビル 1階" },
-                tokyo: { name: "Tokyo: Sugata Research Space C/D", address: "\n渋谷区代々木1-57-4\nドルミ第2代々木ビル 1階" }
+                osaka: { 
+                    name: "Osaka: J-Facility (Ipsos)", 
+                    address: "大阪市北区東天満1-12-12\nイプソスビル 1階",
+                    mapUrl: "https://maps.app.goo.gl/Dvro83gEMMahK4DM6"
+                },
+                'tokyo-c': { 
+                    name: "Tokyo: Sugata Research Space C", 
+                    address: "渋谷区代々木1-58-1\n石山ビル",
+                    mapUrl: "https://maps.app.goo.gl/uu6cmciGAZW6PAQW8"
+                },
+                'tokyo-d': { 
+                    name: "Tokyo: Sugata Research Space D", 
+                    address: "渋谷区代々木1-57-4\nドルミ第2代々木ビル 1階",
+                    mapUrl: "https://goo.gl/maps/MEVQdYVXD9HyRebs9"
+                }
             };
             const taxiModal = document.getElementById('taxiModal');
             document.getElementById('openTaxiModalBtn').addEventListener('click', () => taxiModal.classList.remove('modal-hidden'));
@@ -411,6 +429,7 @@
                 const data = facilityData[facilityKey];
                 document.getElementById('facility-name').textContent = data.name;
                 document.getElementById('japanese-address').innerText = data.address;
+                document.getElementById('open-taxi-map-btn').href = data.mapUrl; // Set the map link
                 facilitySelectionDiv.classList.add('hidden');
                 addressDisplayDiv.classList.remove('hidden');
             };
@@ -423,24 +442,18 @@
                 btn.addEventListener('click', () => showAddressView(btn.dataset.facility));
             });
             document.getElementById('back-to-selection').addEventListener('click', showSelectionView);
-            document.getElementById('copy-address-btn').addEventListener('click', function() {
-                navigator.clipboard.writeText(document.getElementById('japanese-address').innerText).then(() => {
-                    this.innerHTML = '<span class="text-xl">✅</span> Copied!';
-                    setTimeout(() => { this.innerHTML = '<span class="text-xl">📋</span> Copy Address'; }, 2000);
-                });
-            });
+            // --- ▲▲▲ MODIFIED SCRIPT ▲▲▲ ---
             
-            // --- ▼▼▼ ADDED SCRIPT ▼▼▼ ---
             // --- Station Meeting Point Modal Logic ---
             const meetingPointData = {
                 tokyo: { 
                     name: "Tokyo Station Meeting Point", 
-                    details: "Meet Seed at Yaesu Exit Taxi drop off point (There is only one drop off point for Taxi at Yaesu Exit)",
+                    details: "Meet Seed team at Tokyo station Yaesu Exit Taxi drop off point (There is only one drop off point for Taxi at Yaesu Exit)",
                     mapUrl: "https://maps.app.goo.gl/Jx7h6etgm3Sg5PzQ8"
                 },
                 osaka: {
                     name: "Shin-Osaka Station Meeting Point",
-                    details: "Ask your driver to be dropped off for Shinkansen (There is only one drop off point for Shinkansen at Shi-Osaka station)",
+                    details: "Ask your driver to be dropped off for Shinkansen at Shin-Osaka station (There is only one drop off point for Shinkansen at Shi-Osaka station)",
                     mapUrl: "https://maps.app.goo.gl/fa9i1mNyi7Tzb2DS8"
                 }
             };
@@ -474,7 +487,6 @@
             });
             
             document.getElementById('back-to-station-selection').addEventListener('click', showStationSelectionView);
-            // --- ▲▲▲ ADDED SCRIPT ▲▲▲ ---
 
             // --- Gemini API Feature Logic ---
             const geminiModal = document.getElementById('geminiModal');
