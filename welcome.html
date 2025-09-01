@@ -166,7 +166,7 @@
             };
 
             async function callGeminiAPI(prompt, retries = 3, delay = 1000) {
-                if (!YOUR_API_KEY || YOUR_API_KEY === "YOUR_API_KEY_HERE") {
+                if (!YOUR_API_KEY || YOUR_API_KEY === "AIzaSyB-V6HbuAuOGqr62yF6IC92xbWlggwlQrE") {
                     geminiModalResult.innerHTML = `<p class="text-red-500 text-center">API key is not set. Please add your API key in the script tag.</p>`;
                     return;
                 }
@@ -250,4 +250,5 @@
             geminiModal.querySelector('.gemini-modal-overlay').addEventListener('click', closeGeminiModal);
         });
     </script></body></html>
+
 
