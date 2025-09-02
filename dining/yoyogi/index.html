@@ -1,0 +1,368 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tokyo Dining Guide: A Sugata Research Selection</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    <style>
+        /* General Body Styles */
+        :root {
+            --background-color: #121212;
+            --card-color: #1E1E1E;
+            --primary-text: #EAEAEA;
+            --secondary-text: #B3B3B3;
+            --accent-color: #F5B537;
+            --shadow-color: rgba(245, 181, 55, 0.1);
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            margin: 0;
+            background-color: var(--background-color);
+            color: var(--primary-text);
+            line-height: 1.7;
+        }
+
+        /* Hero Header Section with Video */
+        .hero {
+            position: relative;
+            height: 80vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            color: white;
+            padding: 0 20px;
+            overflow: hidden;
+        }
+
+        #hero-video {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            min-width: 100%;
+            min-height: 100%;
+            width: auto;
+            height: auto;
+            z-index: -2;
+            transform: translateX(-50%) translateY(-50%);
+            object-fit: cover;
+        }
+        
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.65);
+            z-index: -1;
+        }
+
+        .hero-content h1 {
+            font-family: 'Playfair Display', serif;
+            font-size: 4rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            text-shadow: 0 2px 10px rgba(0,0,0,0.5);
+        }
+
+        .hero-content p {
+            font-size: 1.25rem;
+            font-weight: 300;
+            max-width: 650px;
+            text-shadow: 0 1px 5px rgba(0,0,0,0.5);
+        }
+
+        /* Main Content Container */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 60px 20px;
+        }
+
+        /* Introduction Section */
+        .intro {
+            text-align: center;
+            margin-bottom: 80px;
+        }
+        
+        .intro img {
+            max-width: 100%;
+            height: auto;
+            margin-bottom: 2rem;
+            border-radius: 10px;
+            border: 1px solid #2a2a2a;
+        }
+
+        .intro h2 {
+            font-family: 'Playfair Display', serif;
+            font-size: 2.8rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+        }
+        
+        .intro p {
+            font-size: 1.1rem;
+            max-width: 800px;
+            margin: 0 auto;
+            color: var(--secondary-text);
+        }
+        
+        /* Section Title Styling */
+        .section-title {
+            text-align: center;
+            margin-bottom: 50px;
+        }
+        .section-title h2 {
+            font-family: 'Playfair Display', serif;
+            font-size: 2.5rem;
+            color: var(--accent-color);
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin: 0;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #333;
+            display: inline-block;
+        }
+
+
+        /* Restaurant Grid Layout */
+        .restaurant-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 35px;
+        }
+
+        /* Card Styling */
+        .card {
+            background: var(--card-color);
+            border-radius: 15px;
+            border: 1px solid #2a2a2a;
+            overflow: hidden;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .card:hover {
+            transform: translateY(-12px);
+            box-shadow: 0 15px 30px var(--shadow-color);
+            border-color: var(--accent-color);
+        }
+
+        .card-img {
+            width: 100%;
+            height: 240px;
+            object-fit: cover;
+            background-color: #333;
+        }
+
+        .card-content {
+            padding: 25px;
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .card-content h3 {
+            margin-top: 0;
+            font-size: 1.6rem;
+            font-weight: 600;
+            color: var(--primary-text);
+        }
+
+        .card-content .cuisine {
+            font-weight: 600;
+            color: var(--accent-color);
+            margin-bottom: 15px;
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        
+        .card-content .description {
+            color: var(--secondary-text);
+            flex-grow: 1;
+        }
+
+        .map-link {
+            display: inline-block;
+            margin-top: 1.5rem;
+            padding: 12px 20px;
+            background-color: var(--accent-color);
+            color: #121212;
+            text-decoration: none;
+            border-radius: 8px;
+            font-weight: 600;
+            transition: background-color 0.3s ease, transform 0.2s ease;
+            text-align: center;
+        }
+
+        .map-link:hover {
+            background-color: #ffc95e;
+            transform: scale(1.05);
+        }
+
+        /* Footer */
+        .footer {
+            text-align: center;
+            padding: 30px 20px;
+            background-color: #0c0c0c;
+            color: var(--secondary-text);
+            margin-top: 60px;
+            border-top: 1px solid #2a2a2a;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .hero-content h1 {
+                font-size: 2.5rem;
+            }
+            .intro h2 {
+                font-size: 2.2rem;
+            }
+            .section-title h2 {
+                font-size: 2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <header class="hero">
+        <video playsinline autoplay muted loop id="hero-video">
+            <source src="https://www.hobo-shinjuku.com/img/topMovie.mp4" type="video/mp4">
+        </video>
+        <div class="hero-content">
+            <h1>A Taste of Tokyo Awaits.</h1>
+            <p>After your research, unwind and dine in Hobo Shinjuku Norengai, an authentic restaurant alley just a short walk from Sugata Research.</p>
+        </div>
+    </header>
+
+    <main class="container">
+        <section class="intro">
+            <img src="https://www.hobo-shinjuku.com/img/plan.jpg" alt="Map of Hobo Shinjuku Norengai area">
+            <h2>The Perfect Post-Research Idea</h2>
+            <p>Just a 5-minute walk from our Sugata Research facility, Hobo Shinjuku Norengai offers a memorable dining experience perfect for entertaining clients. This unique area, composed of renovated traditional Japanese houses, provides an atmospheric setting with a diverse selection of incredible food.</p>
+        </section>
+
+        <section class="shop-section">
+             <div class="section-title">
+                <h2>Main Building Selections</h2>
+             </div>
+            <div class="restaurant-grid">
+                
+                <div class="card">
+                    <img src="https://www.hobo-shinjuku.com/img/shops-1.jpg" alt="Awa-tsutsumi Champagne Mania" class="card-img">
+                    <div class="card-content">
+                        <h3>Awa-tsutsumi Champagne Mania</h3>
+                        <p class="cuisine">Champagne & Gyoza</p>
+                        <p class="description">An unexpectedly perfect pairing. Enjoy handmade gyoza with premium champagne, including a Moët & Chandon free-flow option.</p>
+                        <a href="https://www.google.com/maps/search/?api=1&query=Awa-tsutsumi+Champagne+Mania" target="_blank" class="map-link">View on Google Maps</a>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <img src="https://www.hobo-shinjuku.com/img/shops-2.jpg" alt="Gyutan Iroha Bettei" class="card-img">
+                    <div class="card-content">
+                        <h3>Gyutan Iroha Bettei</h3>
+                        <p class="cuisine">Charcoal-grilled Beef Tongue</p>
+                        <p class="description">A true Japanese delicacy. This restaurant serves exquisite grilled beef tongue in a calm, traditional setting for an authentic experience.</p>
+                        <a href="https://www.google.com/maps/search/?api=1&query=Gyutan+Iroha+Bettei" target="_blank" class="map-link">View on Google Maps</a>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <img src="https://www.hobo-shinjuku.com/img/shops-3.jpg" alt="Spanish Italian Azzurro520" class="card-img">
+                    <div class="card-content">
+                        <h3>Spanish Italian Azzurro520</h3>
+                        <p class="cuisine">Spanish-Italian</p>
+                        <p class="description">Experience fresh seafood with a Spanish-Italian twist. A fantastic wine selection and terrace seating make it a great place to relax.</p>
+                        <a href="https://www.google.com/maps/search/?api=1&query=Azzurro520+Yoyogi" target="_blank" class="map-link">View on Google Maps</a>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <img src="https://www.hobo-shinjuku.com/img/shops-4.jpg" alt="Aroi Brothers" class="card-img">
+                    <div class="card-content">
+                        <h3>Aroi Brothers</h3>
+                        <p class="cuisine">Asian Street Food Bar</p>
+                        <p class="description">A lively izakaya-style bar serving delicious charcoal-grilled dishes from Thailand, Vietnam, and Singapore.</p>
+                        <a href="https://www.google.com/maps/search/?api=1&query=Aroi+Brothers+Yoyogi" target="_blank" class="map-link">View on Google Maps</a>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <img src="https://www.hobo-shinjuku.com/img/shops-8.jpg" alt="Unakushi Yakitori U-Fuku" class="card-img">
+                    <div class="card-content">
+                        <h3>Unakushi Yakitori U-Fuku</h3>
+                        <p class="cuisine">Eel & Chicken Skewers</p>
+                        <p class="description">For a taste of Japanese soul food, this restaurant specializes in perfectly grilled eel skewers (unakushi) and classic yakitori.</p>
+                        <a href="https://www.google.com/maps/search/?api=1&query=Unakushi+Yakitori+U-Fuku" target="_blank" class="map-link">View on Google Maps</a>
+                    </div>
+                </div>
+                 <div class="card">
+                    <img src="https://www.hobo-shinjuku.com/img/sokoPhoto06.jpg" alt="Sushinjuku" class="card-img">
+                    <div class="card-content">
+                        <h3>Sushinjuku</h3>
+                        <p class="cuisine">Sushi Izakaya</p>
+                        <p class="description">A modern take on the classic sushi bar, combining fresh ingredients with a lively tavern atmosphere. Perfect for a fun night out.</p>
+                        <a href="https://www.google.com/maps/search/?api=1&query=Sushinjuku+Yoyogi" target="_blank" class="map-link">View on Google Maps</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="shop-section" style="margin-top: 80px;">
+             <div class="section-title">
+                <h2>Warehouse Annex</h2>
+             </div>
+            <div class="restaurant-grid">
+                 <div class="card">
+                    <img src="https://www.hobo-shinjuku.com/img/sokoPhoto01.jpg" alt="Fujinoba" class="card-img">
+                    <div class="card-content">
+                        <h3>Fujinoba</h3>
+                        <p class="cuisine">Horse Meat Tavern</p>
+                        <p class="description">Experience the unique and delicious flavors of horse meat cuisine, a popular delicacy in Japan, served in a classic tavern setting.</p>
+                        <a href="https://www.google.com/maps/search/?api=1&query=Fujinoba+Yoyogi" target="_blank" class="map-link">View on Google Maps</a>
+                    </div>
+                </div>
+                <div class="card">
+                    <img src="https://www.hobo-shinjuku.com/img/sokoPhoto03.jpg" alt="Hongdae Pocha" class="card-img">
+                    <div class="card-content">
+                        <h3>Hongdae Pocha</h3>
+                        <p class="cuisine">Korean Cuisine</p>
+                        <p class="description">Authentic Korean dishes in a vibrant and friendly "pocha" (tent bar) style, perfect for sharing with friends and colleagues.</p>
+                        <a href="https://www.google.com/maps/search/?api=1&query=Hongdae+Pocha+Yoyogi" target="_blank" class="map-link">View on Google Maps</a>
+                    </div>
+                </div>
+                <div class="card">
+                    <img src="https://www.hobo-shinjuku.com/img/sokoPhoto07.jpg" alt="Yakigakiya" class="card-img">
+                    <div class="card-content">
+                        <h3>Yakigakiya</h3>
+                        <p class="cuisine">Oysters and Wine</p>
+                        <p class="description">A specialty shop offering fresh, grilled oysters paired with a curated selection of wines. A treat for any seafood lover.</p>
+                        <a href="https://www.google.com/maps/search/?api=1&query=Yakigakiya+Yoyogi" target="_blank" class="map-link">View on Google Maps</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <footer class="footer">
+        <p>This is a dining guide created for clients. All restaurant assets &copy; Hobo Shinjuku Norengai.</p>
+    </footer>
+
+</body>
+</html>
+
