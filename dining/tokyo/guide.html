@@ -32,7 +32,7 @@
             overflow-x: hidden;
         }
 
-        /* Hero Header Section with Video */
+        /* Hero Header Section with Image */
         .hero {
             position: relative;
             height: 100vh;
@@ -43,20 +43,10 @@
             color: white;
             padding: 0 20px;
             overflow: hidden;
-        }
-
-        #hero-video {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            min-width: 100%;
-            min-height: 100%;
-            width: auto;
-            height: auto;
-            z-index: -2;
-            transform: translateX(-50%) translateY(-50%);
-            object-fit: cover;
-            filter: brightness(0.7);
+            background-image: url('tokyo-food-guide.png');
+            background-position: center;
+            background-repeat: no-repeat;
+            background-size: cover;
         }
         
         .hero::before {
@@ -66,12 +56,14 @@
             left: 0;
             right: 0;
             bottom: 0;
-            background: rgba(0, 0, 0, 0.4);
-            z-index: -1;
+            background: rgba(0, 0, 0, 0.5); /* Overlay darkness */
+            z-index: 1;
         }
 
         .hero-content {
             animation: fadeIn 2s ease-in-out;
+            position: relative;
+            z-index: 2;
         }
 
         .hero-content h1 {
@@ -101,6 +93,7 @@
             font-size: 0.9rem;
             letter-spacing: 1px;
             animation: bounce 2s infinite;
+            z-index: 2;
         }
 
         /* Main Content Container */
@@ -296,12 +289,9 @@
 <body>
 
     <header class="hero">
-        <video playsinline autoplay muted loop id="hero-video">
-            <source src="https://assets.mixkit.co/videos/preview/mixkit-japanese-street-food-vendor-40546-large.mp4" type="video/mp4">
-        </video>
         <div class="hero-content">
             <h1>TOKYO FOOD & DRINKS</h1>
-            <p>Your exclusive guide to the finest restaurants in Tokyo, curated for the discerning palate.</p>
+            <p>A special guide for our friends at The Link Group. <br>Your exclusive guide to the finest restaurants in Tokyo, curated for the discerning palate.</p>
         </div>
         <a href="#guide-start" class="scroll-down">EXPLORE THE GUIDE &#9660;</a>
     </header>
