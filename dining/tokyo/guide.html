@@ -1,0 +1,445 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tokyo's Culinary Scene: A Curated Guide</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=Lato:wght@300;400;700&display=swap" rel="stylesheet">
+    <style>
+        /* General Body Styles */
+        :root {
+            --background-color: #0d0d0d;
+            --card-color: #1a1a1a;
+            --primary-text: #f0f0f0;
+            --secondary-text: #a0a0a0;
+            --accent-color: #e6a756;
+            --shadow-color: rgba(230, 167, 86, 0.15);
+            --border-color: #333;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Lato', sans-serif;
+            margin: 0;
+            background-color: var(--background-color);
+            color: var(--primary-text);
+            line-height: 1.7;
+            overflow-x: hidden;
+        }
+
+        /* Hero Header Section with Video */
+        .hero {
+            position: relative;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            color: white;
+            padding: 0 20px;
+            overflow: hidden;
+        }
+
+        #hero-video {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            min-width: 100%;
+            min-height: 100%;
+            width: auto;
+            height: auto;
+            z-index: -2;
+            transform: translateX(-50%) translateY(-50%);
+            object-fit: cover;
+            filter: brightness(0.7);
+        }
+        
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.4);
+            z-index: -1;
+        }
+
+        .hero-content {
+            animation: fadeIn 2s ease-in-out;
+        }
+
+        .hero-content h1 {
+            font-family: 'Playfair Display', serif;
+            font-size: 5rem;
+            font-weight: 900;
+            margin-bottom: 1rem;
+            text-shadow: 0 4px 15px rgba(0,0,0,0.6);
+            letter-spacing: 2px;
+            text-transform: uppercase;
+        }
+
+        .hero-content p {
+            font-size: 1.3rem;
+            font-weight: 300;
+            max-width: 700px;
+            text-shadow: 0 2px 8px rgba(0,0,0,0.6);
+        }
+
+        .scroll-down {
+            position: absolute;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            color: white;
+            text-decoration: none;
+            font-size: 0.9rem;
+            letter-spacing: 1px;
+            animation: bounce 2s infinite;
+        }
+
+        /* Main Content Container */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 80px 20px;
+        }
+
+        /* Parallax Section */
+        .parallax {
+            background-attachment: fixed;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-size: cover;
+            height: 400px;
+            position: relative;
+        }
+        
+        .parallax::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0,0,0,0.5);
+        }
+
+        #parallax-1 { background-image: url('https://images.unsplash.com/photo-1553621042-f6e147245754?q=80&w=2500&auto=format&fit=crop'); }
+        #parallax-2 { background-image: url('https://images.unsplash.com/photo-1617196034796-73dfa7b1fd56?q=80&w=2500&auto=format&fit=crop'); }
+        #parallax-3 { background-image: url('https://images.unsplash.com/photo-1506354666786-959d6d497f1a?q=80&w=2500&auto=format&fit=crop'); }
+
+
+        /* Section Title Styling */
+        .section-title {
+            text-align: center;
+            margin-bottom: 60px;
+        }
+        .section-title h2 {
+            font-family: 'Playfair Display', serif;
+            font-size: 3rem;
+            color: var(--accent-color);
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin: 0;
+            padding-bottom: 15px;
+            border-bottom: 2px solid var(--border-color);
+            display: inline-block;
+        }
+
+        /* Restaurant Grid Layout */
+        .restaurant-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
+            gap: 40px;
+        }
+
+        /* Card Styling */
+        .card {
+            background: var(--card-color);
+            border-radius: 15px;
+            border: 1px solid var(--border-color);
+            overflow: hidden;
+            transition: transform 0.4s ease, box-shadow 0.4s ease;
+            display: flex;
+            flex-direction: column;
+            position: relative;
+        }
+        
+        .card:hover {
+            transform: translateY(-15px) scale(1.02);
+            box-shadow: 0 20px 40px var(--shadow-color);
+            border-color: var(--accent-color);
+        }
+        
+        .card-img-container {
+            width: 100%;
+            height: 250px;
+            overflow: hidden;
+        }
+        .card-img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            background-color: #333;
+            transition: transform 0.4s ease;
+        }
+        
+        .card:hover .card-img {
+            transform: scale(1.1);
+        }
+
+        .card-content {
+            padding: 30px;
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .card-content h3 {
+            margin: 0 0 5px 0;
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--primary-text);
+            font-family: 'Playfair Display', serif;
+        }
+
+        .card-content .cuisine {
+            font-weight: 700;
+            color: var(--accent-color);
+            margin-bottom: 15px;
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        
+        .card-content .description {
+            color: var(--secondary-text);
+            flex-grow: 1;
+            margin-bottom: 1.5rem;
+        }
+
+        .card-footer {
+            margin-top: auto;
+        }
+
+        .website-link {
+            display: inline-block;
+            padding: 12px 25px;
+            background-color: var(--accent-color);
+            color: #121212;
+            text-decoration: none;
+            border-radius: 8px;
+            font-weight: 700;
+            transition: background-color 0.3s ease, transform 0.2s ease;
+            text-align: center;
+        }
+
+        .website-link:hover {
+            background-color: #ffc95e;
+            transform: scale(1.05);
+        }
+
+        .top-pick-badge {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background-color: var(--accent-color);
+            color: #121212;
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.3);
+        }
+
+        /* Footer */
+        .footer {
+            text-align: center;
+            padding: 40px 20px;
+            background-color: #080808;
+            color: var(--secondary-text);
+            margin-top: 60px;
+            border-top: 1px solid var(--border-color);
+        }
+
+        /* Keyframes for animations */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% { transform: translateX(-50%) translateY(0); }
+            40% { transform: translateX(-50%) translateY(-20px); }
+            60% { transform: translateX(-50%) translateY(-10px); }
+        }
+
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .hero-content h1 {
+                font-size: 3rem;
+            }
+            .section-title h2 {
+                font-size: 2.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <header class="hero">
+        <video playsinline autoplay muted loop id="hero-video">
+            <source src="https://assets.mixkit.co/videos/preview/mixkit-japanese-street-food-vendor-40546-large.mp4" type="video/mp4">
+        </video>
+        <div class="hero-content">
+            <h1>TOKYO FOOD & DRINKS</h1>
+            <p>Your exclusive guide to the finest restaurants in Tokyo, curated for the discerning palate.</p>
+        </div>
+        <a href="#guide-start" class="scroll-down">EXPLORE THE GUIDE &#9660;</a>
+    </header>
+
+    <main id="guide-start" class="container">
+        <div class="section-title">
+            <h2>Authentic Japanese Cuisine</h2>
+        </div>
+        <div class="restaurant-grid">
+             <div class="card">
+                <div class="top-pick-badge">Top Pick</div>
+                <div class="card-img-container"><img src="yamamoto-raku.png" alt="Yamato Raku" class="card-img"></div>
+                <div class="card-content">
+                    <h3>Yamato Raku</h3>
+                    <p class="cuisine">Shinjuku • Seasonal Cuisine</p>
+                    <p class="description">A refined yet casual dining establishment with traditional Irori hearth seats, counter seating, and private rooms available.</p>
+                    <div class="card-footer">
+                        <a href="https://www.raku-shinjuku.jp/en/food/" target="_blank" class="website-link">Visit Website</a>
+                    </div>
+                </div>
+            </div>
+            <div class="card">
+                <div class="card-img-container"><img src="shunju-tameikesanno.png" alt="Shunju Tameikesanno" class="card-img"></div>
+                <div class="card-content">
+                    <h3>Shunju Tameikesanno</h3>
+                    <p class="cuisine">Nagatacho • Creative Japanese</p>
+                    <p class="description">Enjoy Japanese-inspired dishes made with organic vegetables and seasonal ingredients in an open space with stunning panoramic city views.</p>
+                    <div class="card-footer">
+                        <a href="https://shunju.com/tameike/menu/" target="_blank" class="website-link">Visit Website</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+    
+    <div class="parallax" id="parallax-1"></div>
+
+    <main class="container">
+        <div class="section-title">
+            <h2>Omakase Sushi</h2>
+        </div>
+        <div class="restaurant-grid">
+             <div class="card">
+                <div class="card-img-container"><img src="sushi-tokyo-zen.png" alt="SUSHI TOKYO TEN" class="card-img"></div>
+                <div class="card-content">
+                    <h3>SUSHI TOKYO TEN</h3>
+                    <p class="cuisine">Shinjuku & Roppongi • Traditional Sushi</p>
+                    <p class="description">Experience the art of sushi as each piece is carefully executed by the chef, allowing you to savor the authentic flavors of the season.</p>
+                     <div class="card-footer">
+                        <a href="https://sushitokyo-ten.com/" target="_blank" class="website-link">Visit Website</a>
+                    </div>
+                </div>
+            </div>
+            <div class="card">
+                 <div class="top-pick-badge">Top Pick</div>
+                <div class="card-img-container"><img src="sushi-itsumi.png" alt="SUSHI ITSUMI" class="card-img"></div>
+                <div class="card-content">
+                    <h3>SUSHI ITSUMI</h3>
+                    <p class="cuisine">Akasaka • Creative Edomae</p>
+                    <p class="description">Edo-style tradition meets creative flair. The allure lies in the 18 to 20 delicate yet playful small plates in your omakase experience.</p>
+                     <div class="card-footer">
+                        <a href="https://www.sushi-itsumi.com/" target="_blank" class="website-link">Visit Website</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <div class="parallax" id="parallax-2"></div>
+
+    <main class="container">
+        <div class="section-title">
+            <h2>Izakaya & Tempura</h2>
+        </div>
+        <div class="restaurant-grid">
+             <div class="card">
+                 <div class="top-pick-badge">Top Pick</div>
+                <div class="card-img-container"><img src="gonpachi.png" alt="Gonpachi Nishiazabu" class="card-img"></div>
+                <div class="card-content">
+                    <h3>Gonpachi Nishiazabu</h3>
+                    <p class="cuisine">Nishiazabu • Izakaya</p>
+                    <p class="description">Featured in the movie 'Kill Bill', this restaurant blends old Japan's charm with a dynamic interior, offering handmade soba and skewers.</p>
+                     <div class="card-footer">
+                        <a href="https://gonpachi.jp/nishi-azabu/" target="_blank" class="website-link">Visit Website</a>
+                    </div>
+                </div>
+            </div>
+            <div class="card">
+                <div class="card-img-container"><img src="tempura-kondo.png" alt="Tempura Kondo" class="card-img"></div>
+                <div class="card-content">
+                    <h3>Tempura Kondo</h3>
+                    <p class="cuisine">Ginza • Tempura Master</p>
+                    <p class="description">With 50+ years of craftsmanship, owner Fumio Kondo's ever-evolving technique continues to captivate guests from around the world.</p>
+                     <div class="card-footer">
+                        <a href="https://tempura-kondo.com/en/" target="_blank" class="website-link">Visit Website</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+    
+    <div class="parallax" id="parallax-3"></div>
+
+    <main class="container">
+        <div class="section-title">
+            <h2>Exquisite Meat Dishes</h2>
+        </div>
+        <div class="restaurant-grid">
+             <div class="card">
+                <div class="card-img-container"><img src="jojoen-menu.png" alt="Yakiniku Jojoen" class="card-img"></div>
+                <div class="card-content">
+                    <h3>Yakiniku Jojoen</h3>
+                    <p class="cuisine">Multiple Locations • High-end Yakiniku</p>
+                    <p class="description">One of the premier high-end barbecue restaurant chains, offering exquisite cuts of carefully selected meat in a luxurious ambiance.</p>
+                     <div class="card-footer">
+                        <a href="https://www.jojoen.co.jp/en/" target="_blank" class="website-link">Visit Website</a>
+                    </div>
+                </div>
+            </div>
+            <div class="card">
+                 <div class="top-pick-badge">Top Pick</div>
+                <div class="card-img-container"><img src="ginza-katsukami.png" alt="Ginza Katsukami" class="card-img"></div>
+                <div class="card-content">
+                    <h3>Ginza Katsukami</h3>
+                    <p class="cuisine">Ginza • Tonkatsu Omakase</p>
+                    <p class="description">A Michelin Bib Gourmand restaurant famous for its tonkatsu omakase, serving a series of different premium pork cuts.</p>
+                     <div class="card-footer">
+                        <a href="https://katsukami.com/ginza-katsukami%20en%2001.html" target="_blank" class="website-link">Visit Website</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer class="footer">
+        <p>A Curated Dining Guide by Your Friends at Sugata Research. <br>All restaurant assets are property of their respective owners.</p>
+    </footer>
+
+</body>
+</html>
+
