@@ -243,29 +243,22 @@
   document.querySelectorAll('.restaurant-grid').forEach(grid=>grid.setAttribute('role','list'));
   document.querySelectorAll('article.card').forEach(card=>card.setAttribute('role','listitem'));
 
-  // --- Fix English Menu URLs that accidentally include quotes or %22 ---
+  // --- English Menu URL guard ---
   document.querySelectorAll('a.menu-link').forEach(a=>{
     let href = a.getAttribute('href') || '';
-    let cleaned = href.trim().replace(/^['"]+|['"]+$/g,'');
-    cleaned = cleaned.replace(/^%22|%22$/g,'');
-    if (cleaned.startsWith('https://') || cleaned.startsWith('http://')) {
-      a.setAttribute('href', cleaned);
-    }
+    let cleaned = href.trim().replace(/^['\"]+|['\"]+$/g,'').replace(/^%22|%22$/g,'');
+    if (cleaned.startsWith('https://') || cleaned.startsWith('http://')) a.setAttribute('href', cleaned);
     a.setAttribute('target','_blank');
     a.setAttribute('rel','noopener noreferrer');
   });
 
-  // --- Simple slideshow (auto-rotate, pause for reduced motion) ---
-  const prefersReduced = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  // --- Simple slideshow (always auto-rotate) ---
   const slides = Array.from(document.querySelectorAll('.slideshow .slide'));
   let i = 0;
-  if (slides.length) slides[0].classList.add('is-active');
-  if (!prefersReduced && slides.length > 1) {
-    setInterval(() => {
-      slides[i].classList.remove('is-active');
-      i = (i + 1) % slides.length;
-      slides[i].classList.add('is-active');
-    }, 3500);
+  const show = (n)=> slides.forEach((s,idx)=> s.classList.toggle('is-active', idx===n));
+  if (slides.length) show(0);
+  if (slides.length > 1) {
+    setInterval(()=>{ i = (i+1)%slides.length; show(i); }, 3500);
   }
 })();</script>
 </body>
