@@ -231,9 +231,25 @@
   </footer>
 
   <script>(function(){
+  // accessibility roles kept
   document.querySelectorAll('.card-img').forEach(img=>img.setAttribute('tabindex','-1'));
   document.querySelectorAll('.restaurant-grid').forEach(grid=>grid.setAttribute('role','list'));
   document.querySelectorAll('article.card').forEach(card=>card.setAttribute('role','listitem'));
+
+  // --- Fix English Menu URLs that accidentally include quotes or %22 ---
+  document.querySelectorAll('a.menu-link').forEach(a=>{
+    let href = a.getAttribute('href') || '';
+    // trim spaces and surrounding quotes / %22 fragments
+    let cleaned = href.trim().replace(/^['"]+|['"]+$/g,'');
+    cleaned = cleaned.replace(/^%22|%22$/g,'');
+    // If scheme is missing but URL starts with https encoded, try to recover
+    if (cleaned.startsWith('https://') || cleaned.startsWith('http://')) {
+      a.setAttribute('href', cleaned);
+    }
+    // enforce new-tab + security
+    a.setAttribute('target','_blank');
+    a.setAttribute('rel','noopener noreferrer');
+  });
 })();</script>
 </body>
 </html>
