@@ -1,445 +1,249 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Tokyo's Culinary Scene: A Curated Guide</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=Lato:wght@300;400;700&display=swap" rel="stylesheet">
-    <style>
-        /* General Body Styles */
-        :root {
-            --background-color: #0d0d0d;
-            --card-color: #1a1a1a;
-            --primary-text: #f0f0f0;
-            --secondary-text: #a0a0a0;
-            --accent-color: #e6a756;
-            --shadow-color: rgba(230, 167, 86, 0.15);
-            --border-color: #333;
-        }
-
-        html {
-            scroll-behavior: smooth;
-        }
-
-        body {
-            font-family: 'Lato', sans-serif;
-            margin: 0;
-            background-color: var(--background-color);
-            color: var(--primary-text);
-            line-height: 1.7;
-            overflow-x: hidden;
-        }
-
-        /* Hero Header Section with Video */
-        .hero {
-            position: relative;
-            height: 100vh;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            text-align: center;
-            color: white;
-            padding: 0 20px;
-            overflow: hidden;
-        }
-
-        #hero-video {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            min-width: 100%;
-            min-height: 100%;
-            width: auto;
-            height: auto;
-            z-index: -2;
-            transform: translateX(-50%) translateY(-50%);
-            object-fit: cover;
-            filter: brightness(0.7);
-        }
-        
-        .hero::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: rgba(0, 0, 0, 0.4);
-            z-index: -1;
-        }
-
-        .hero-content {
-            animation: fadeIn 2s ease-in-out;
-        }
-
-        .hero-content h1 {
-            font-family: 'Playfair Display', serif;
-            font-size: 5rem;
-            font-weight: 900;
-            margin-bottom: 1rem;
-            text-shadow: 0 4px 15px rgba(0,0,0,0.6);
-            letter-spacing: 2px;
-            text-transform: uppercase;
-        }
-
-        .hero-content p {
-            font-size: 1.3rem;
-            font-weight: 300;
-            max-width: 700px;
-            text-shadow: 0 2px 8px rgba(0,0,0,0.6);
-        }
-
-        .scroll-down {
-            position: absolute;
-            bottom: 30px;
-            left: 50%;
-            transform: translateX(-50%);
-            color: white;
-            text-decoration: none;
-            font-size: 0.9rem;
-            letter-spacing: 1px;
-            animation: bounce 2s infinite;
-        }
-
-        /* Main Content Container */
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 80px 20px;
-        }
-
-        /* Parallax Section */
-        .parallax {
-            background-attachment: fixed;
-            background-position: center;
-            background-repeat: no-repeat;
-            background-size: cover;
-            height: 400px;
-            position: relative;
-        }
-        
-        .parallax::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: rgba(0,0,0,0.5);
-        }
-
-        #parallax-1 { background-image: url('https://images.unsplash.com/photo-1553621042-f6e147245754?q=80&w=2500&auto=format&fit=crop'); }
-        #parallax-2 { background-image: url('https://images.unsplash.com/photo-1617196034796-73dfa7b1fd56?q=80&w=2500&auto=format&fit=crop'); }
-        #parallax-3 { background-image: url('https://images.unsplash.com/photo-1506354666786-959d6d497f1a?q=80&w=2500&auto=format&fit=crop'); }
-
-
-        /* Section Title Styling */
-        .section-title {
-            text-align: center;
-            margin-bottom: 60px;
-        }
-        .section-title h2 {
-            font-family: 'Playfair Display', serif;
-            font-size: 3rem;
-            color: var(--accent-color);
-            text-transform: uppercase;
-            letter-spacing: 2px;
-            margin: 0;
-            padding-bottom: 15px;
-            border-bottom: 2px solid var(--border-color);
-            display: inline-block;
-        }
-
-        /* Restaurant Grid Layout */
-        .restaurant-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
-            gap: 40px;
-        }
-
-        /* Card Styling */
-        .card {
-            background: var(--card-color);
-            border-radius: 15px;
-            border: 1px solid var(--border-color);
-            overflow: hidden;
-            transition: transform 0.4s ease, box-shadow 0.4s ease;
-            display: flex;
-            flex-direction: column;
-            position: relative;
-        }
-        
-        .card:hover {
-            transform: translateY(-15px) scale(1.02);
-            box-shadow: 0 20px 40px var(--shadow-color);
-            border-color: var(--accent-color);
-        }
-        
-        .card-img-container {
-            width: 100%;
-            height: 250px;
-            overflow: hidden;
-        }
-        .card-img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            background-color: #333;
-            transition: transform 0.4s ease;
-        }
-        
-        .card:hover .card-img {
-            transform: scale(1.1);
-        }
-
-        .card-content {
-            padding: 30px;
-            flex-grow: 1;
-            display: flex;
-            flex-direction: column;
-        }
-
-        .card-content h3 {
-            margin: 0 0 5px 0;
-            font-size: 1.8rem;
-            font-weight: 700;
-            color: var(--primary-text);
-            font-family: 'Playfair Display', serif;
-        }
-
-        .card-content .cuisine {
-            font-weight: 700;
-            color: var(--accent-color);
-            margin-bottom: 15px;
-            font-size: 0.9rem;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-        }
-        
-        .card-content .description {
-            color: var(--secondary-text);
-            flex-grow: 1;
-            margin-bottom: 1.5rem;
-        }
-
-        .card-footer {
-            margin-top: auto;
-        }
-
-        .website-link {
-            display: inline-block;
-            padding: 12px 25px;
-            background-color: var(--accent-color);
-            color: #121212;
-            text-decoration: none;
-            border-radius: 8px;
-            font-weight: 700;
-            transition: background-color 0.3s ease, transform 0.2s ease;
-            text-align: center;
-        }
-
-        .website-link:hover {
-            background-color: #ffc95e;
-            transform: scale(1.05);
-        }
-
-        .top-pick-badge {
-            position: absolute;
-            top: 15px;
-            right: 15px;
-            background-color: var(--accent-color);
-            color: #121212;
-            padding: 5px 12px;
-            border-radius: 20px;
-            font-size: 0.8rem;
-            font-weight: 700;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.3);
-        }
-
-        /* Footer */
-        .footer {
-            text-align: center;
-            padding: 40px 20px;
-            background-color: #080808;
-            color: var(--secondary-text);
-            margin-top: 60px;
-            border-top: 1px solid var(--border-color);
-        }
-
-        /* Keyframes for animations */
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(20px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-        @keyframes bounce {
-            0%, 20%, 50%, 80%, 100% { transform: translateX(-50%) translateY(0); }
-            40% { transform: translateX(-50%) translateY(-20px); }
-            60% { transform: translateX(-50%) translateY(-10px); }
-        }
-
-
-        /* Responsive Design */
-        @media (max-width: 768px) {
-            .hero-content h1 {
-                font-size: 3rem;
-            }
-            .section-title h2 {
-                font-size: 2.5rem;
-            }
-        }
-    </style>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Tokyo Food & Drinks 2025 | Seed Planning</title>
+  <meta name="description" content="A hand‑picked guide to Tokyo restaurants—perfect for post‑research meals. Walkable from Sugata Research (Sugata Space C/D)." />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&family=Playfair+Display:wght@500;700&display=swap" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+  <style>
+    :root{--ink:#0b0f19;--accent:#f97316;--muted:#6b7280}
+    body{font-family:Inter,system-ui,Segoe UI,Roboto,Helvetica,Arial,sans-serif;color:var(--ink)}
+    .serif{font-family:'Playfair Display',serif}
+    .glass{backdrop-filter:blur(10px);background:rgba(8,8,12,.45)}
+    .tag{font-size:.7rem;border:1px solid rgba(255,255,255,.35);padding:.15rem .45rem;border-radius:9999px}
+    .card{transition:transform .2s ease, box-shadow .2s ease}
+    .card:hover{transform:translateY(-2px); box-shadow:0 10px 30px rgba(0,0,0,.15)}
+    .fade{animation:fade .6s ease both}
+    @keyframes fade{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+    .hero::after{content:"";position:absolute;inset:0;background:radial-gradient(1200px 600px at 20% -10%, rgba(249,115,22,.35), transparent 60%),linear-gradient(0deg,rgba(5,8,10,.55),rgba(5,8,10,.55));}
+    @media (min-width:1024px){.masonry{column-count:2;column-gap:1.25rem}.masonry>*{break-inside:avoid}}
+  </style>
 </head>
-<body>
+<body class="bg-gray-50">
+  <!-- HERO -->
+  <header class="relative hero min-h-screen grid place-items-center text-white">
+    <img src="tokyo-food-guide.png" alt="Tokyo night street" class="absolute inset-0 w-full h-full object-cover"/>
+    <nav class="absolute top-0 left-0 right-0 p-4 lg:p-6 flex items-center justify-between z-10">
+      <div class="flex items-center space-x-3">
+        <img src="tokyo-food-guide.png" alt="logo" class="w-8 h-8 rounded"/>
+        <span class="font-extrabold tracking-tight">Seed Planning</span>
+      </div>
+      <div class="hidden md:flex items-center space-x-6 text-sm text-gray-200">
+        <a href="#picks" class="hover:text-white">Top Picks</a>
+        <a href="#map" class="hover:text-white">Map</a>
+        <a href="#about" class="hover:text-white">About</a>
+      </div>
+    </nav>
+    <div class="relative z-10 text-center px-6">
+      <p class="inline-block mb-4 glass tag">Short walk from <b>Sugata Research (Sugata Space C/D)</b></p>
+      <h1 class="serif text-4xl md:text-6xl font-bold leading-tight">Tokyo Food & Drinks <span class="text-orange-400">2025</span></h1>
+      <p class="mt-4 max-w-2xl mx-auto text-gray-200">A compact, decision‑friendly list for overseas guests. Handpicked after countless projects and debriefs around Yoyogi & central Tokyo.</p>
+      <div class="mt-8 flex flex-wrap justify-center gap-2 text-xs uppercase tracking-wide">
+        <span class="tag glass">Authentic Japanese</span>
+        <span class="tag glass">Omakase Sushi</span>
+        <span class="tag glass">Izakaya / Tempura</span>
+        <span class="tag glass">Meat Dishes</span>
+        <span class="tag glass">Vegetarian Options</span>
+      </div>
+      <a href="#picks" class="mt-10 inline-flex items-center px-5 py-3 rounded-full bg-orange-500 hover:bg-orange-600 shadow-lg">Explore the picks</a>
+    </div>
+  </header>
 
-    <header class="hero">
-        <video playsinline autoplay muted loop id="hero-video">
-            <source src="https://assets.mixkit.co/videos/preview/mixkit-japanese-street-food-vendor-40546-large.mp4" type="video/mp4">
-        </video>
-        <div class="hero-content">
-            <h1>TOKYO FOOD & DRINKS</h1>
-            <p>A special guide for our friends at The Link Group. <br>Your exclusive guide to the finest restaurants in Tokyo, curated for the discerning palate.</p>
+  <!-- FILTERS -->
+  <section id="picks" class="max-w-6xl mx-auto px-4 sm:px-6 -mt-20 relative z-10">
+    <div class="bg-white rounded-2xl shadow-xl p-4 md:p-6">
+      <div class="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-4">
+        <h2 class="serif text-2xl md:text-3xl">Seed’s Top Picks</h2>
+        <div class="flex flex-wrap gap-2 text-sm">
+          <button class="filter-btn tag" data-filter="all">All</button>
+          <button class="filter-btn tag" data-filter="auth">Authentic</button>
+          <button class="filter-btn tag" data-filter="sushi">Omakase</button>
+          <button class="filter-btn tag" data-filter="izakaya">Izakaya/Tempura</button>
+          <button class="filter-btn tag" data-filter="meat">Meat</button>
+          <button class="filter-btn tag" data-filter="veg">Veg‑friendly</button>
         </div>
-        <a href="#guide-start" class="scroll-down">EXPLORE THE GUIDE &#9660;</a>
-    </header>
+      </div>
+    </div>
 
-    <main id="guide-start" class="container">
-        <div class="section-title">
-            <h2>Authentic Japanese Cuisine</h2>
+    <!-- CARDS -->
+    <div class="masonry mt-6">
+      <!-- AUTHENTIC: Yamato Raku Shinjuku -->
+      <article class="card fade bg-white rounded-2xl shadow p-5 mb-5" data-tags="auth veg">
+        <img class="rounded-xl w-full object-cover" src="yamamoto-raku.png" alt="Yamato Raku Shinjuku"/>
+        <div class="mt-4">
+          <h3 class="serif text-2xl">Yamato Raku Shinjuku</h3>
+          <p class="text-sm text-gray-600">Refined yet casual, with irori seats, counter/table seating and private rooms.</p>
+          <dl class="mt-3 text-sm grid gap-1">
+            <div class="flex gap-2"><dt class="w-20 text-gray-500">Lunch</dt><dd>11:00–15:00</dd></div>
+            <div class="flex gap-2"><dt class="w-20 text-gray-500">Dinner</dt><dd>17:00–22:00</dd></div>
+            <div class="flex gap-2"><dt class="w-20 text-gray-500">Area</dt><dd>Shinjuku</dd></div>
+            <div class="flex gap-2"><dt class="w-20 text-gray-500">Phone</dt><dd><a href="tel:03-5312-5477" class="underline">03-5312-5477</a></dd></div>
+          </dl>
+          <div class="mt-4 flex flex-wrap gap-2">
+            <a class="tag" href="https://www.raku-shinjuku.jp/en/food/" target="_blank" rel="noopener">Menu</a>
+            <a class="tag" href="https://maps.google.com/?q=Shinjuku,3-5-4,Rainbow%20Village%20Bldg.%204F" target="_blank" rel="noopener">Google Maps</a>
+            <span class="tag">Veg‑friendly</span>
+          </div>
         </div>
-        <div class="restaurant-grid">
-             <div class="card">
-                <div class="top-pick-badge">Top Pick</div>
-                <div class="card-img-container"><img src="yamamoto-raku.png" alt="Yamato Raku" class="card-img"></div>
-                <div class="card-content">
-                    <h3>Yamato Raku</h3>
-                    <p class="cuisine">Shinjuku • Seasonal Cuisine</p>
-                    <p class="description">A refined yet casual dining establishment with traditional Irori hearth seats, counter seating, and private rooms available.</p>
-                    <div class="card-footer">
-                        <a href="https://www.raku-shinjuku.jp/en/food/" target="_blank" class="website-link">Visit Website</a>
-                    </div>
-                </div>
-            </div>
-            <div class="card">
-                <div class="card-img-container"><img src="shunju-tameikesanno.png" alt="Shunju Tameikesanno" class="card-img"></div>
-                <div class="card-content">
-                    <h3>Shunju Tameikesanno</h3>
-                    <p class="cuisine">Nagatacho • Creative Japanese</p>
-                    <p class="description">Enjoy Japanese-inspired dishes made with organic vegetables and seasonal ingredients in an open space with stunning panoramic city views.</p>
-                    <div class="card-footer">
-                        <a href="https://shunju.com/tameike/menu/" target="_blank" class="website-link">Visit Website</a>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </main>
-    
-    <div class="parallax" id="parallax-1"></div>
+      </article>
 
-    <main class="container">
-        <div class="section-title">
-            <h2>Omakase Sushi</h2>
+      <!-- AUTHENTIC: Shunju Tameikesanno -->
+      <article class="card fade bg-white rounded-2xl shadow p-5 mb-5" data-tags="auth veg views">
+        <img class="rounded-xl w-full object-cover" src="shunju-tameikesanno.png" alt="Shunju Tameikesanno"/>
+        <div class="mt-4">
+          <h3 class="serif text-2xl">Shunju Tameikesanno</h3>
+          <p class="text-sm text-gray-600">Creative Japanese‑inspired dishes with organic vegetables and a panoramic city view. Closed Sun & holidays.</p>
+          <dl class="mt-3 text-sm grid gap-1">
+            <div class="flex gap-2"><dt class="w-20 text-gray-500">Lunch</dt><dd>Mon–Fri 11:30–14:30 / Sat 11:30–15:00</dd></div>
+            <div class="flex gap-2"><dt class="w-20 text-gray-500">Dinner</dt><dd>Mon–Fri 17:00–22:30 / Sat 17:00–22:00</dd></div>
+            <div class="flex gap-2"><dt class="w-20 text-gray-500">Phone</dt><dd><a href="tel:050-5485-4366" class="underline">050-5485-4366</a></dd></div>
+          </dl>
+          <div class="mt-4 flex flex-wrap gap-2">
+            <a class="tag" href="https://shunju.com/tameike/menu" target="_blank" rel="noopener">Menu</a>
+            <a class="tag" href="https://maps.google.com/?q=Sanno%20Park%20Tower%2027F" target="_blank" rel="noopener">Google Maps</a>
+            <span class="tag">Veg‑friendly</span>
+          </div>
         </div>
-        <div class="restaurant-grid">
-             <div class="card">
-                <div class="card-img-container"><img src="sushi-tokyo-zen.png" alt="SUSHI TOKYO TEN" class="card-img"></div>
-                <div class="card-content">
-                    <h3>SUSHI TOKYO TEN</h3>
-                    <p class="cuisine">Shinjuku & Roppongi • Traditional Sushi</p>
-                    <p class="description">Experience the art of sushi as each piece is carefully executed by the chef, allowing you to savor the authentic flavors of the season.</p>
-                     <div class="card-footer">
-                        <a href="https://sushitokyo-ten.com/" target="_blank" class="website-link">Visit Website</a>
-                    </div>
-                </div>
-            </div>
-            <div class="card">
-                 <div class="top-pick-badge">Top Pick</div>
-                <div class="card-img-container"><img src="sushi-itsumi.png" alt="SUSHI ITSUMI" class="card-img"></div>
-                <div class="card-content">
-                    <h3>SUSHI ITSUMI</h3>
-                    <p class="cuisine">Akasaka • Creative Edomae</p>
-                    <p class="description">Edo-style tradition meets creative flair. The allure lies in the 18 to 20 delicate yet playful small plates in your omakase experience.</p>
-                     <div class="card-footer">
-                        <a href="https://www.sushi-itsumi.com/" target="_blank" class="website-link">Visit Website</a>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </main>
+      </article>
 
-    <div class="parallax" id="parallax-2"></div>
-
-    <main class="container">
-        <div class="section-title">
-            <h2>Izakaya & Tempura</h2>
+      <!-- OMAKASE: Sushi Tokyo Ten -->
+      <article class="card fade bg-white rounded-2xl shadow p-5 mb-5" data-tags="sushi">
+        <img class="rounded-xl w-full object-cover" src="sushi-tokyo-zen.png" alt="Sushi Tokyo Ten"/>
+        <div class="mt-4">
+          <h3 class="serif text-2xl">Sushi Tokyo Ten</h3>
+          <p class="text-sm text-gray-600">Traditional omakase—one piece at a time, focused on seasonal flavor.</p>
+          <dl class="mt-3 text-sm grid gap-1">
+            <div class="flex gap-2"><dt class="w-20 text-gray-500">Hours</dt><dd>Lunch 11:00–15:00 / Dinner 17:00–23:00</dd></div>
+          </dl>
+          <div class="mt-4 flex flex-wrap gap-2">
+            <a class="tag" href="https://sushitokyo-ten.com/" target="_blank" rel="noopener">Website</a>
+            <a class="tag" href="https://maps.google.com/?q=NeWoMan%20Food%20Hall%202F%20Sendagaya" target="_blank" rel="noopener">Google Maps</a>
+          </div>
         </div>
-        <div class="restaurant-grid">
-             <div class="card">
-                 <div class="top-pick-badge">Top Pick</div>
-                <div class="card-img-container"><img src="gonpachi.png" alt="Gonpachi Nishiazabu" class="card-img"></div>
-                <div class="card-content">
-                    <h3>Gonpachi Nishiazabu</h3>
-                    <p class="cuisine">Nishiazabu • Izakaya</p>
-                    <p class="description">Featured in the movie 'Kill Bill', this restaurant blends old Japan's charm with a dynamic interior, offering handmade soba and skewers.</p>
-                     <div class="card-footer">
-                        <a href="https://gonpachi.jp/nishi-azabu/" target="_blank" class="website-link">Visit Website</a>
-                    </div>
-                </div>
-            </div>
-            <div class="card">
-                <div class="card-img-container"><img src="tempura-kondo.png" alt="Tempura Kondo" class="card-img"></div>
-                <div class="card-content">
-                    <h3>Tempura Kondo</h3>
-                    <p class="cuisine">Ginza • Tempura Master</p>
-                    <p class="description">With 50+ years of craftsmanship, owner Fumio Kondo's ever-evolving technique continues to captivate guests from around the world.</p>
-                     <div class="card-footer">
-                        <a href="https://tempura-kondo.com/en/" target="_blank" class="website-link">Visit Website</a>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </main>
-    
-    <div class="parallax" id="parallax-3"></div>
+      </article>
 
-    <main class="container">
-        <div class="section-title">
-            <h2>Exquisite Meat Dishes</h2>
+      <!-- OMAKASE: Sushi Itsumi -->
+      <article class="card fade bg-white rounded-2xl shadow p-5 mb-5" data-tags="sushi">
+        <img class="rounded-xl w-full object-cover" src="sushi-itsumi.png" alt="Sushi Itsumi"/>
+        <div class="mt-4">
+          <h3 class="serif text-2xl">Sushi Itsumi</h3>
+          <p class="text-sm text-gray-600">Edo‑style spirit with creative flair. 18–20 playful small plates in omakase.</p>
+          <dl class="mt-3 text-sm grid gap-1">
+            <div class="flex gap-2"><dt class="w-20 text-gray-500">Hours</dt><dd>Lunch 12:00–14:30 / Dinner 18:00–22:30</dd></div>
+          </dl>
+          <div class="mt-4 flex flex-wrap gap-2">
+            <a class="tag" href="https://www.sushi-itsumi.com/" target="_blank" rel="noopener">Website</a>
+            <a class="tag" href="https://maps.google.com/?q=Akasaka%203-20-9%20B1" target="_blank" rel="noopener">Google Maps</a>
+          </div>
         </div>
-        <div class="restaurant-grid">
-             <div class="card">
-                <div class="card-img-container"><img src="jojoen-menu.png" alt="Yakiniku Jojoen" class="card-img"></div>
-                <div class="card-content">
-                    <h3>Yakiniku Jojoen</h3>
-                    <p class="cuisine">Multiple Locations • High-end Yakiniku</p>
-                    <p class="description">One of the premier high-end barbecue restaurant chains, offering exquisite cuts of carefully selected meat in a luxurious ambiance.</p>
-                     <div class="card-footer">
-                        <a href="https://www.jojoen.co.jp/en/" target="_blank" class="website-link">Visit Website</a>
-                    </div>
-                </div>
-            </div>
-            <div class="card">
-                 <div class="top-pick-badge">Top Pick</div>
-                <div class="card-img-container"><img src="ginza-katsukami.png" alt="Ginza Katsukami" class="card-img"></div>
-                <div class="card-content">
-                    <h3>Ginza Katsukami</h3>
-                    <p class="cuisine">Ginza • Tonkatsu Omakase</p>
-                    <p class="description">A Michelin Bib Gourmand restaurant famous for its tonkatsu omakase, serving a series of different premium pork cuts.</p>
-                     <div class="card-footer">
-                        <a href="https://katsukami.com/ginza-katsukami%20en%2001.html" target="_blank" class="website-link">Visit Website</a>
-                    </div>
-                </div>
-            </div>
+      </article>
+
+      <!-- IZAKAYA: Gonpachi -->
+      <article class="card fade bg-white rounded-2xl shadow p-5 mb-5" data-tags="izakaya veg">
+        <img class="rounded-xl w-full object-cover" src="gonpachi.png" alt="Gonpachi Nishiazabu"/>
+        <div class="mt-4">
+          <h3 class="serif text-2xl">Gonpachi Nishiazabu</h3>
+          <p class="text-sm text-gray-600">Old‑Japan charm, handmade soba, skewers, tempura, and curated sake/whisky. Open late.</p>
+          <dl class="mt-3 text-sm grid gap-1">
+            <div class="flex gap-2"><dt class="w-20 text-gray-500">Hours</dt><dd>11:30–27:30 (Lunch 11:30–15:00)</dd></div>
+          </dl>
+          <div class="mt-4 flex flex-wrap gap-2">
+            <a class="tag" href="https://gonpachi.jp/nishi-azabu/" target="_blank" rel="noopener">Website</a>
+            <a class="tag" href="https://maps.google.com/?q=1-13-11%20Nishiazabu" target="_blank" rel="noopener">Google Maps</a>
+            <span class="tag">Veg‑friendly</span>
+          </div>
         </div>
-    </main>
+      </article>
 
-    <footer class="footer">
-        <p>A Curated Dining Guide by Your Friends at Seed Planning. <br>All restaurant assets are property of their respective owners.</p>
-    </footer>
+      <!-- TEMPURA Kondo -->
+      <article class="card fade bg-white rounded-2xl shadow p-5 mb-5" data-tags="izakaya veg">
+        <img class="rounded-xl w-full object-cover" src="tempura-kondo.png" alt="Tempura Kondo"/>
+        <div class="mt-4">
+          <h3 class="serif text-2xl">Tempura Kondo (Ginza)</h3>
+          <p class="text-sm text-gray-600">50+ years of craftsmanship. Famous for vegetable tempura—carrot ribbons, sweet potato, fava beans, asparagus.</p>
+          <dl class="mt-3 text-sm grid gap-1">
+            <div class="flex gap-2"><dt class="w-20 text-gray-500">Hours</dt><dd>Lunch 12:00–13:30 / Dinner 17:00–20:30 (Closed Sun)</dd></div>
+          </dl>
+          <div class="mt-4 flex flex-wrap gap-2">
+            <a class="tag" href="https://tempura-kondo.com/en/" target="_blank" rel="noopener">Website</a>
+            <a class="tag" href="https://maps.google.com/?q=Ginza%205-5-13%209F" target="_blank" rel="noopener">Google Maps</a>
+            <span class="tag">Veg‑friendly</span>
+          </div>
+        </div>
+      </article>
 
+      <!-- MEAT: Jojoen -->
+      <article class="card fade bg-white rounded-2xl shadow p-5 mb-5" data-tags="meat">
+        <img class="rounded-xl w-full object-cover" src="jojoen-room.png" alt="Yakiniku Jojoen"/>
+        <div class="mt-4">
+          <h3 class="serif text-2xl">Yakiniku Jojoen</h3>
+          <p class="text-sm text-gray-600">High‑end yakiniku with carefully selected cuts and signature salads in a luxe setting.</p>
+          <dl class="mt-3 text-sm grid gap-1">
+            <div class="flex gap-2"><dt class="w-20 text-gray-500">Hours</dt><dd>Lunch 11:00–15:00 / Dinner 17:00–23:00</dd></div>
+          </dl>
+          <div class="mt-4 flex flex-wrap gap-2">
+            <a class="tag" href="https://www.jojoen.co.jp/en/" target="_blank" rel="noopener">Website</a>
+            <a class="tag" href="https://maps.google.com/?q=Akasaka%203-11-3" target="_blank" rel="noopener">Google Maps</a>
+          </div>
+        </div>
+      </article>
+
+      <!-- MEAT: Ginza Katsukami -->
+      <article class="card fade bg-white rounded-2xl shadow p-5 mb-5" data-tags="meat">
+        <img class="rounded-xl w-full object-cover" src="ginza-katsukami.png" alt="Ginza Katsukami"/>
+        <div class="mt-4">
+          <h3 class="serif text-2xl">Ginza Katsukami (Bib Gourmand)</h3>
+          <p class="text-sm text-gray-600">Tonkatsu omakase—multiple pork cuts (tenderloin, cheek, loin) served in sequence.</p>
+          <dl class="mt-3 text-sm grid gap-1">
+            <div class="flex gap-2"><dt class="w-20 text-gray-500">Hours</dt><dd>Lunch 11:30–14:00 / Dinner 18:00 & 20:00 seatings</dd></div>
+          </dl>
+          <div class="mt-4 flex flex-wrap gap-2">
+            <a class="tag" href="https://katsukami.com/ginza-katsukami_en_01.html" target="_blank" rel="noopener">Website</a>
+            <a class="tag" href="https://maps.google.com/?q=Ginza%205-6-10%205F" target="_blank" rel="noopener">Google Maps</a>
+          </div>
+        </div>
+      </article>
+    </div>
+  </section>
+
+  <!-- MAP CALLOUT / ABOUT -->
+  <section id="map" class="max-w-6xl mx-auto px-4 sm:px-6 mt-10">
+    <div class="grid md:grid-cols-2 gap-6">
+      <div class="bg-white rounded-2xl shadow p-6">
+        <h3 class="serif text-2xl mb-2">Where these are</h3>
+        <p class="text-sm text-gray-600 mb-4">Most picks are an easy ride or short walk from Yoyogi/Shinjuku. Tap any card for Maps.</p>
+        <iframe class="w-full h-72 rounded-xl" loading="lazy" referrerpolicy="no-referrer-when-downgrade"
+          src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d25930.49634172736!2d139.676!3d35.682!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x60188cd2b3bc0f0f%3A0x9a2a3b4b6b8c0f!2sYoyogi!5e0!3m2!1sen!2sjp!4v1700000000000"></iframe>
+      </div>
+      <div id="about" class="bg-white rounded-2xl shadow p-6">
+        <h3 class="serif text-2xl mb-2">How to use</h3>
+        <ul class="list-disc pl-5 text-sm text-gray-700 space-y-2">
+          <li>Place images in the <code>/tlg/dining/</code> folder next to this HTML file.</li>
+          <li>Filenames currently used: <code>tokyo-food-guide.png</code>, <code>yamamoto-raku.png</code>, <code>shunju-tameikesanno.png</code>, <code>sushi-tokyo-zen.png</code>, <code>sushi-itsumi.png</code>, <code>gonpachi.png</code>, <code>tempura-kondo.png</code>, <code>jojoen-room.png</code>, <code>ginza-katsukami.png</code>.</li>
+          <li>Change a photo by replacing the file or updating the <code>src</code> attribute.</li>
+        </ul>
+        <div class="mt-4 text-xs text-gray-500">Copy © Seed Planning. Restaurant details pulled from our 2025 briefing.</div>
+      </div>
+    </div>
+  </section>
+
+  <footer class="max-w-6xl mx-auto px-4 sm:px-6 mt-10 mb-16 text-center text-gray-500">
+    <div class="text-sm">Made for overseas guests — perfect after research days at Sugata. Questions? <a class="underline" href="mailto:info@seedplanning.co.jp">Contact us</a>.</div>
+  </footer>
+
+  <script>
+    // Simple filter
+    const btns = document.querySelectorAll('.filter-btn');
+    const cards = document.querySelectorAll('[data-tags]');
+    btns.forEach(b=>b.addEventListener('click',()=>{
+      const f=b.dataset.filter; btns.forEach(x=>x.classList.remove('bg-orange-500','text-white'));
+      b.classList.add('bg-orange-500','text-white');
+      cards.forEach(c=>{ const tags=c.dataset.tags.split(' '); c.style.display=(f==='all'||tags.includes(f))?'':'none';});
+    }));
+  </script>
 </body>
 </html>
-
