@@ -14,14 +14,14 @@
     body{font-family:Inter,system-ui,Segoe UI,Roboto,Helvetica,Arial,sans-serif;color:var(--ink)}
     .serif{font-family:'Playfair Display',serif}
     .glass{backdrop-filter:blur(10px);background:rgba(8,8,12,.45)}
-    .tag{font-size:.7rem;border:1px solid rgba(255,255,255,.35);padding:.15rem .45rem;border-radius:9999px}
+    .tag{font-size:.7rem;border:1px solid rgba(0,0,0,.15);padding:.2rem .5rem;border-radius:9999px}
     .card{transition:transform .2s ease, box-shadow .2s ease}
-    .card:hover{transform:translateY(-2px); box-shadow:0 10px 30px rgba(0,0,0,.15)}
-    .fade{animation:fade .6s ease both}
+    .card:hover{transform:translateY(-2px); box-shadow:0 10px 30px rgba(0,0,0,.12)}
+    .fade{animation:fade .5s ease both}
     @keyframes fade{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
     .hero::after{content:"";position:absolute;inset:0;background:radial-gradient(1200px 600px at 20% -10%, rgba(249,115,22,.35), transparent 60%),linear-gradient(0deg,rgba(5,8,10,.55),rgba(5,8,10,.55));}
     @media (min-width:1024px){.masonry{column-count:2;column-gap:1.25rem}.masonry>*{break-inside:avoid}}
-    .no-results{display:none}
+    .active-card{outline:3px solid rgba(249,115,22,.6);outline-offset:2px}
   </style>
 </head>
 <body class="bg-gray-50">
@@ -40,17 +40,9 @@
       </div>
     </nav>
     <div class="relative z-10 text-center px-6">
-      <p class="inline-block mb-4 glass tag">A short walk or quick taxi from your facility or hotel</p>
+      <p class="inline-block mb-4 glass tag text-gray-100">A short walk or quick taxi from your facility or hotel</p>
       <h1 class="serif text-4xl md:text-6xl font-bold leading-tight">Tokyo Food & Drinks <span class="text-orange-400">2025</span></h1>
-      <p class="mt-4 max-w-2xl mx-auto text-gray-200">A compact, decision‑friendly list for overseas guests. Handpicked after countless projects and debriefs in central Tokyo.</p>
-      <div class="mt-8 flex flex-wrap justify-center gap-2 text-xs uppercase tracking-wide">
-        <span class="tag glass">Authentic Japanese</span>
-        <span class="tag glass">Omakase Sushi</span>
-        <span class="tag glass">Izakaya / Tempura</span>
-        <span class="tag glass">Meat Dishes</span>
-        <span class="tag glass">Vegetarian Options</span>
-        <span class="tag glass">Ramen</span>
-      </div>
+      <p class="mt-4 max-w-2xl mx-auto text-gray-200">A compact, decision‑friendly list for overseas guests. Handpicked after countless projects and debriefs across central Tokyo.</p>
       <a href="#picks" class="mt-10 inline-flex items-center px-5 py-3 rounded-full bg-orange-500 hover:bg-orange-600 shadow-lg">Explore the picks</a>
     </div>
   </header>
@@ -75,156 +67,206 @@
     <!-- CARDS -->
     <div class="masonry mt-6">
       <!-- AUTHENTIC: Yamato Raku Shinjuku -->
-      <article class="card fade bg-white rounded-2xl shadow p-5 mb-5 cursor-pointer" data-tags="auth veg" data-map="Yamato Raku Shinjuku, Rainbow Village Bldg 4F, 3-5-4 Shinjuku, Tokyo">
+      <article class="card fade bg-white rounded-2xl shadow p-5 mb-5" data-tags="auth veg" data-map="〒160-0022 東京都新宿区新宿３丁目５−４ レインボービレッジ ４F" data-name="Yamato Raku Shinjuku">
         <img class="rounded-xl w-full object-cover" src="yamamoto-raku.png" alt="Yamato Raku Shinjuku"/>
         <div class="mt-4">
           <h3 class="serif text-2xl">Yamato Raku Shinjuku</h3>
           <p class="text-sm text-gray-600">Refined yet casual, with irori seats, counter/table seating and private rooms.</p>
           <dl class="mt-3 text-sm grid gap-1">
-            <div class="flex gap-2"><dt class="w-20 text-gray-500">Lunch</dt><dd>11:00–15:00</dd></div>
-            <div class="flex gap-2"><dt class="w-20 text-gray-500">Dinner</dt><dd>17:00–22:00</dd></div>
-            <div class="flex gap-2"><dt class="w-20 text-gray-500">Area</dt><dd>Shinjuku</dd></div>
-            <div class="flex gap-2"><dt class="w-20 text-gray-500">Phone</dt><dd><a href="tel:03-5312-5477" class="underline">03-5312-5477</a></dd></div>
+            <div class="flex gap-2"><dt class="w-24 text-gray-500">Lunch</dt><dd>11:00–15:00</dd></div>
+            <div class="flex gap-2"><dt class="w-24 text-gray-500">Dinner</dt><dd>17:00–22:00</dd></div>
+            <div class="flex gap-2"><dt class="w-24 text-gray-500">Area</dt><dd>Shinjuku</dd></div>
+            <div class="flex gap-2"><dt class="w-24 text-gray-500">Phone</dt><dd><a href="tel:03-5312-5477" class="underline">03-5312-5477</a></dd></div>
+            <div class="flex gap-2"><dt class="w-24 text-gray-500">Address</dt><dd>〒160-0022 東京都新宿区新宿３丁目５−４ レインボービレッジ ４F</dd></div>
           </dl>
-          <div class="mt-4 flex flex-wrap gap-2 items-center">
-            <a class="tag" href="https://www.raku-shinjuku.jp/en/food/" target="_blank" rel="noopener">Website/Menu</a>
-            <a class="tag" href="https://maps.google.com/?q=Yamato%20Raku%20Shinjuku%203-5-4" target="_blank" rel="noopener">Google Maps</a>
-            <span class="tag">Veg‑friendly</span>
-            <span class="ml-auto text-xs text-gray-600">Ask Seed PM to make a reservation</span>
+          <div class="mt-4 flex flex-wrap gap-2">
+            <a class="tag" href="https://www.raku-shinjuku.jp/en/" target="_blank" rel="noopener">Website/Menu</a>
+            <a class="tag map-link" href="https://www.google.com/maps?q=〒160-0022 東京都新宿区新宿３丁目５−４ レインボービレッジ ４F" target="_blank" rel="noopener">Google Maps</a>
+            <span class="tag">Ask your Seed PM to make a reservation</span>
           </div>
         </div>
       </article>
 
       <!-- AUTHENTIC: Shunju Tameikesanno -->
-      <article class="card fade bg-white rounded-2xl shadow p-5 mb-5 cursor-pointer" data-tags="auth veg views" data-map="Shunju Tameikesanno, Sanno Park Tower 27F, Tokyo">
+      <article class="card fade bg-white rounded-2xl shadow p-5 mb-5" data-tags="auth veg views" data-map="〒100-6127 東京都千代田区永田町２丁目１１−１ 山王パークタワー ２７階" data-name="Shunju Tameikesanno">
         <img class="rounded-xl w-full object-cover" src="shunju-tameikesanno.png" alt="Shunju Tameikesanno"/>
         <div class="mt-4">
           <h3 class="serif text-2xl">Shunju Tameikesanno</h3>
           <p class="text-sm text-gray-600">Creative Japanese‑inspired dishes with organic vegetables and a panoramic city view. Closed Sun & holidays.</p>
           <dl class="mt-3 text-sm grid gap-1">
-            <div class="flex gap-2"><dt class="w-20 text-gray-500">Lunch</dt><dd>Mon–Fri 11:30–14:30 / Sat 11:30–15:00</dd></div>
-            <div class="flex gap-2"><dt class="w-20 text-gray-500">Dinner</dt><dd>Mon–Fri 17:00–22:30 / Sat 17:00–22:00</dd></div>
-            <div class="flex gap-2"><dt class="w-20 text-gray-500">Phone</dt><dd><a href="tel:050-5485-4366" class="underline">050-5485-4366</a></dd></div>
+            <div class="flex gap-2"><dt class="w-24 text-gray-500">Lunch</dt><dd>Mon–Fri 11:30–14:30 / Sat 11:30–15:00</dd></div>
+            <div class="flex gap-2"><dt class="w-24 text-gray-500">Dinner</dt><dd>Mon–Fri 17:00–22:30 / Sat 17:00–22:00</dd></div>
+            <div class="flex gap-2"><dt class="w-24 text-gray-500">Phone</dt><dd><a href="tel:050-5485-4366" class="underline">050-5485-4366</a></dd></div>
+            <div class="flex gap-2"><dt class="w-24 text-gray-500">Address</dt><dd>〒100-6127 東京都千代田区永田町２丁目１１−１ 山王パークタワー ２７階</dd></div>
           </dl>
-          <div class="mt-4 flex flex-wrap gap-2 items-center">
+          <div class="mt-4 flex flex-wrap gap-2">
             <a class="tag" href="https://shunju.com/tameike/menu" target="_blank" rel="noopener">Website/Menu</a>
-            <a class="tag" href="https://maps.google.com/?q=Sanno%20Park%20Tower%2027F" target="_blank" rel="noopener">Google Maps</a>
-            <span class="tag">Veg‑friendly</span>
-            <span class="ml-auto text-xs text-gray-600">Ask Seed PM to make a reservation</span>
+            <a class="tag map-link" href="https://www.google.com/maps?q=〒100-6127 東京都千代田区永田町２丁目１１−１ 山王パークタワー ２７階" target="_blank" rel="noopener">Google Maps</a>
+            <span class="tag">Ask your Seed PM to make a reservation</span>
           </div>
         </div>
       </article>
 
       <!-- OMAKASE: Sushi Tokyo Ten -->
-      <article class="card fade bg-white rounded-2xl shadow p-5 mb-5 cursor-pointer" data-tags="sushi" data-map="Sushi Tokyo Ten, NEWoMan Shinjuku Food Hall, Tokyo">
+      <article class="card fade bg-white rounded-2xl shadow p-5 mb-5" data-tags="sushi" data-map="〒151-0051 東京都渋谷区千駄ケ谷５丁目２４−５５（NEWoMan）" data-name="Sushi Tokyo Ten">
         <img class="rounded-xl w-full object-cover" src="sushi-tokyo-zen.png" alt="Sushi Tokyo Ten"/>
         <div class="mt-4">
           <h3 class="serif text-2xl">Sushi Tokyo Ten</h3>
           <p class="text-sm text-gray-600">Traditional omakase—one piece at a time, focused on seasonal flavor.</p>
           <dl class="mt-3 text-sm grid gap-1">
-            <div class="flex gap-2"><dt class="w-20 text-gray-500">Hours</dt><dd>Lunch 11:00–15:00 / Dinner 17:00–23:00</dd></div>
+            <div class="flex gap-2"><dt class="w-24 text-gray-500">Hours</dt><dd>Lunch 11:00–15:00 / Dinner 17:00–23:00</dd></div>
+            <div class="flex gap-2"><dt class="w-24 text-gray-500">Address</dt><dd>〒151-0051 東京都渋谷区千駄ケ谷５丁目２４−５５（NEWoMan）</dd></div>
           </dl>
-          <div class="mt-4 flex flex-wrap gap-2 items-center">
+          <div class="mt-4 flex flex-wrap gap-2">
             <a class="tag" href="https://sushitokyo-ten.com/" target="_blank" rel="noopener">Website</a>
-            <a class="tag" href="https://maps.google.com/?q=NEWowMan%20Food%20Hall%202F%20Shinjuku" target="_blank" rel="noopener">Google Maps</a>
-            <span class="ml-auto text-xs text-gray-600">Ask Seed PM to make a reservation</span>
+            <a class="tag map-link" href="https://www.google.com/maps?q=〒151-0051 東京都渋谷区千駄ケ谷５丁目２４−５５ Sushi Tokyo Ten" target="_blank" rel="noopener">Google Maps</a>
+            <span class="tag">Ask your Seed PM to make a reservation</span>
           </div>
         </div>
       </article>
 
       <!-- OMAKASE: Sushi Itsumi -->
-      <article class="card fade bg-white rounded-2xl shadow p-5 mb-5 cursor-pointer" data-tags="sushi" data-map="Sushi Itsumi, Akasaka 3-20-9 B1, Tokyo">
+      <article class="card fade bg-white rounded-2xl shadow p-5 mb-5" data-tags="sushi" data-map="〒107-0052 東京都港区赤坂３丁目２０−９ 赤坂千切屋ビル B1F" data-name="Sushi Itsumi">
         <img class="rounded-xl w-full object-cover" src="sushi-itsumi.png" alt="Sushi Itsumi"/>
         <div class="mt-4">
           <h3 class="serif text-2xl">Sushi Itsumi</h3>
           <p class="text-sm text-gray-600">Edo‑style spirit with creative flair. 18–20 playful small plates in omakase.</p>
           <dl class="mt-3 text-sm grid gap-1">
-            <div class="flex gap-2"><dt class="w-20 text-gray-500">Hours</dt><dd>Lunch 12:00–14:30 / Dinner 18:00–22:30</dd></div>
+            <div class="flex gap-2"><dt class="w-24 text-gray-500">Hours</dt><dd>Lunch 12:00–14:30 / Dinner 18:00–22:30</dd></div>
+            <div class="flex gap-2"><dt class="w-24 text-gray-500">Address</dt><dd>〒107-0052 東京都港区赤坂３丁目２０−９ 赤坂千切屋ビル B1F</dd></div>
           </dl>
-          <div class="mt-4 flex flex-wrap gap-2 items-center">
+          <div class="mt-4 flex flex-wrap gap-2">
             <a class="tag" href="https://www.sushi-itsumi.com/" target="_blank" rel="noopener">Website</a>
-            <a class="tag" href="https://maps.google.com/?q=Akasaka%203-20-9%20B1" target="_blank" rel="noopener">Google Maps</a>
-            <span class="ml-auto text-xs text-gray-600">Ask Seed PM to make a reservation</span>
+            <a class="tag map-link" href="https://www.google.com/maps?q=〒107-0052 東京都港区赤坂３丁目２０−９ 赤坂千切屋ビル B1F" target="_blank" rel="noopener">Google Maps</a>
+            <span class="tag">Ask your Seed PM to make a reservation</span>
           </div>
         </div>
       </article>
 
       <!-- IZAKAYA: Gonpachi -->
-      <article class="card fade bg-white rounded-2xl shadow p-5 mb-5 cursor-pointer" data-tags="izakaya veg" data-map="Gonpachi Nishiazabu, Tokyo">
+      <article class="card fade bg-white rounded-2xl shadow p-5 mb-5" data-tags="izakaya veg" data-map="〒106-0031 東京都港区西麻布１丁目１３−１１" data-name="Gonpachi Nishiazabu">
         <img class="rounded-xl w-full object-cover" src="gonpachi.png" alt="Gonpachi Nishiazabu"/>
         <div class="mt-4">
           <h3 class="serif text-2xl">Gonpachi Nishiazabu</h3>
           <p class="text-sm text-gray-600">Old‑Japan charm, handmade soba, skewers, tempura, and curated sake/whisky. Open late.</p>
+        
           <dl class="mt-3 text-sm grid gap-1">
-            <div class="flex gap-2"><dt class="w-20 text-gray-500">Hours</dt><dd>11:30–27:30 (Lunch 11:30–15:00)</dd></div>
+            <div class="flex gap-2"><dt class="w-24 text-gray-500">Hours</dt><dd>11:30–27:30 (Lunch 11:30–15:00)</dd></div>
+            <div class="flex gap-2"><dt class="w-24 text-gray-500">Address</dt><dd>〒106-0031 東京都港区西麻布１丁目１３−１１</dd></div>
           </dl>
-          <div class="mt-4 flex flex-wrap gap-2 items-center">
+          <div class="mt-4 flex flex-wrap gap-2">
             <a class="tag" href="https://gonpachi.jp/nishi-azabu/" target="_blank" rel="noopener">Website</a>
-            <a class="tag" href="https://maps.google.com/?q=1-13-11%20Nishiazabu" target="_blank" rel="noopener">Google Maps</a>
-            <span class="tag">Veg‑friendly</span>
-            <span class="ml-auto text-xs text-gray-600">Ask Seed PM to make a reservation</span>
+            <a class="tag map-link" href="https://www.google.com/maps?q=〒106-0031 東京都港区西麻布１丁目１３−１１" target="_blank" rel="noopener">Google Maps</a>
+            <span class="tag">Ask your Seed PM to make a reservation</span>
           </div>
         </div>
       </article>
 
       <!-- TEMPURA Kondo -->
-      <article class="card fade bg-white rounded-2xl shadow p-5 mb-5 cursor-pointer" data-tags="izakaya veg" data-map="Tempura Kondo, Ginza 5-5-13 9F, Tokyo">
+      <article class="card fade bg-white rounded-2xl shadow p-5 mb-5" data-tags="izakaya veg" data-map="〒104-0061 東京都中央区銀座５丁目５−１３ 坂口ビル ９F" data-name="Tempura Kondo">
         <img class="rounded-xl w-full object-cover" src="tempura-kondo.png" alt="Tempura Kondo"/>
         <div class="mt-4">
           <h3 class="serif text-2xl">Tempura Kondo (Ginza)</h3>
           <p class="text-sm text-gray-600">50+ years of craftsmanship. Famous for vegetable tempura—carrot ribbons, sweet potato, fava beans, asparagus.</p>
           <dl class="mt-3 text-sm grid gap-1">
-            <div class="flex gap-2"><dt class="w-20 text-gray-500">Hours</dt><dd>Lunch 12:00–13:30 / Dinner 17:00–20:30 (Closed Sun)</dd></div>
+            <div class="flex gap-2"><dt class="w-24 text-gray-500">Hours</dt><dd>Lunch 12:00–13:30 / Dinner 17:00–20:30 (Closed Sun)</dd></div>
+            <div class="flex gap-2"><dt class="w-24 text-gray-500">Address</dt><dd>〒104-0061 東京都中央区銀座５丁目５−１３ 坂口ビル ９F</dd></div>
           </dl>
-          <div class="mt-4 flex flex-wrap gap-2 items-center">
-            <a class="tag" href="https://tempura-kondo.com/en/" target="_blank" rel="noopener">Website</a>
-            <a class="tag" href="https://maps.google.com/?q=Ginza%205-5-13%209F" target="_blank" rel="noopener">Google Maps</a>
-            <span class="tag">Veg‑friendly</span>
-            <span class="ml-auto text-xs text-gray-600">Ask Seed PM to make a reservation</span>
+          <div class="mt-4 flex flex-wrap gap-2">
+            <a class="tag" href="https://tempura-kondo.com/" target="_blank" rel="noopener">Website</a>
+            <a class="tag map-link" href="https://www.google.com/maps?q=〒104-0061 東京都中央区銀座５丁目５−１３ 坂口ビル ９F" target="_blank" rel="noopener">Google Maps</a>
+            <span class="tag">Ask your Seed PM to make a reservation</span>
           </div>
         </div>
       </article>
 
-      <!-- MEAT: Jojoen -->
-      <article class="card fade bg-white rounded-2xl shadow p-5 mb-5 cursor-pointer" data-tags="meat" data-map="Jojoen Akasaka, 3-11-3, Tokyo">
-        <img class="rounded-xl w-full object-cover" src="jojoen-menu.png" alt="Yakiniku Jojoen"/>
+      <!-- MEAT: Jojoen (Shinjuku Central East Exit) -->
+      <article class="card fade bg-white rounded-2xl shadow p-5 mb-5" data-tags="meat" data-map="〒160-0022 東京都新宿区新宿３丁目２７−１０ 武蔵野ビル 7F" data-name="Yakiniku Jojoen Shinjuku Central East Exit">
+        <img class="rounded-xl w-full object-cover" src="jojoen-room.png" alt="Yakiniku Jojoen"/>
         <div class="mt-4">
-          <h3 class="serif text-2xl">Yakiniku Jojoen</h3>
+          <h3 class="serif text-2xl">Yakiniku Jojoen (Shinjuku Central East Exit)</h3>
           <p class="text-sm text-gray-600">High‑end yakiniku with carefully selected cuts and signature salads in a luxe setting.</p>
           <dl class="mt-3 text-sm grid gap-1">
-            <div class="flex gap-2"><dt class="w-20 text-gray-500">Hours</dt><dd>Lunch 11:00–15:00 / Dinner 17:00–23:00</dd></div>
+            <div class="flex gap-2"><dt class="w-24 text-gray-500">Hours</dt><dd>Lunch 11:00–15:00 / Dinner 17:00–23:00</dd></div>
+            <div class="flex gap-2"><dt class="w-24 text-gray-500">Address</dt><dd>〒160-0022 東京都新宿区新宿３丁目２７−１０ 武蔵野ビル 7F</dd></div>
           </dl>
-          <div class="mt-4 flex flex-wrap gap-2 items-center">
+          <div class="mt-4 flex flex-wrap gap-2">
             <a class="tag" href="https://www.jojoen.co.jp/en/" target="_blank" rel="noopener">Website</a>
-            <a class="tag" href="https://maps.google.com/?q=Akasaka%203-11-3" target="_blank" rel="noopener">Google Maps</a>
-            <span class="ml-auto text-xs text-gray-600">Ask Seed PM to make a reservation</span>
+            <a class="tag map-link" href="https://www.google.com/maps?q=〒160-0022 東京都新宿区新宿３丁目２７−１０ 武蔵野ビル 7F" target="_blank" rel="noopener">Google Maps</a>
+            <span class="tag">Ask your Seed PM to make a reservation</span>
           </div>
         </div>
       </article>
 
       <!-- MEAT: Ginza Katsukami -->
-      <article class="card fade bg-white rounded-2xl shadow p-5 mb-5 cursor-pointer" data-tags="meat" data-map="Ginza Katsukami, 5-6-10 5F, Tokyo">
+      <article class="card fade bg-white rounded-2xl shadow p-5 mb-5" data-tags="meat" data-map="〒104-0061 東京都中央区銀座５丁目６−１０ 銀座ミヤコビル ５階" data-name="Ginza Katsukami">
         <img class="rounded-xl w-full object-cover" src="ginza-katsukami.png" alt="Ginza Katsukami"/>
         <div class="mt-4">
           <h3 class="serif text-2xl">Ginza Katsukami (Bib Gourmand)</h3>
           <p class="text-sm text-gray-600">Tonkatsu omakase—multiple pork cuts (tenderloin, cheek, loin) served in sequence.</p>
           <dl class="mt-3 text-sm grid gap-1">
-            <div class="flex gap-2"><dt class="w-20 text-gray-500">Hours</dt><dd>Lunch 11:30–14:00 / Dinner 18:00 & 20:00 seatings</dd></div>
+            <div class="flex gap-2"><dt class="w-24 text-gray-500">Hours</dt><dd>Lunch 11:30–14:00 / Dinner 18:00 & 20:00 seatings</dd></div>
+            <div class="flex gap-2"><dt class="w-24 text-gray-500">Address</dt><dd>〒104-0061 東京都中央区銀座５丁目６−１０ 銀座ミヤコビル ５階</dd></div>
           </dl>
-          <div class="mt-4 flex flex-wrap gap-2 items-center">
-            <a class="tag" href="https://katsukami.com/ginza-katsukami_en_01.html" target="_blank" rel="noopener">Website</a>
-            <a class="tag" href="https://maps.google.com/?q=Ginza%205-6-10%205F" target="_blank" rel="noopener">Google Maps</a>
-            <span class="ml-auto text-xs text-gray-600">Ask Seed PM to make a reservation</span>
+          <div class="mt-4 flex flex-wrap gap-2">
+            <a class="tag" href="https://katsukami.com/ginza-katsukami_jp_01.html" target="_blank" rel="noopener">Website</a>
+            <a class="tag map-link" href="https://www.google.com/maps?q=〒104-0061 東京都中央区銀座５丁目６−１０ 銀座ミヤコビル ５階" target="_blank" rel="noopener">Google Maps</a>
+            <span class="tag">Ask your Seed PM to make a reservation</span>
           </div>
         </div>
       </article>
-    </div>
 
-    <!-- No results message -->
-    <div id="no-results" class="no-results mt-6">
-      <div class="bg-white rounded-2xl shadow p-6 text-center text-gray-600">
-        No results yet for this category. Ramen picks are being curated — coming soon.
-      </div>
+      <!-- RAMEN: Tsuta -->
+      <article class="card fade bg-white rounded-2xl shadow p-5 mb-5" data-tags="ramen" data-map="〒151-0066 東京都渋谷区西原３丁目２−４ フロンティア代々木上原 B1" data-name="Japanese Soba Noodles Tsuta">
+        <img class="rounded-xl w-full object-cover" src="https://images.unsplash.com/photo-1546069901-5ec6a79120b0?auto=format&fit=crop&w=1200&q=60" alt="Ramen bowl – Tsuta style"/>
+        <div class="mt-4">
+          <h3 class="serif text-2xl">Japanese Soba Noodles Tsuta (Yoyogi‑Uehara)</h3>
+          <p class="text-sm text-gray-600">Michelin‑awarded ramen; shoyu base with truffle aroma. ~23 seats (counter 11, tables 12). Budget ¥3,000–3,999.</p>
+          <dl class="mt-3 text-sm grid gap-1">
+            <div class="flex gap-2"><dt class="w-24 text-gray-500">Address</dt><dd>〒151-0066 東京都渋谷区西原３丁目２−４ フロンティア代々木上原 B1</dd></div>
+          </dl>
+          <div class="mt-4 flex flex-wrap gap-2">
+            <a class="tag" href="https://www.tsuta79.tokyo/menuen" target="_blank" rel="noopener">Website</a>
+            <a class="tag map-link" href="https://www.google.com/maps?q=〒151-0066 東京都渋谷区西原３丁目２−４ フロンティア代々木上原 B1" target="_blank" rel="noopener">Google Maps</a>
+            <span class="tag">Note: many ramen shops are cash‑only</span>
+          </div>
+        </div>
+      </article>
+
+      <!-- RAMEN: Fuunji -->
+      <article class="card fade bg-white rounded-2xl shadow p-5 mb-5" data-tags="ramen" data-map="〒151-0053 東京都渋谷区代々木２丁目１４−３ 北斗第一ビル １F" data-name="Fuunji">
+        <img class="rounded-xl w-full object-cover" src="https://images.unsplash.com/photo-1604908814235-8e05f52f5176?auto=format&fit=crop&w=1200&q=60" alt="Tsukemen at Fuunji"/>
+        <div class="mt-4">
+          <h3 class="serif text-2xl">Fuunji (Shinjuku Main)</h3>
+          <p class="text-sm text-gray-600">Famous for rich fish‑pork tsukemen. ~15 counter seats. Budget ¥1,000–2,000. ~8 min walk from venue.</p>
+          <dl class="mt-3 text-sm grid gap-1">
+            <div class="flex gap-2"><dt class="w-24 text-gray-500">Address</dt><dd>〒151-0053 東京都渋谷区代々木２丁目１４−３ 北斗第一ビル １F</dd></div>
+          </dl>
+          <div class="mt-4 flex flex-wrap gap-2">
+            <a class="tag" href="https://www.fu-unji.com/" target="_blank" rel="noopener">Website</a>
+            <a class="tag map-link" href="https://www.google.com/maps?q=〒151-0053 東京都渋谷区代々木２丁目１４−３ 北斗第一ビル １F" target="_blank" rel="noopener">Google Maps</a>
+            <span class="tag">Note: many ramen shops are cash‑only</span>
+          </div>
+        </div>
+      </article>
+
+      <!-- RAMEN: RAMEN TOMIRAI -->
+      <article class="card fade bg-white rounded-2xl shadow p-5 mb-5" data-tags="ramen" data-map="〒151-0053 東京都渋谷区代々木１丁目３３−２" data-name="RAMEN TOMIRAI">
+        <img class="rounded-xl w-full object-cover" src="https://images.unsplash.com/photo-1569718212165-3a8278d5f624?auto=format&fit=crop&w=1200&q=60" alt="Ramen Tomirai"/>
+        <div class="mt-4">
+          <h3 class="serif text-2xl">RAMEN TOMIRAI (Yoyogi)</h3>
+          <p class="text-sm text-gray-600">Popular tonkotsu‑gyokai style. ~20 seats (two floors). Budget ¥1,000–1,999. ~4 min walk from venue.</p>
+          <dl class="mt-3 text-sm grid gap-1">
+            <div class="flex gap-2"><dt class="w-24 text-gray-500">Address</dt><dd>〒151-0053 東京都渋谷区代々木１丁目３３−２</dd></div>
+          </dl>
+          <div class="mt-4 flex flex-wrap gap-2">
+            <a class="tag" href="https://sites.google.com/view/ramen-tomirai8177/%E3%83%A1%E3%83%8B%E3%83%A5%E3%83%BC" target="_blank" rel="noopener">Website</a>
+            <a class="tag map-link" href="https://www.google.com/maps?q=〒151-0053 東京都渋谷区代々木１丁目３３−２" target="_blank" rel="noopener">Google Maps</a>
+            <span class="tag">Note: many ramen shops are cash‑only</span>
+          </div>
+        </div>
+      </article>
+
     </div>
   </section>
 
@@ -233,85 +275,78 @@
     <div class="grid md:grid-cols-2 gap-6">
       <div class="bg-white rounded-2xl shadow p-6">
         <h3 class="serif text-2xl mb-2">Where these are</h3>
-        <p class="text-sm text-gray-600 mb-4">Select a card to preview its location. Tap any card’s Google Maps link for directions.</p>
+        <p class="text-sm text-gray-600 mb-4">Tap a card to update the map. Click “Open in Google Maps” for full navigation.</p>
         <iframe id="mapFrame" class="w-full h-72 rounded-xl" loading="lazy" referrerpolicy="no-referrer-when-downgrade" src=""></iframe>
-        <div class="mt-3">
-          <a id="openInMaps" href="#" target="_blank" rel="noopener" class="inline-flex items-center px-4 py-2 rounded-full bg-orange-500 hover:bg-orange-600 text-white text-sm">Open in Google Maps</a>
+        <div class="mt-3 text-right">
+          <a id="mapOpenBtn" href="#" target="_blank" rel="noopener" class="inline-flex items-center px-3 py-2 text-sm rounded-md bg-gray-900 text-white hover:bg-black">Open in Google Maps</a>
         </div>
       </div>
       <div id="about" class="bg-white rounded-2xl shadow p-6">
         <h3 class="serif text-2xl mb-2">Quick tips for overseas guests</h3>
         <ul class="list-disc pl-5 text-sm text-gray-700 space-y-2">
-          <li><strong>Reservations:</strong> Popular spots fill up. <em>Ask your Seed PM</em> and we’ll take care of it.</li>
+          <li><strong>Reservations:</strong> Popular spots fill up. <strong>Ask your Seed PM to make a reservation.</strong></li>
           <li><strong>Allergies/Dietary:</strong> Tell us in advance; most places can accommodate.</li>
           <li><strong>Payment:</strong> Cards widely accepted; small spots may prefer cash. <em>Ramen shops are often cash‑only.</em></li>
-          <li><strong>Tipping:</strong> Not required (a service charge may be included).</li>
-          <li><strong>Late arrivals:</strong> 10–15 minutes late can be treated as a cancellation at some venues.</li>
+          <li><strong>Tipping:</strong> Not required (service charge may apply).</li>
+          <li><strong>Late arrivals:</strong> 10–15 min late can be auto‑cancel at some venues.</li>
         </ul>
-        <div class="mt-4 text-xs text-gray-500">Questions? <a class="underline" href="mailto:y.honda@seedplanning.co.jp">Contact your Seed PM</a>.</div>
+        <div class="mt-4 text-xs text-gray-500">Copy © Seed Planning. Restaurant details pulled from our 2025 briefing.</div>
       </div>
     </div>
   </section>
 
   <footer class="max-w-6xl mx-auto px-4 sm:px-6 mt-10 mb-16 text-center text-gray-500">
-    <div class="text-sm">Made for overseas guests — perfect after research days. © Seed Planning</div>
+    <div class="text-sm">Made for overseas guests — perfect after research days. Questions? <a class="underline" href="mailto:y.honda@seedplanning.co.jp">Contact us</a>.</div>
   </footer>
 
   <script>
-    // --- Filter logic with empty state ---
+    // --- Simple filter ---
     const btns = document.querySelectorAll('.filter-btn');
     const cards = Array.from(document.querySelectorAll('[data-tags]'));
-    const empty = document.getElementById('no-results');
+    const mapFrame = document.getElementById('mapFrame');
+    const mapOpenBtn = document.getElementById('mapOpenBtn');
 
-    function applyFilter(f){
-      let shown = 0;
-      btns.forEach(x=>x.classList.remove('bg-orange-500','text-white'));
-      const activeBtn = Array.from(btns).find(b=>b.dataset.filter===f);
-      if(activeBtn){ activeBtn.classList.add('bg-orange-500','text-white'); }
+    function toMapsUrlFromQuery(q){
+      return `https://www.google.com/maps?q=${encodeURIComponent(q)}`;
+    }
+
+    function setMapFromCard(card){
+      const q = card.dataset.map || card.querySelector('.map-link')?.href || 'Tokyo';
+      const openUrl = q.startsWith('http') ? q : toMapsUrlFromQuery(q);
+      const embedUrl = openUrl + (openUrl.includes('?') ? '&' : '?') + 'output=embed';
+      mapFrame.src = embedUrl;
+      mapOpenBtn.href = openUrl.replace('&output=embed','');
+      cards.forEach(c=>c.classList.remove('active-card'));
+      card.classList.add('active-card');
+    }
+
+    btns.forEach(b=>b.addEventListener('click',()=>{
+      const f=b.dataset.filter; btns.forEach(x=>x.classList.remove('bg-orange-500','text-white'));
+      b.classList.add('bg-orange-500','text-white');
+      let firstVisible=null;
       cards.forEach(c=>{
         const tags=c.dataset.tags.split(' ');
-        const visible = (f==='all'||tags.includes(f));
-        c.style.display = visible ? '' : 'none';
-        if(visible) shown++;
+        const show=(f==='all'||tags.includes(f));
+        c.style.display= show?'':'none';
+        if(show && !firstVisible) firstVisible=c;
       });
-      empty.style.display = shown===0 ? '' : 'none';
-      if(shown>0){
-        const firstVisible = cards.find(c=>c.style.display!=='none');
-        if(firstVisible) setMap(firstVisible.dataset.map);
-      }
-    }
+      if(firstVisible) { setMapFromCard(firstVisible); document.getElementById('map').scrollIntoView({behavior:'smooth', block:'start'}); }
+    }));
 
-    // --- Live map embed ---
-    const mapFrame = document.getElementById('mapFrame');
-    const openInMaps = document.getElementById('openInMaps');
-    let currentMapUrl = '';
-
-    function setMap(query){
-      if(!query) return;
-      const base = 'https://www.google.com/maps';
-      const q = encodeURIComponent(query);
-      currentMapUrl = `${base}?q=${q}`;
-      mapFrame.src = `${currentMapUrl}&output=embed`;
-      openInMaps.href = currentMapUrl;
-    }
-
-    // Card click updates map, but let anchor clicks work normally
-    cards.forEach(card=>{
-      card.addEventListener('click', (e)=>{
-        if(e.target.closest('a')) return; // don't hijack link clicks
-        setMap(card.dataset.map);
-        window.location.hash = 'map';
+    // Card click -> update map (ignore clicks on anchors)
+    cards.forEach(c=>{
+      c.addEventListener('click', (e)=>{
+        if(e.target.closest('a')) return; // let links work normally
+        setMapFromCard(c);
+        document.getElementById('map').scrollIntoView({behavior:'smooth', block:'start'});
       });
     });
 
-    // Init: show first card on load
-    window.addEventListener('DOMContentLoaded',()=>{
-      setMap(cards[0]?.dataset.map || 'Shinjuku Station, Tokyo');
-      applyFilter('all');
-    });
-
-    // Bind filter buttons
-    btns.forEach(b=>b.addEventListener('click',()=>applyFilter(b.dataset.filter)));
+    // Initialize: focus first card
+    (function init(){
+      const first = cards[0];
+      if(first){ setMapFromCard(first); }
+    })();
   </script>
 </body>
 </html>
