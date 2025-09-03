@@ -4,7 +4,7 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Tokyo Food & Drinks 2025 | Seed Planning</title>
-  <meta name="description" content="A hand‑picked guide to Tokyo restaurants—perfect for post‑research meals. A short walk or quick taxi from your facility or hotel." />
+  <meta name="description" content="A hand‑picked guide to Tokyo restaurants—perfect for post‑research meals. Quick taxi from your facility or hotel." />
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&family=Playfair+Display:wght@500;700&display=swap" rel="stylesheet">
@@ -42,7 +42,7 @@
     <div class="relative z-10 text-center px-6">
       <p class="inline-block mb-4 glass tag text-gray-100">A short walk or quick taxi from your facility or hotel</p>
       <h1 class="serif text-4xl md:text-6xl font-bold leading-tight">Tokyo Food & Drinks <span class="text-orange-400">2025</span></h1>
-      <p class="mt-4 max-w-2xl mx-auto text-gray-200">A compact, decision‑friendly list for overseas guests. Handpicked after countless projects and debriefs across central Tokyo.</p>
+      <p class="mt-4 max-w-2xl mx-auto text-gray-200">A compact, decision‑friendly list for overseas researchers. Handpicked after countless projects and debriefs across central Tokyo.</p>
       <a href="#picks" class="mt-10 inline-flex items-center px-5 py-3 rounded-full bg-orange-500 hover:bg-orange-600 shadow-lg">Explore the picks</a>
     </div>
   </header>
@@ -149,7 +149,6 @@
         <div class="mt-4">
           <h3 class="serif text-2xl">Gonpachi Nishiazabu</h3>
           <p class="text-sm text-gray-600">Old‑Japan charm, handmade soba, skewers, tempura, and curated sake/whisky. Open late.</p>
-        
           <dl class="mt-3 text-sm grid gap-1">
             <div class="flex gap-2"><dt class="w-24 text-gray-500">Hours</dt><dd>11:30–27:30 (Lunch 11:30–15:00)</dd></div>
             <div class="flex gap-2"><dt class="w-24 text-gray-500">Address</dt><dd>〒106-0031 東京都港区西麻布１丁目１３−１１</dd></div>
@@ -300,7 +299,7 @@
   </footer>
 
   <script>
-    // --- Simple filter ---
+    // --- Simple filter (stay in place; do not auto-scroll) ---
     const btns = document.querySelectorAll('.filter-btn');
     const cards = Array.from(document.querySelectorAll('[data-tags]'));
     const mapFrame = document.getElementById('mapFrame');
@@ -309,9 +308,8 @@
     function toMapsUrlFromQuery(q){
       return `https://www.google.com/maps?q=${encodeURIComponent(q)}`;
     }
-
     function setMapFromCard(card){
-      const q = card.dataset.map || card.querySelector('.map-link')?.href || 'Tokyo';
+      const q = card.dataset.map || card.querySelector('.map-link')?.getAttribute('href') || 'Tokyo';
       const openUrl = q.startsWith('http') ? q : toMapsUrlFromQuery(q);
       const embedUrl = openUrl + (openUrl.includes('?') ? '&' : '?') + 'output=embed';
       mapFrame.src = embedUrl;
@@ -320,8 +318,10 @@
       card.classList.add('active-card');
     }
 
-    btns.forEach(b=>b.addEventListener('click',()=>{
-      const f=b.dataset.filter; btns.forEach(x=>x.classList.remove('bg-orange-500','text-white'));
+    btns.forEach(b=>b.addEventListener('click',(e)=>{
+      e.preventDefault(); // keep viewport position
+      const f=b.dataset.filter; 
+      btns.forEach(x=>x.classList.remove('bg-orange-500','text-white'));
       b.classList.add('bg-orange-500','text-white');
       let firstVisible=null;
       cards.forEach(c=>{
@@ -330,10 +330,10 @@
         c.style.display= show?'':'none';
         if(show && !firstVisible) firstVisible=c;
       });
-      if(firstVisible) { setMapFromCard(firstVisible); document.getElementById('map').scrollIntoView({behavior:'smooth', block:'start'}); }
+      if(firstVisible) { setMapFromCard(firstVisible); }
     }));
 
-    // Card click -> update map (ignore clicks on anchors)
+    // Card click -> update map (ignore clicks on anchors); scroll to the map only when a card itself is clicked
     cards.forEach(c=>{
       c.addEventListener('click', (e)=>{
         if(e.target.closest('a')) return; // let links work normally
