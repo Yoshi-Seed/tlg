@@ -1,0 +1,208 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>TLG Dining Link</title>
+  <style>
+    :root{
+      --bg:#0b0d10; --card:#12161c; --text:#e7eef7; --muted:#9fb0c3; --accent:#6ab3ff; --outline:#223044; --ok:#57d89a; --warn:#ffd166;
+    }
+    *{box-sizing:border-box}
+    body{margin:0; font-family:system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial,"Hiragino Kaku Gothic ProN","Noto Sans JP",sans-serif; color:var(--text); background:linear-gradient(180deg,#0b0d10,#0f1319 60%);}    
+    a{color:var(--accent)}
+    .wrap{max-width:980px; margin:48px auto; padding:0 20px}
+    header{display:flex; align-items:center; gap:12px; margin-bottom:20px}
+    .logo{width:36px;height:36px;border-radius:10px;background:radial-gradient(circle at 30% 30%,#6ab3ff,#6ab3ff22 40%,transparent 41%),linear-gradient(135deg,#2a3b55,#10141b); box-shadow:0 6px 20px #0008}
+    h1{font-size:20px;letter-spacing:.4px;margin:0}
+    .card{background:var(--card); border:1px solid var(--outline); border-radius:16px; padding:20px; box-shadow:0 10px 35px #0006}
+    form .grid{display:grid; grid-template-columns:1fr; gap:14px}
+    @media(min-width:720px){form .grid{grid-template-columns:1fr 1fr}}
+    label{display:flex; flex-direction:column; gap:8px; font-size:13px; color:var(--muted)}
+    input, textarea, select{background:#0f1318; color:var(--text); border:1px solid var(--outline); border-radius:12px; padding:12px 14px; font-size:16px; outline:none}
+    input:focus, textarea:focus{border-color:#385784; box-shadow:0 0 0 3px #6ab3ff22}
+    .row{display:flex; gap:12px; align-items:center; flex-wrap:wrap}
+    .btn{appearance:none; border:none; border-radius:12px; padding:12px 16px; background:linear-gradient(180deg,#6ab3ff,#4b93d6); color:#08213a; font-weight:700; cursor:pointer; box-shadow:0 6px 18px #0008}
+    .btn.secondary{background:#0f1318; color:var(--text); border:1px solid var(--outline)}
+    .btn.ghost{background:transparent; border:1px dashed var(--outline); color:var(--muted)}
+    .note{color:var(--muted); font-size:13px}
+    .share{margin-top:16px; display:flex; gap:10px; align-items:center; flex-wrap:wrap}
+    .share input{flex:1; min-width:280px}
+    .pill{display:inline-flex; align-items:center; gap:8px; border:1px solid var(--outline); background:#0f1318; color:var(--muted); border-radius:999px; padding:6px 10px; font-size:12px}
+    .title{font-size:18px; margin:0 0 12px 0}
+    .kvs{display:grid; grid-template-columns:140px 1fr; gap:8px; font-size:16px}
+    .kvs div{padding:8px 0; border-bottom:1px dashed #223044}
+    iframe{width:100%; height:400px; border:0; border-radius:14px}
+    .spacer{height:16px}
+    dialog{border:none; border-radius:16px; padding:0; width:min(680px,90vw); background:var(--card); color:var(--text)}
+    .modal-head{display:flex; justify-content:space-between; align-items:center; padding:14px 18px; border-bottom:1px solid var(--outline)}
+    .modal-body{padding:18px}
+    .modal-foot{display:flex; justify-content:flex-end; gap:10px; padding:14px 18px; border-top:1px solid var(--outline)}
+    .mono{font-family:ui-monospace,SFMono-Regular,Menlo,Monaco,Consolas,monospace; background:#0f1318; padding:10px; border-radius:10px; border:1px solid var(--outline)}
+    .tag{background:#0f1318; border:1px solid var(--outline); color:#9fb0c3; border-radius:8px; padding:4px 8px; font-size:12px}
+    .view-head{display:flex; align-items:center; justify-content:space-between; gap:10px; margin-bottom:12px}
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <header>
+      <div class="logo" aria-hidden="true"></div>
+      <h1>TLG Dining Link</h1>
+      <span class="pill" title="No login, client‑side only">serverless</span>
+    </header>
+
+    <div id="app" class="card"></div>
+  </div>
+
+  <dialog id="taxiModal">
+    <div class="modal-head">
+      <strong>Your Taxi driver instruction</strong>
+      <button class="btn secondary" onclick="closeTaxi()">閉じる</button>
+    </div>
+    <div class="modal-body">
+      <p class="note">運転手さんに見せる日本語住所：</p>
+      <div id="taxiText" class="mono" style="white-space:pre-wrap"></div>
+    </div>
+    <div class="modal-foot">
+      <button class="btn secondary" onclick="copyTaxi()">住所をコピー</button>
+    </div>
+  </dialog>
+
+  <script>
+    const el = (html) => { const t = document.createElement('template'); t.innerHTML = html.trim(); return t.content.firstElementChild; };
+
+    const fmtDateTime = (v) => {
+      if(!v) return '';
+      // v is expected like '2025-09-03T19:00'
+      try{
+        const [d, t] = v.split('T');
+        return d.replaceAll('-', '/') + ' ' + t;
+      }catch{ return v }
+    };
+
+    const buildShareURL = ({name, addr, time, pax}) => {
+      const url = new URL(location.href.split('?')[0]);
+      const p = new URLSearchParams({ name, addr, time, pax: String(pax||'') });
+      url.search = p.toString();
+      return url.toString();
+    };
+
+    const parseParams = () => {
+      const p = new URLSearchParams(location.search);
+      const name = p.get('name') || '';
+      const addr = p.get('addr') || '';
+      const time = p.get('time') || '';
+      const pax  = p.get('pax') || '';
+      if(name || addr || time || pax) return { name, addr, time, pax };
+      return null;
+    };
+
+    function renderForm(){
+      const node = el(`
+        <div>
+          <h2 class="title">予約情報の入力</h2>
+          <form id="f">
+            <div class="grid">
+              <label>レストラン名
+                <input id="name" required placeholder="例：鮨 〇〇">
+              </label>
+              <label>予約日時（JST）
+                <input id="time" type="datetime-local" required>
+              </label>
+              <label>住所（日本語）
+                <textarea id="addr" rows="3" required placeholder="例：東京都中央区〜〜 ビル名・階層まで"></textarea>
+              </label>
+              <label>人数
+                <input id="pax" type="number" min="1" step="1" required value="2">
+              </label>
+            </div>
+            <div class="spacer"></div>
+            <div class="row">
+              <button class="btn" type="submit">発行（リンクを作成）</button>
+              <span class="note">※この版はURLに情報を含むクライアントサイド実装です。</span>
+            </div>
+          </form>
+          <div id="share" class="share" style="display:none"></div>
+        </div>
+      `);
+
+      node.querySelector('#f').addEventListener('submit', (e)=>{
+        e.preventDefault();
+        const name = node.querySelector('#name').value.trim();
+        const addr = node.querySelector('#addr').value.trim();
+        const time = node.querySelector('#time').value.trim();
+        const pax  = node.querySelector('#pax').value.trim();
+        if(!name || !addr || !time || !pax){ alert('未入力の項目があります'); return; }
+        const link = buildShareURL({name, addr, time, pax});
+        const share = node.querySelector('#share');
+        share.style.display='flex';
+        share.innerHTML = '';
+        share.append(
+          el('<span class="note">このURLをTLGに共有：</span>'),
+          el(`<input readonly value="${link}">`),
+          el(`<button class="btn secondary" type="button">コピー</button>`),
+          el(`<a class="btn" href="${link}" target="_blank" rel="noopener">プレビューを開く</a>`)
+        );
+        share.querySelector('button').addEventListener('click', async ()=>{
+          const inp = share.querySelector('input');
+          inp.select(); inp.setSelectionRange(0, 99999);
+          try{ await navigator.clipboard.writeText(inp.value); share.querySelector('button').textContent='コピー済み'; }catch{ }
+        });
+      });
+
+      document.getElementById('app').replaceChildren(node);
+    }
+
+    function renderView(data){
+      const url = `https://www.google.com/maps?q=${encodeURIComponent(data.addr)}&hl=ja&output=embed`;
+      const node = el(`
+        <div>
+          <div class="view-head">
+            <h2 class="title" style="margin:0">ご予約のご案内</h2>
+            <div class="row">
+              <button class="btn secondary" onclick="openTaxi('${encodeURIComponent(data.addr)}')">Your Taxi driver instruction</button>
+              <a class="btn ghost" href="${location.pathname}" title="新規作成">新しいリンクを作る</a>
+            </div>
+          </div>
+
+          <div class="kvs">
+            <div>レストラン名</div><div><strong>${escapeHtml(data.name)}</strong></div>
+            <div>予約日時（JST）</div><div>${fmtDateTime(data.time)}</div>
+            <div>人数</div><div>${Number(data.pax)||''} 名</div>
+            <div>住所</div><div>${escapeHtml(data.addr)}</div>
+          </div>
+
+          <div class="spacer"></div>
+          <iframe src="${url}" loading="lazy" referrerpolicy="no-referrer-when-downgrade" allowfullscreen></iframe>
+          <p class="note">上の地図が表示されない場合は <a href="https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(data.addr)}" target="_blank" rel="noopener">Googleマップで開く</a> をご利用ください。</p>
+        </div>
+      `);
+
+      document.getElementById('app').replaceChildren(node);
+    }
+
+    function escapeHtml(s){
+      return (s||'').replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+    }
+
+    // Modal helpers
+    function openTaxi(encodedAddr){
+      const addr = decodeURIComponent(encodedAddr);
+      document.getElementById('taxiText').textContent = addr;
+      document.getElementById('taxiModal').showModal();
+    }
+    function closeTaxi(){ document.getElementById('taxiModal').close(); }
+    async function copyTaxi(){
+      try{
+        const t = document.getElementById('taxiText').textContent;
+        await navigator.clipboard.writeText(t);
+      }catch{}
+    }
+    window.openTaxi = openTaxi; window.closeTaxi = closeTaxi; window.copyTaxi = copyTaxi;
+
+    // boot
+    const data = parseParams();
+    if(data) renderView(data); else renderForm();
+  </script>
+</body>
+</html>
