@@ -4,6 +4,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Your Japan Research Journey - On-the-Ground Support</title>
+    <!-- Gemini API key is stored server-side in .env as GEMINI_API_KEY -->
 
     <!-- Tailwind -->
     <script src="https://cdn.tailwindcss.com"></script>
@@ -914,9 +915,7 @@
             const geminiLoader = document.getElementById('gemini-loader');
             const geminiModalResult = document.getElementById('gemini-modal-result');
 
-            // IMPORTANT: Enter your Google AI Studio API key here
-            // 重要：ここにGoogle AI Studioで取得したAPIキーを入力してください
-            const YOUR_API_KEY = "AIzaSyB-V6HbuAuOGqr62yF6IC92xbWlggwlQrE";
+            // Gemini API is invoked via a serverless function so no API key is exposed in the client.
 
             const featureConfig = {
                 dinner: {
@@ -932,32 +931,16 @@
             };
 
             async function callGeminiAPI(prompt, retries = 3, delay = 1000) {
-                if (!YOUR_API_KEY || YOUR_API_KEY === "YOUR_API_KEY_HERE") {
-                    geminiModalResult.innerHTML = `<p class="text-red-500 text-center">API key is not set. Please add your API key in the script tag.</p>`;
-                    return;
-                }
-
                 geminiGenerateBtn.disabled = true;
                 geminiBtnText.classList.add('hidden');
                 geminiLoader.classList.remove('hidden');
                 geminiModalResult.innerHTML = '<div class="text-center p-4">Generating ideas...</div>';
 
-                const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-05-20:generateContent?key=${YOUR_API_KEY}`;
-                const payload = {
-                    contents: [{
-                        parts: [{
-                            text: prompt
-                        }]
-                    }]
-                };
-
                 try {
-                    const response = await fetch(apiUrl, {
+                    const response = await fetch('/api/gemini', {
                         method: 'POST',
-                        headers: {
-                            'Content-Type': 'application/json'
-                        },
-                        body: JSON.stringify(payload)
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({ prompt })
                     });
 
                     if (!response.ok) {
@@ -965,7 +948,7 @@
                     }
 
                     const result = await response.json();
-                    const text = result.candidates?.[0]?.content?.parts?.[0]?.text;
+                    const text = result.html;
 
                     if (text) {
                         geminiModalResult.innerHTML = text;
