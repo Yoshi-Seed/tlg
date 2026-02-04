@@ -4,8 +4,10 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Your Japan Research Journey - On-the-Ground Support</title>
+
     <!-- Tailwind -->
     <script src="https://cdn.tailwindcss.com"></script>
+
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -13,13 +15,26 @@
       href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&family=Playfair+Display:wght@700&display=swap"
       rel="stylesheet"
     />
+
     <style>
       :root {
-        --bg-color: #fcfaf6;
-        --text-color: #3d3d3d;
-        --primary-color: #0b3d5f;
-        --accent-color: #d16058;
-        --border-color: #eaeaea;
+        /* TLG base */
+        --bg-color: #fef9ef; /* TLG cream */
+        --surface-color: #ffffff;
+        --border-color: #e7e2d8;
+
+        /* Typography */
+        --text-color: #1f2937;
+        --muted-text: #5b6472;
+
+        /* Brand fusion */
+        --primary-color: #0e4a6b; /* Seed medical blue (trust) */
+        --primary-ink: #0b3550; /* deeper heading ink */
+        --accent-color: #d80132; /* TLG red */
+        --tlg-olive: #5a643c; /* TLG green */
+
+        /* UI effects */
+        --ring-color: rgba(14, 74, 107, 0.22);
       }
 
       body {
@@ -35,23 +50,58 @@
       h2,
       h3 {
         font-family: "Playfair Display", serif;
-        color: var(--primary-color);
+        color: var(--primary-ink);
         font-weight: 700;
       }
 
+      /* Normalize common Tailwind grays used in the markup to our palette */
+      .text-gray-600 {
+        color: var(--muted-text) !important;
+      }
+      .text-gray-700,
+      .text-gray-800 {
+        color: var(--text-color) !important;
+      }
+
       .card {
-        background-color: #fff;
+        background-color: var(--surface-color);
         border-radius: 16px;
-        box-shadow: 0 8px 30px rgba(0, 0, 0, 0.08);
-        transition: transform 0.3s ease, box-shadow 0.3s ease;
+        border: 1px solid var(--border-color);
+        box-shadow: 0 10px 28px rgba(15, 23, 42, 0.08);
+        transition: transform 0.25s ease, box-shadow 0.25s ease;
         position: relative;
         overflow: hidden;
-        border: 1px solid var(--border-color);
       }
 
       .card:hover {
-        transform: translateY(-6px);
-        box-shadow: 0 12px 40px rgba(0, 0, 0, 0.12);
+        transform: translateY(-5px);
+        box-shadow: 0 16px 40px rgba(15, 23, 42, 0.12);
+      }
+
+      /* Buttons (optional helpers) */
+      .btn-primary {
+        background: var(--primary-color);
+        color: #fff;
+      }
+      .btn-primary:hover {
+        opacity: 0.92;
+      }
+
+      .btn-accent {
+        background: var(--accent-color);
+        color: #fff;
+      }
+      .btn-accent:hover {
+        opacity: 0.92;
+      }
+
+      .btn-ghost {
+        background: rgba(31, 41, 55, 0.04);
+        border: 1px solid rgba(31, 41, 55, 0.10);
+        color: var(--text-color);
+      }
+      .btn-ghost:hover {
+        background: rgba(31, 41, 55, 0.07);
       }
 
       .timeline-container {
@@ -64,7 +114,7 @@
       .timeline-spine {
         position: absolute;
         top: 0;
-        left: 60px; /* Changed from 21px */
+        left: 60px;
         width: 3px;
         height: 100%;
         background-color: var(--border-color);
@@ -74,13 +124,13 @@
       #timeline-progress {
         position: absolute;
         top: 0;
-        left: 60px; /* Changed from 21px */
+        left: 60px;
         width: 3px;
         height: 0;
         background: linear-gradient(
           to bottom,
-          var(--primary-color),
-          var(--accent-color)
+          rgba(14, 74, 107, 0.95),
+          rgba(216, 1, 50, 0.9)
         );
         z-index: 1;
         transition: height 0.1s linear;
@@ -90,7 +140,7 @@
         position: relative;
         display: flex;
         align-items: flex-start;
-        gap: 2.2rem; /* Changed from 2rem */
+        gap: 2.2rem;
         margin-bottom: 3.5rem;
         opacity: 0;
         transform: translateY(40px);
@@ -142,20 +192,21 @@
         padding-left: 1rem;
       }
 
+      /* Accents tuned to TLG x Seed */
       .card-accent-1 {
-        border-color: #0077b6;
+        border-color: var(--primary-color);
       }
       .card-accent-2 {
-        border-color: #f77f00;
+        border-color: var(--tlg-olive);
       }
       .card-accent-3 {
-        border-color: #0081a7;
+        border-color: #2b6777;
       }
       .card-accent-4 {
-        border-color: #d62828;
+        border-color: var(--accent-color);
       }
       .card-accent-5 {
-        border-color: #6a4c93;
+        border-color: #8b5e34;
       }
 
       details summary {
@@ -208,12 +259,14 @@
         transition: transform 0.3s ease, opacity 0.3s ease;
       }
 
+      /* Top bar: subtle TLG cream + clean border */
       .custom-header {
-        background-color: #1a2a4b;
-        color: #ffffff;
-        padding: 0.5rem 1rem;
+        background-color: rgba(254, 249, 239, 0.92);
+        color: var(--text-color);
+        padding: 0.65rem 1rem;
         width: 100%;
-        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        border-bottom: 1px solid var(--border-color);
+        backdrop-filter: blur(10px);
         text-align: center;
       }
     </style>
@@ -222,8 +275,9 @@
   <body class="selection:bg-yellow-200">
     <!-- Top bar -->
     <div class="custom-header">
-      <p class="text-lg font-light tracking-wider opacity-80">
-        SEED x TLG | On-the-Ground Partnership
+      <p class="text-lg font-light tracking-wider opacity-90">
+        <span style="color: var(--accent-color); font-weight: 600">SEED</span> x
+        TLG | On-the-Ground Partnership
       </p>
     </div>
 
@@ -251,7 +305,7 @@
         <img
           src="https://yoshi-seed.github.io/tlg/fuji.png"
           alt="Welcome to Japan banner with iconic landmarks"
-          class="w-full h-auto rounded-2xl shadow- xl object-cover"
+          class="w-full h-auto rounded-2xl shadow-xl object-cover"
         />
       </div>
 
@@ -271,7 +325,7 @@
           </a>
           <button
             id="openTaxiModalBtn"
-            class="inline-flex items-center justify-center gap-3 px-4 py-3 rounded-xl bg-gray-100 text-gray-800 font-semibold border border-gray-200 transition hover:bg-gray-200"
+            class="inline-flex items-center justify-center gap-3 px-4 py-3 rounded-xl btn-ghost font-semibold transition"
           >
             <span class="text-xl">🚕</span> Instructions for your Japanese Taxi
             driver
@@ -387,7 +441,7 @@
             </p>
             <button
               id="openMeetingPointModalBtn"
-              class="mt-4 inline-flex items-center gap-2 justify-center px-4 py-2 rounded-lg bg-gray-100 text-gray-800 font-semibold border border-gray-200 transition hover:bg-gray-200"
+              class="mt-4 inline-flex items-center gap-2 justify-center px-4 py-2 rounded-lg btn-ghost font-semibold transition"
             >
               📍 Show Tokyo / Osaka Station Meeting Point
             </button>
@@ -428,7 +482,7 @@
                 href="https://yoshi-seed.github.io/tlg/dining/tokyo/"
                 target="_blank"
                 rel="noopener noreferrer"
-                class="inline-flex items-center gap-2 justify-center px-4 py-2 rounded-lg bg-gray-100 text-gray-800 font-semibold border border-gray-200 transition hover:bg-gray-200"
+                class="inline-flex items-center gap-2 justify-center px-4 py-2 rounded-lg btn-ghost font-semibold transition"
               >
                 Here are some top pick recommendations for Tokyo.
               </a>
@@ -436,7 +490,7 @@
                 href="https://yoshi-seed.github.io/tlg/dining/osaka/"
                 target="_blank"
                 rel="noopener noreferrer"
-                class="inline-flex items-center gap-2 justify-center px-4 py-2 rounded-lg bg-gray-100 text-gray-800 font-semibold border border-gray-200 transition hover:bg-gray-200"
+                class="inline-flex items-center gap-2 justify-center px-4 py-2 rounded-lg btn-ghost font-semibold transition"
               >
                 Here are some top pick recommendation for Osaka.
               </a>
@@ -524,6 +578,7 @@
     <!-- Footer -->
     <footer
       class="border-t bg-white/90 backdrop-blur-sm sticky bottom-0 z-20 py-5"
+      style="border-color: var(--border-color)"
     >
       <div
         class="max-w-4xl mx-auto px-4 flex flex-col sm:flex-row items-center justify-between gap-4"
@@ -562,7 +617,7 @@
           <div class="flex flex-col gap-4">
             <button
               data-facility="osaka"
-              class="facility-btn text-left w-full p-4 rounded-lg border-2 border-gray-200 hover:border-blue-500 hover:bg-blue-50 transition"
+              class="facility-btn text-left w-full p-4 rounded-lg border-2 border-gray-200 hover:border-[var(--primary-color)] hover:bg-[color:rgba(14,74,107,0.06)] transition"
             >
               <span class="font-bold text-lg text-gray-800"
                 >Osaka: J-Facility (Ipsos)</span
@@ -571,7 +626,7 @@
             </button>
             <button
               data-facility="osaka-es"
-              class="facility-btn text-left w-full p-4 rounded-lg border-2 border-gray-200 hover:border-blue-500 hover:bg-blue-50 transition"
+              class="facility-btn text-left w-full p-4 rounded-lg border-2 border-gray-200 hover:border-[var(--primary-color)] hover:bg-[color:rgba(14,74,107,0.06)] transition"
             >
               <span class="font-bold text-lg text-gray-800"
                 >Osaka: es Interview Room</span
@@ -580,7 +635,7 @@
             </button>
             <button
               data-facility="akasaka"
-              class="facility-btn text-left w-full p-4 rounded-lg border-2 border-gray-200 hover:border-blue-500 hover:bg-blue-50 transition"
+              class="facility-btn text-left w-full p-4 rounded-lg border-2 border-gray-200 hover:border-[var(--primary-color)] hover:bg-[color:rgba(14,74,107,0.06)] transition"
             >
               <span class="font-bold text-lg text-gray-800"
                 >Tokyo: TGI Akasaka Interview Room</span
@@ -589,7 +644,7 @@
             </button>
             <button
               data-facility="tokyo-c"
-              class="facility-btn text-left w-full p-4 rounded-lg border-2 border-gray-200 hover:border-blue-500 hover:bg-blue-50 transition"
+              class="facility-btn text-left w-full p-4 rounded-lg border-2 border-gray-200 hover:border-[var(--primary-color)] hover:bg-[color:rgba(14,74,107,0.06)] transition"
             >
               <span class="font-bold text-lg text-gray-800"
                 >Tokyo: Sugata Research Space C</span
@@ -598,16 +653,16 @@
             </button>
             <button
               data-facility="tokyo-d"
-              class="facility-btn text-left w-full p-4 rounded-lg border-2 border-gray-200 hover:border-blue-500 hover:bg-blue-50 transition"
+              class="facility-btn text-left w-full p-4 rounded-lg border-2 border-gray-200 hover:border-[var(--primary-color)] hover:bg-[color:rgba(14,74,107,0.06)] transition"
             >
               <span class="font-bold text-lg text-gray-800"
                 >Tokyo: Sugata Research Space D</span
               ><br />
               <span class="text-gray-600">Select for Japanese address & Map</span>
             </button>
-             <button
+            <button
               data-facility="tokyo-e"
-              class="facility-btn text-left w-full p-4 rounded-lg border-2 border-gray-200 hover:border-blue-500 hover:bg-blue-50 transition"
+              class="facility-btn text-left w-full p-4 rounded-lg border-2 border-gray-200 hover:border-[var(--primary-color)] hover:bg-[color:rgba(14,74,107,0.06)] transition"
             >
               <span class="font-bold text-lg text-gray-800"
                 >Tokyo: Weiden Haus</span
@@ -633,7 +688,7 @@
           <div class="mt-8 flex flex-col sm:flex-row gap-4">
             <button
               id="back-to-selection"
-              class="w-full sm:w-auto flex-1 inline-flex items-center justify-center gap-2 px-4 py-3 rounded-xl bg-gray-200 text-gray-800 font-semibold transition hover:bg-gray-300"
+              class="w-full sm:w-auto flex-1 inline-flex items-center justify-center gap-2 px-4 py-3 rounded-xl btn-ghost font-semibold transition"
             >
               <span>← Back</span>
             </button>
@@ -651,7 +706,7 @@
 
         <button
           id="closeModalBtn"
-          class="absolute -top-3 -right-3 h-10 w-10 flex items-center justify-center bg-white rounded-full shadow-lg text-gray-600 hover:text-red-500 hover:rotate-90 transition-transform"
+          class="absolute -top-3 -right-3 h-10 w-10 flex items-center justify-center bg-white rounded-full shadow-lg text-gray-600 hover:text-[var(--accent-color)] hover:rotate-90 transition-transform"
         >
           <svg
             class="w-6 h-6"
@@ -688,7 +743,7 @@
           <div class="flex flex-col gap-4">
             <button
               data-station="tokyo"
-              class="station-btn text-left w-full p-4 rounded-lg border-2 border-gray-200 hover:border-blue-500 hover:bg-blue-50 transition"
+              class="station-btn text-left w-full p-4 rounded-lg border-2 border-gray-200 hover:border-[var(--primary-color)] hover:bg-[color:rgba(14,74,107,0.06)] transition"
             >
               <span class="font-bold text-lg text-gray-800">Tokyo Station</span
               ><br />
@@ -698,7 +753,7 @@
             </button>
             <button
               data-station="osaka"
-              class="station-btn text-left w-full p-4 rounded-lg border-2 border-gray-200 hover:border-blue-500 hover:bg-blue-50 transition"
+              class="station-btn text-left w-full p-4 rounded-lg border-2 border-gray-200 hover:border-[var(--primary-color)] hover:bg-[color:rgba(14,74,107,0.06)] transition"
             >
               <span class="font-bold text-lg text-gray-800"
                 >Shin-Osaka Station</span
@@ -722,7 +777,7 @@
           <div class="mt-8 flex flex-col sm:flex-row gap-4">
             <button
               id="back-to-station-selection"
-              class="w-full sm:w-auto flex-1 inline-flex items-center justify-center gap-2 px-4 py-3 rounded-xl bg-gray-200 text-gray-800 font-semibold transition hover:bg-gray-300"
+              class="w-full sm:w-auto flex-1 inline-flex items-center justify-center gap-2 px-4 py-3 rounded-xl btn-ghost font-semibold transition"
             >
               <span>← Back</span>
             </button>
@@ -740,7 +795,7 @@
 
         <button
           id="closeMeetingPointModalBtn"
-          class="absolute -top-3 -right-3 h-10 w-10 flex items-center justify-center bg-white rounded-full shadow-lg text-gray-600 hover:text-red-500 hover:rotate-90 transition-transform"
+          class="absolute -top-3 -right-3 h-10 w-10 flex items-center justify-center bg-white rounded-full shadow-lg text-gray-600 hover:text-[var(--accent-color)] hover:rotate-90 transition-transform"
         >
           <svg
             class="w-6 h-6"
@@ -823,12 +878,13 @@
             address: "渋谷区代々木1-57-4\nドルミ第2代々木ビル1階",
             mapUrl: "https://goo.gl/maps/MEVQdYVXD9HyRebs9",
           },
-           "tokyo-e": {
+          "tokyo-e": {
             name: "Tokyo: Weiden Haus (3rd Floor)",
             address: "港区赤坂2-14-8\n山口建設ビルディング3F",
             mapUrl: "https://maps.app.goo.gl/PwYT5JHJxmkachh86",
           },
         };
+
         const taxiModal = document.getElementById("taxiModal");
         document
           .getElementById("openTaxiModalBtn")
@@ -887,6 +943,7 @@
             mapUrl: "https://maps.app.goo.gl/fa9i1mNyi7Tzb2DS8",
           },
         };
+
         const meetingPointModal = document.getElementById("meetingPointModal");
         const openMeetingPointBtn = document.getElementById(
           "openMeetingPointModalBtn"
@@ -937,6 +994,3 @@
     </script>
   </body>
 </html>
-
-
-
